@@ -1,8 +1,6 @@
 #pragma once
-class Ludo
+class home
 {
-
-	
 
 
 };

@@ -1,9 +1,8 @@
 #pragma once
-class Ludo
+ class player
 {
 
-	
-
-
+ 
+ 
 };
 
