@@ -1,8 +1,13 @@
 #pragma once
+class home;
+
+
 class board
 {
 
-//lklklklklklk
+
+
+	public:
 
 
 

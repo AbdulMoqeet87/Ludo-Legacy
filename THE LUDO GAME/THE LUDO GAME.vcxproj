@@ -134,6 +134,7 @@
     <ClCompile Include="piece.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Ludo.h" />
     <ClInclude Include="piece.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
