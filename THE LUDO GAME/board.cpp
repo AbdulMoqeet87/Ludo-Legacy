@@ -7,7 +7,7 @@ board::board()
 
 	for (int i = 0; i < 90; i++)
 	{
-		//Cs[i] = new Cell(rdr);
+		Cs[i] = new Cell(rdr);
 	}
 
 }
