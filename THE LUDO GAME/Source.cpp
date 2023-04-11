@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+    //AMNA
     //-------------------------
     sf::Color greyish_green(64, 96, 64);
     sf::Color dark_yellow(153, 153, 0);
