@@ -6,10 +6,12 @@ board::board()
 {
 	ifstream rdr("Cells.txt");
 
+	Cs = new Cell*[90];
 	for (int i = 0; i < 90; i++)
 	{
 		Cs[i] = new Cell(rdr,sf::Color::White);
 	}
+
 }
 
 

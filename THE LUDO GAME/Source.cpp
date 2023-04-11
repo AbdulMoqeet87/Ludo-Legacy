@@ -293,7 +293,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
-    board B();
+    board B;
     while (window.isOpen())
     {
         sf::Event event;
@@ -302,7 +302,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        //B.drawBoard(window);
+        B.drawBoard(window);
         window.display();
     }
 
