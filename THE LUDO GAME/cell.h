@@ -17,5 +17,6 @@ public:
 	void Draw(RenderWindow& window);
 	void Highlight(RenderWindow& window, Color _C);
 	void UnHighlight(RenderWindow& window);
+
 };
 
