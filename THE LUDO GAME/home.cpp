@@ -13,8 +13,9 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 	int ci, ri;
 
 	rdr >> ri >> ci;
-	Background = new Cell(ri, ci, 235,_C);
-
+	Background = new Cell(ci, ri, 235,_C);
+	Background->setOutlClr(sf::Color::White);
+	Background->setOutlSize(5);
 	sf::Texture Tex;
 	Tex.loadFromFile(fileName);
 	Pic.setTexture(Tex);
@@ -25,6 +26,7 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 	{
 		Cs[i] = new Cell(rdr, C);
 	}
+
 }
 
 int home::getSafeSpot()

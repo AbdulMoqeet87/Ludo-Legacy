@@ -39,3 +39,12 @@ void Cell::UnHighlight(RenderWindow& window)
 {
     Rec.setFillColor(C);
 }
+void Cell:: setOutlClr(sf::Color C)
+{
+    this->Rec.setOutlineColor(C);
+}
+void Cell::setOutlSize(int size)
+{
+    this->Rec.setOutlineThickness(5);
+}
+    
