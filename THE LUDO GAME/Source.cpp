@@ -29,19 +29,19 @@ int main()
     //head.setRotation(180);
     //-------------------------------------------------
     
-    sf::CircleShape C1(20);
+    sf::CircleShape C1(22);
     C1.setFillColor(sf::Color::White);
     C1.setPosition(20, 15);
-    
-    sf::CircleShape C2(20);
+   
+    sf::CircleShape C2(22);
     C2.setFillColor(sf::Color::White);
     C2.setPosition(180, 15);
     
-    sf::CircleShape C3(20);
+    sf::CircleShape C3(22);
     C3.setFillColor(sf::Color::White);
     C3.setPosition(20, 180);
     
-    sf::CircleShape C4(20);
+    sf::CircleShape C4(22);
     C4.setFillColor(sf::Color::White);
     C4.setPosition(180, 180);
 
@@ -122,7 +122,7 @@ int main()
 
     sf::RectangleShape shape6;
     shape6.setSize(sf::Vector2f(40, 40));
-    shape6.setFillColor(sf::Color::White);
+    shape6.setFillColor(maroon);
     shape6.setPosition(246, 0);
 
     sf::RectangleShape shape7;
@@ -239,7 +239,7 @@ int main()
                 window.close();
         }
 
-        window.clear();
+        /*window.clear();
         window.draw(shape);
         window.draw(shape1);
         window.draw(shape2);
@@ -274,8 +274,16 @@ int main()
         window.draw(C1);
         window.draw(C2);
         window.draw(C3);
-        window.draw(C4);
-        
+        window.draw(C4);*/
+
+
+
+
+
+
+
+
+
         window.display();
     }
 
