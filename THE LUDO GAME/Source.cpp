@@ -1,9 +1,10 @@
 #include<iostream>
 #include<SFML/Graphics.hpp>
+#include"board.h"
 using namespace std;
 //using namespace sf;
 
-int main()
+int main1()
 {
     //AMNA
     //-------------------------
@@ -290,5 +291,11 @@ int main()
     return 0;
 }
 
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(1375, 696), "Abdul SFML", sf::Style::Close | sf::Style::Resize);
+    window.setPosition(sf::Vector2i(-10, 0));
+    board B();
 
+}
 
