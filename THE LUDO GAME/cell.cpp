@@ -19,6 +19,8 @@ Cell::Cell(istream& rdr)
 {
     rdr >> ci;
     rdr >> ri;
+
+
 }
 
 void Cell::Draw(RenderWindow& window)
