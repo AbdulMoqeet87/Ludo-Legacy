@@ -8,7 +8,7 @@ class board
 	private:
 
 		Cell**Cs;
-
+		home** Hs;
 	public:
 		board();
 		void drawBoard(sf::RenderWindow& window);
