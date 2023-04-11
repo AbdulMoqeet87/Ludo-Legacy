@@ -10,7 +10,6 @@ board::board()
 	{
 		Cs[i] = new Cell(rdr,sf::Color::White);
 	}
-
 }
 
 
