@@ -283,8 +283,6 @@ int main1()
 
 
 
-
-
         window.display();
     }
 
