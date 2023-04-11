@@ -15,12 +15,14 @@ Cell::Cell(int _ri, int _ci, int _s, Color _C)
     Rec.setPosition(ci, ri);
 }
 
-Cell::Cell(istream& rdr)
+Cell::Cell(istream& rdr, Color _C) :C{ _C }
 {
     rdr >> ci;
     rdr >> ri;
-
-
+    size = 40;
+    Rec.setSize(sf::Vector2f(size, size));
+    Rec.setFillColor(C);
+    Rec.setPosition(ci, ri);
 }
 
 void Cell::Draw(RenderWindow& window)
