@@ -9,6 +9,6 @@ private:
 	int SafeSpot;
 	Cell** C;
 public:
-	void getSafeSpot
+	void getSafeSpot();
 };
 
