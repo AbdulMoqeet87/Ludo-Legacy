@@ -291,9 +291,21 @@ int main1()
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1375, 696), "Abdul SFML", sf::Style::Close | sf::Style::Resize);
+    sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
     board B();
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        //B.drawBoard(window);
+        window.display();
+    }
 
+    return 0;
 }
 
