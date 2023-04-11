@@ -7,7 +7,7 @@ using namespace std;
 
 home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 {
-	this->InitialPos = IP;
+	/*this->InitialPos = IP;
 	this->SafeSpot = SP;
 	this->C = _C;
 	int ci, ri;
@@ -21,7 +21,7 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 	for (int i = 0; i < 5; i++)
 	{
 		Cs[i] = new Cell(rdr, C);
-	}
+	}*/
 }
 
 int home::getSafeSpot()
