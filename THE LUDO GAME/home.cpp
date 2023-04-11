@@ -13,7 +13,7 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 	int ci, ri;
 
 	rdr >> ri >> ci;
-	Background = new Cell(ri, ci, 235);
+	Background = new Cell(ri, ci, 235,_C);
 
 	sf::Texture Tex;
 	Tex.loadFromFile(fileName);
@@ -25,9 +25,6 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName)
 	{
 		Cs[i] = new Cell(rdr, C);
 	}
-
-
-
 }
 
 int home::getSafeSpot()
@@ -41,9 +38,12 @@ int home::getInitialPos()
 }
 void home::Draw(RenderWindow& window)
 {
-	window.draw(Pic);
+	//window.draw(Pic);
+	Background->Draw(window);
+
 	for (int i = 0; i < 5; i++)
 	{
 		Cs[i]->Draw(window);
 	}
+
 }
