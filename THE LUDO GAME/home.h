@@ -14,6 +14,7 @@ private:
 	int InitialPos;
 	int SafeSpot;
 	Cell** Cs;
+	Cell* Background;
 	Color C;
 	Sprite Pic;
 public:
