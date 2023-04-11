@@ -1,17 +1,18 @@
 #pragma once
-class home;
+#include<SFML/Graphics.hpp>
 
+class home;
 
 class board
 {
-private:
+	private:
 
-public:
-	board();
-	void drawBoard(WindowRender& window);
-	bool isValidMove(int sri, int sci, int dri, int dci);
-	//void Move(int sri, int sci, int dri, int dci);
-	//drawHome();
+	public:
+		board();
+		void drawBoard(sf::RenderWindow& window);
+		bool isValidMove(int sri, int sci, int dri, int dci);
+		void Move(int sri, int sci, int dri, int dci);
+		void drawHome();
 	
 
 };

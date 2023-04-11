@@ -11,10 +11,3 @@ class piece
 
 
 };
-
-int main()
-{
-
-S.
-
-}
