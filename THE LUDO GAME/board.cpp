@@ -47,10 +47,12 @@ void board::drawBoard(sf::RenderWindow& window)
 
 }
 
-void board::drawHome()
+void board::drawHome(sf::RenderWindow& window)
 {
 
-
-
+	for (int i = 0; i < 6; i++)
+	{
+		Hs[i]->Draw(window);
+	}
 
 }
