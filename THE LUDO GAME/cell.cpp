@@ -12,7 +12,7 @@ Cell::Cell(int _ri, int _ci, int _s, Color _C)
     this->C = _C;
     Rec.setSize(sf::Vector2f(size, size));
     Rec.setFillColor(C);
-    Rec.setPosition(ci, ri);
+    Rec.setPosition(ci+40, ri+40);
 }
 
 Cell::Cell(istream& rdr, Color _C) :C{ _C }
@@ -22,7 +22,7 @@ Cell::Cell(istream& rdr, Color _C) :C{ _C }
     size = 40;
     Rec.setSize(sf::Vector2f(size, size));
     Rec.setFillColor(C);
-    Rec.setPosition(ci, ri);
+    Rec.setPosition(ci+40, ri+40);
 }
 
 void Cell::Draw(RenderWindow& window)

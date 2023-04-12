@@ -3,12 +3,14 @@
 
 class home;
 class Cell;
+class piece;
 class board
 {
 	private:
 
 		Cell**Cs;
 		home** Hs;
+		piece** Ps;
 	public:
 		board();
 		void drawBoard(sf::RenderWindow& window);

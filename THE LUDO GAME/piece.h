@@ -1,13 +1,20 @@
 #pragma once
 #include"utility.h"
-struct position
-{
-	int ri; int ci;
-};
+#include<SFML/Graphics.hpp>
+#include<fstream>;
+#include<iostream>
+using namespace sf;
+using namespace std;
 class piece
 {
-
-	position S;
-
+	int ri, ci;
+	Texture P;
+	Sprite Pc;
+	Color C;
+public:
+	
+	piece(int ci,int ri,Color,string Cn);
+	piece(istream& Rdr,Color,string Cn);
+	void Draw(RenderWindow& window);
 
 };
