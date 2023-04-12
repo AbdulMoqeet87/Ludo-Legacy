@@ -109,7 +109,7 @@ void board::drawBoard(sf::RenderWindow& window)
 	{
 		Cs[i]->Draw(window);
 	}
-
+	drawHome(window);
 
 }
 

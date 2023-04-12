@@ -1,6 +1,7 @@
 #include<iostream>
 #include<SFML/Graphics.hpp>
 #include"board.h"
+#include"Dice.h"
 using namespace std;
 //using namespace sf;
 
@@ -289,7 +290,7 @@ int main1()
     return 0;
 }
 
-int main()
+int main2()
 {
     sf::Texture awai;
     awai.loadFromFile("BluePiece.png");
@@ -315,3 +316,31 @@ int main()
     return 0;
 }
 
+int main()
+{
+    sf::Texture awai;
+    awai.loadFromFile("BluePiece.png");
+
+    sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
+    window.setPosition(sf::Vector2i(-10, 0));
+    Dice D;
+    board B;
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        window.clear();
+        D.rollDice(&B,window);
+        B.drawBoard(window);
+        D.drawDice(window);
+        window.display();
+        for (long long i = 0; i < 1000000000; i++);
+
+    }
+
+    return 0;
+}
