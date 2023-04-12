@@ -10,7 +10,7 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName,int pic_c,int p
 	this->InitialPos = IP;
 	this->SafeSpot = SP;
 	this->C = _C;
-	
+		
 
 	rdr >> ci >> ri;
 	Background = new Cell(ri, ci, 235,_C);
@@ -36,8 +36,6 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName,int pic_c,int p
 	Circles[1].setPosition(ci + 213, ri + 52);
 	Circles[2].setPosition(ci + 53, ri + 213);
 	Circles[3].setPosition(ci + 213, ri + 213);
-
-
 }
 
 int home::getSafeSpot()
