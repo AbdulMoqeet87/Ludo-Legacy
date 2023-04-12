@@ -293,16 +293,7 @@ int main()
 {
     sf::Texture awai;
     awai.loadFromFile("BluePiece.png");
-    sf::Sprite C(awai);
-    sf::Sprite C2(awai);
-    sf::Sprite C3(awai);
-    sf::Sprite C4(awai);
-
-    C.setPosition(60 ,433);
-    C2.setPosition(60+160,433);
-    C3.setPosition(60 ,433+161);
-    C4.setPosition(60+160 ,433+161);
-    //C.setScale(0.9, 0.9);
+    
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
     board B;
@@ -317,10 +308,7 @@ int main()
 
         B.drawBoard(window);
         B.drawHome(window);
-       /* window.draw(C);
-        window.draw(C2);
-        window.draw(C3);
-        window.draw(C4);*/
+       
         window.display();
     }
 

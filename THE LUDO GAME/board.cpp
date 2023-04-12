@@ -92,14 +92,12 @@ board::board()
 			_r = Hs[5]->getRow();
 			_c = Hs[5]->getCol();
 		}						
+
 		Ps[i] = new piece(_c+55, _r+59, C, fn);
 		Ps[i+1] = new piece(_c+215, _r+59, C, fn);
 		Ps[i+2] = new piece(_c+55, _r+220, C, fn);
-		Ps[i+3] = new piece(_c+215, _r+220, C, fn);
-	
+		Ps[i+3] = new piece(_c+215, _r+220, C, fn);	
 	}
-
-	
 }
 
 
