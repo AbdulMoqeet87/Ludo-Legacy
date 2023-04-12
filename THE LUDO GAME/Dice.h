@@ -10,6 +10,8 @@ private:
 	int DiceValue;
 	Texture Tex;
 	RectangleShape dice;
+	Texture TexPic;
+	Sprite D;
 	Vector2u TextureSize;
 public:
 	Dice();
