@@ -10,6 +10,7 @@ Cell::Cell(int _ri, int _ci, int _s, Color _C)
     this->ci = _ci;
     this->size = _s;
     this->C = _C;
+    this->P = nullptr;
     Rec.setSize(sf::Vector2f(size, size));
     Rec.setFillColor(C);
     Rec.setPosition(ci+40, ri+40);
@@ -47,4 +48,25 @@ void Cell::setOutlSize(int size)
 {
     this->Rec.setOutlineThickness(5);
 }
-    
+int Cell::getRow()
+{
+    return ri;
+}
+int Cell::getCol()
+{
+    return ci;
+}
+void Cell::setPiece(piece* NP)
+{
+    P = NP;
+}
+bool Cell::isClicked(int ri, int ci)
+{
+    return Rec.getLocalBounds().contains(ci, ri);
+
+}
+//piece* Cell::getPiece()
+//{
+//    return P;
+//}
+

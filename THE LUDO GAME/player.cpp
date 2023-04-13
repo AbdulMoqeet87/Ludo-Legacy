@@ -5,13 +5,15 @@
 using namespace sf;
 using namespace std;
 
-player::player(string _name, Color _C, bool _isWin, bool _isKill)
+player::player(string _name, Color _C,bool _isWin, bool _isKill, bool _CanMove)
 {
 	this->Name = _name;
 	this->C = _C;
 	this->IsWin = _isWin;
 	this->HasKilled = _isKill;
+	this->CanMove = _CanMove;
 }
+
 Color player::getColor()
 {
 	return this->C;
