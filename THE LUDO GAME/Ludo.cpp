@@ -98,7 +98,7 @@ void Ludo::RollDice(sf::RenderWindow& window)
 void Ludo::Move(int indx)
 {
 	
-	B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()), B->getCellRow(B->getHome(Turn)->getInitialPos()));
+	B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos())+38, B->getCellRow(B->getHome(Turn)->getInitialPos())+42);
 
 }
 
