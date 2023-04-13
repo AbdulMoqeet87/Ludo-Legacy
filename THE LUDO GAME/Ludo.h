@@ -22,6 +22,6 @@ public:
 	bool isValidSc(int &indx);
 	void play(sf::RenderWindow& window);
 	void RollDice(sf::RenderWindow& window);
-	void Move();
+	void Move(int indx);
 };
 

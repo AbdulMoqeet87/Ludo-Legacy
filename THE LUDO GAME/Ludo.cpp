@@ -95,8 +95,10 @@ void Ludo::RollDice(sf::RenderWindow& window)
 	}
 }
 
-void Ludo::Move()
+void Ludo::Move(int indx)
 {
+	
+	B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()), B->getCellRow(B->getHome(Turn)->getInitialPos()));
 
 }
 
@@ -129,7 +131,7 @@ void Ludo::play(sf::RenderWindow& window)
 				{
 					//B->getPiece(indx)->setPosition(B->getHome(Turn)->getInitialPos());
 					B->setCellColor(B->getHome(Turn)->getSafeSpot());
-
+					Move(indx);
 					turnChange();
 					selected = false;
 					indx = -1;

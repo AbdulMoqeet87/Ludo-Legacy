@@ -154,3 +154,12 @@ void board::setCellColor(int ind)
 	Cs[ind]->setOutlSize(3);
 	Cs[ind]->setOutlClr(sf::Color::Green);
 }
+int board::getCellRow(int indx)
+{
+	return this->Cs[indx]->getRow();
+}
+int board::getCellCol(int indx)
+{
+	return this->Cs[indx]->getCol();
+
+}
