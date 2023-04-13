@@ -75,6 +75,7 @@ int Dice::getDiceValue()
 Dice::Dice(int r,int c)
 {
 	this->DiceValue = 0;
+
 	this->ri = r;
 	this->ci = c;
 	Tex.loadFromFile("rollDice.png");
