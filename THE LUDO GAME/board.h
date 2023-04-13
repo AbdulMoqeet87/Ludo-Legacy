@@ -15,7 +15,7 @@ class board
 		board();
 		void drawBoard(sf::RenderWindow& window);
 		bool isValidMove(int sri, int sci);
-		void Move(int sri, int sci);
+		void Move(int sri, int sci,int DValue);
 		void drawHome(sf::RenderWindow& window);
 	
 

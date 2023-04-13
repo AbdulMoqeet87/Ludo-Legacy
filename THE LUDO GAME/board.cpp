@@ -125,3 +125,8 @@ void board::drawHome(sf::RenderWindow& window)
 		Ps[i]->Draw(window);
 	}
 }
+
+//void board::Move(int sri, int sci, int DValue)
+//{
+//
+//}
