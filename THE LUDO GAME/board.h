@@ -22,6 +22,7 @@ class board
 		void setPiece(piece* P, int i);
 		home* getHome(int i);
 		void setCellColor(int ind);
-
+		int getCellRow(int indx);
+		int getCellCol(int indx);
 };
 
