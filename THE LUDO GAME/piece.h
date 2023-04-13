@@ -18,7 +18,4 @@ public:
 	Color getColor();
 	bool Contains(int ri, int ci);
 	void setPosition(int ci, int ri);
-
-	
-
 };

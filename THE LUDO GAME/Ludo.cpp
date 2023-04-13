@@ -130,7 +130,7 @@ void Ludo::play(sf::RenderWindow& window)
 				if (isValidSc(indx))
 				{
 					//B->getPiece(indx)->setPosition(B->getHome(Turn)->getInitialPos());
-					B->setCellColor(B->getHome(Turn)->getSafeSpot());
+					//B->setCellColor(B->getHome(Turn)->getSafeSpot());
 					Move(indx);
 					turnChange();
 					selected = false;
