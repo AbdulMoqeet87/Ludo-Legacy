@@ -13,8 +13,9 @@ private:
 	Texture TexPic;
 	Sprite D;
 	Vector2u TextureSize;
+	int ri, ci;
 public:
-	Dice();
+	Dice(int r, int c);
 	int getDiceValue();
 	void rollDice(board* B, RenderWindow& window);
 	void drawDice(RenderWindow& window);

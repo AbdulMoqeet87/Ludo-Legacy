@@ -87,3 +87,13 @@ int home::getCol()
 {
 	return ci;
 }
+
+bool home::clickedHomePiece(int ri,int ci,int& pi)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (Circles[i].getLocalBounds().contains(ri, ci));
+	}
+	return 0;//
+}
+

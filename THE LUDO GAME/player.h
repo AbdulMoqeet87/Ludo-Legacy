@@ -12,8 +12,9 @@ private:
 	string Name;
 	bool IsWin;
 	bool HasKilled;
+	bool CanMove;
 public:
-	player(string _name, Color, bool _isWin = false, bool _isKill = false);
+	player(string _name, Color, bool _isWin = false, bool _isKill = false, bool _CanMove = false);
 	Color getColor();
 	string getName();
 	bool isWin();

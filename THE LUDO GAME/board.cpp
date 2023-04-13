@@ -22,7 +22,7 @@ board::board()
 	ifstream rdr("Cells.txt");
 	
 	Hs = new home*[6];
-	Hs[0] = new home(rdr, 88,3,maroon, "Player1_bg.png",-15,15);
+	Hs[0] = new home(rdr, 3,88,maroon, "Player1_bg.png",-15,15);
 	Hs[1] = new home(rdr,16,11,purple,"elephantfront.png",350,15);
 	Hs[2] = new home(rdr, 35,30,dark_green, "tiger2.png",720,15);
 	Hs[3] = new home(rdr, 48,43,golden_yellow, "shark.png",720,380);
@@ -124,4 +124,33 @@ void board::drawHome(sf::RenderWindow& window)
 	{
 		Ps[i]->Draw(window);
 	}
+}
+
+//piece* board::getPiece(int ri, int ci)
+//{
+//	for (int i = 0; i < 90; i++)
+//	{
+//		if (Cs[i]->isClicked(ri, ci))
+//			return Cs[i]->getPiece();
+//	}
+//}
+
+void board::setPiece(piece* P,int i)
+{
+	Cs[i]->setPiece(P);
+}
+
+home* board::getHome(int i)
+{
+	return Hs[i];
+}
+
+piece* board::getPiece(int indx)
+{
+	return Ps[indx];
+}
+void board::setCellColor(int ind)
+{
+	Cs[ind]->setOutlSize(3);
+	Cs[ind]->setOutlClr(sf::Color::Green);
 }

@@ -25,3 +25,19 @@ void piece::Draw(sf::RenderWindow& window)
 {	
 	window.draw(Pc);
 }
+
+Color piece::getColor()
+{
+	return C;
+}
+bool piece::Contains(int r, int c)
+{
+	if (this->Pc.getGlobalBounds().contains(c, r))
+		return true;
+	return false;
+}
+
+void piece::setPosition(int ci, int ri)
+{
+	Pc.setPosition(ci, ri);
+}

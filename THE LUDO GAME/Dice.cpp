@@ -37,7 +37,8 @@ int Dice::getDiceValue()
 //		window.draw(dice);
 //		B->drawBoard(window);
 //		window.display();
-//		for (long long i = 0; i < 100000000; i++);
+//		sf::sleep(sf::seconds(0.055));
+//		//for (long long i = 0; i < 10000000; i++);
 //	}
 //	window.clear();
 //}
@@ -71,13 +72,16 @@ int Dice::getDiceValue()
 //}
 
 
-Dice::Dice()
+Dice::Dice(int r,int c)
 {
 	this->DiceValue = 0;
+	this->ri = r;
+	this->ci = c;
 	Tex.loadFromFile("rollDice.png");
 	dice.setSize(Vector2f(120, 120));
 	dice.setPosition(1150, 500);
 	dice.setTexture(&Tex);
+	D.setPosition(ci, ri);
 	TextureSize = Tex.getSize();
 	TextureSize.x /= 3;
 	TextureSize.y /= 3;
@@ -134,7 +138,7 @@ void Dice::drawDice(RenderWindow& window)
 	TexPic.loadFromFile(filename);
 	D.setTexture(TexPic);
 	D.setScale(0.2, 0.2);
-	//dice.setSize(Vector2f(100, 100));
 	D.setPosition(1150, 500);
+	//dice.setSize(Vector2f(100, 100));
 	window.draw(D);
 }
