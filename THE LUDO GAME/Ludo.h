@@ -10,6 +10,7 @@ class Dice;
 class Ludo
 {
 private:
+	Dice* dice;
 	Dice* Ds[3];
 	board* B;
 	player* Ps[6];
@@ -21,7 +22,12 @@ public:
 	void turnChange();
 	bool isValidSc(int &indx);
 	void play(sf::RenderWindow& window);
-	void RollDice(sf::RenderWindow& window);
-	void Move(int indx);
+	void RollDice(sf::RenderWindow& window, int& di);
+	void DrawDice(sf::RenderWindow& window);
+	void Move(int indx, int DiceIndx);
+	bool clickedDice();
+	bool canMove();
+	void selectDiceValue(int& DiceIndx);
+
 };
 

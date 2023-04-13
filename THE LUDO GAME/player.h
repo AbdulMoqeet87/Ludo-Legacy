@@ -21,5 +21,7 @@ public:
 	bool hasKilled();
 	void setIsWin(bool _win);
 	void setHasKilled(bool _kill);
+	bool canMove();
+	void setCanMove(bool _Move);
 };
 

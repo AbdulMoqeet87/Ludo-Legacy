@@ -19,5 +19,9 @@ public:
 	int getDiceValue();
 	void rollDice(board* B, RenderWindow& window);
 	void drawDice(RenderWindow& window);
+	void setDiceValue(int d);
+	bool isClicked(int ri, int ci);
+	//void drawDiceNum(RenderWindow& window, int ri, int ci);
+
 };
 

@@ -96,7 +96,8 @@ void Dice::rollDice(board* B, RenderWindow& window)
 	{
 		for (int c = 0; c < 3; c++)
 		{
-			for (long long i = 0; i < 100000000; i++);
+			//for (long long i = 0; i < 100000000; i++);
+			sleep(sf::seconds(0.055));
 			window.clear();
 			if (r < 2)
 				dice.setPosition(1150, 530 - (c * 30));
@@ -138,7 +139,51 @@ void Dice::drawDice(RenderWindow& window)
 	TexPic.loadFromFile(filename);
 	D.setTexture(TexPic);
 	D.setScale(0.2, 0.2);
-	D.setPosition(1150, 500);
+	D.setPosition(ri, ci);
 	//dice.setSize(Vector2f(100, 100));
 	window.draw(D);
 }
+
+void Dice::setDiceValue(int d)
+{
+	this->DiceValue = d;
+}
+
+bool Dice::isClicked(int ri, int ci)
+{
+	if (this->D.getGlobalBounds().contains(ci, ri))
+		return true;
+	return false;
+}
+
+//void Dice::drawDiceNum(RenderWindow& window,int ri,int ci)
+//{
+//	string filename;
+//	switch (this->DiceValue)
+//	{
+//	case 1:
+//		filename = "dice1.png";
+//		break;
+//	case 2:
+//		filename = "dice2.png";
+//		break;
+//	case 3:
+//		filename = "dice3.png";
+//		break;
+//	case 4:
+//		filename = "dice4.png";
+//		break;
+//	case 5:
+//		filename = "dice5.png";
+//		break;
+//	case 6:
+//		filename = "dice6.png";
+//		break;
+//	}
+//	TexPic.loadFromFile(filename);
+//	D.setTexture(TexPic);
+//	D.setScale(0.2, 0.2);
+//	D.setPosition(ci, ri);
+//	//dice.setSize(Vector2f(100, 100));
+//	window.draw(D);
+//}
