@@ -22,8 +22,8 @@ private:
 	Sprite Pic;
 	Texture Circ;
 	Sprite* Circles;
-	public:
-	home(istream& rdr, int IP,int SP, int TP, Color _C,string FileName,int pc,int pr);
+public:
+	home(istream& rdr, int IP, int SP, int TP, Color _C, string FileName, int pc, int pr);
 	void Draw(RenderWindow& window);
 	int getSafeSpot();
 	int getInitialPos();
@@ -33,7 +33,7 @@ private:
 	sf::Color getHOmeColor();
 	int getRow();
 	int getCol();
-	bool clickedHomePiece(int ri, int ci,int &pi);
+	bool clickedHomePiece(int ri, int ci, int& pi);
 	bool isHomeCell(int r, int c);
 	void HomeCellPos(int i, int& r, int& c);
 };
