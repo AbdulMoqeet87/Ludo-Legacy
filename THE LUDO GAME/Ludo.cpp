@@ -249,7 +249,6 @@ void Ludo::selectDiceValue(int& DiceIndx)
 	//			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 	//			sri = mousePos.y;
 	//			sci = mousePos.x;
-
 	//
 	//			for (int i = 0; i < 3; i++)
 	//			{
@@ -267,16 +266,12 @@ void Ludo::selectDiceValue(int& DiceIndx)
 	//		}
 	//		if (breakAll)break;
 	//	}
-
 	//	if (breakAll)break;
 	//	window.clear();
 	//	B->drawBoard(window);
 	//	DrawDice(window);
 	//	window.display();
-
 	//}
-
-
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -303,10 +298,7 @@ void Ludo::selectDiceValue(int& DiceIndx)
 	//	DiceIndx = 2;
 	//}
 
-
 	cout << "Exit Selected Value\n";
-
-
 
 	//void Ludo::play(sf::RenderWindow& window)
 	//{
@@ -383,6 +375,7 @@ void Ludo::selectDiceValue(int& DiceIndx)
 	//	}
 	//}
 }
+
 bool Ludo::DiceIsEmpty()
 {
 
@@ -390,6 +383,7 @@ bool Ludo::DiceIsEmpty()
 		return true;
 	return false;
 }
+
 void Ludo::EraseDice()
 {
 	Ds[0] = 0; Ds[1] = 0; Ds[2] = 0;
