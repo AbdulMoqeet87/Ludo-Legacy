@@ -103,7 +103,7 @@ void Ludo::DrawDice(sf::RenderWindow& window)
 	dice->drawDice(window);
 }
 
-bool Ludo::Move(int indx,int DiceIndx)
+void Ludo::Move(int indx,int DiceIndx)
 {
 	int ir = B->getPiece(indx)->getInitialRow();
 	int ic = B->getPiece(indx)->getInitialCol();
@@ -117,7 +117,7 @@ bool Ludo::Move(int indx,int DiceIndx)
 	//---------------------------------setting row col of piece
 		 B->getPiece(indx)->setRow(B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
 		 B->getPiece(indx)->setCol(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38);
-		 return true;
+		
 	}
 	else if ((ir != curr_r || ic != curr_c))
 	{
@@ -126,10 +126,9 @@ bool Ludo::Move(int indx,int DiceIndx)
 		if (NewCell_indx > 89)
 			NewCell_indx -= 90;
 		B->getPiece(indx)->setCellIndex(NewCell_indx);
-		B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);
-		return true;
+		B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);		
 	}
-	return false;
+	
 }
 
 bool Ludo::clickedDice()
@@ -337,6 +336,7 @@ void Ludo::EraseDice()
 {
 	Ds[0] = 0; Ds[1] = 0; Ds[2] = 0;
 }
+
 void Ludo::play(sf::RenderWindow& window)
 {
 	int indx = -1;
@@ -412,9 +412,6 @@ void Ludo::play(sf::RenderWindow& window)
 					//EraseDice();
 				}
 			}
-
-			
-
 			/*	if (diceRolled)
 				{
 					if (DiceIsEmpty())

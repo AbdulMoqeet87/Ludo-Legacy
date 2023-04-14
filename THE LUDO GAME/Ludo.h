@@ -24,7 +24,7 @@ public:
 	void play(sf::RenderWindow& window);
 	void RollDice(sf::RenderWindow& window, int di);
 	void DrawDice(sf::RenderWindow& window);
-	bool Move(int indx, int DiceIndx);
+	void  Move(int indx, int DiceIndx);
 	bool clickedDice();
 	bool canMove();
 	void selectDiceValue(int& DiceIndx);
