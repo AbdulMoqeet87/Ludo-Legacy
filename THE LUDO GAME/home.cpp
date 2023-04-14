@@ -14,8 +14,8 @@ home::home(istream& rdr, int IP, int SP,Color _C,string fileName,int pic_c,int p
 
 	rdr >> ci >> ri;
 	Background = new Cell(ri, ci, 235,_C);
-	Background->setOutlClr(sf::Color::White);
 	Background->setOutlSize(5);
+	Background->setOutlClr(sf::Color::Blue);
 	//sf::Texture Tex;
 	Tex.loadFromFile(fileName);
 	Pic.setTexture(Tex);
@@ -94,6 +94,6 @@ bool home::clickedHomePiece(int ri,int ci,int& pi)
 	{
 		if (Circles[i].getLocalBounds().contains(ri, ci));
 	}
-	return 0;//
+	return 0;
 }
 
