@@ -31,6 +31,7 @@ public:
 	void selectDiceValue(int& DiceIndx);
 	bool DiceIsEmpty();
 	void EraseDice();
-
+	bool AllSix();
+	bool isWin();
 };
 

@@ -99,6 +99,10 @@ board::board()
 		Ps[i+2] = new piece(_c+55, _r+220, C, fn);
 		Ps[i+3] = new piece(_c+215, _r+220, C, fn);	
 	}
+	/*Ps[1]->setCellIndex(86);
+	Ps[1]->setPosition(Cs[86]->getCol() + 38, Cs[86]->getRow() + 42);
+	Ps[5]->setCellIndex(88);
+	Ps[5]->setPosition(Cs[88]->getCol() + 38, Cs[88]->getRow() + 42);*/
 }
 
 void board::drawBoard(sf::RenderWindow& window)
