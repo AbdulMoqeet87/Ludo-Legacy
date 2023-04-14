@@ -45,9 +45,11 @@ bool piece::Contains(int r, int c)
 	return false;
 }
 
-void piece::setPosition(int ci, int ri)
+void piece::setPosition(int c, int r)
 {
-	Pc.setPosition(ci, ri);
+	Pc.setPosition(c, r);
+	ri = r;
+	ci = c;
 }
 
 int piece::getInitialRow()
@@ -82,7 +84,19 @@ int piece::GetRow()
 {
 	return ri;
 }
-int  piece::GetCol()
+int piece::GetCol()
 {
 	return ci;
+}
+
+bool piece::atIntialPos(int r, int c)
+{
+	if (InitialRow == r && InitialCol == c)
+		return true;
+	return false;
+}
+
+Color piece::getClr()
+{
+	return C;
 }

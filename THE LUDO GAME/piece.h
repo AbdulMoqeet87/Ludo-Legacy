@@ -28,5 +28,6 @@ public:
 	void setCol(int c);
 	int  GetRow();
 	int GetCol();
-
+	bool atIntialPos(int r, int c);
+	Color getClr();
 };
