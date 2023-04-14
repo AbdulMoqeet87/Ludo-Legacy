@@ -21,11 +21,7 @@ private:
 	Sprite Pic;
 	Texture Circ;
 	Sprite* Circles;
-	bool P1_occ;
-	bool P2_occ;
-	bool P3_occ;
-	bool P4_occ;
-public:
+	public:
 	home(istream& rdr, int IP,int SP, Color _C,string FileName,int pc,int pr);
 	void Draw(RenderWindow& window);
 	int getSafeSpot();

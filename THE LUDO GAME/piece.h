@@ -8,6 +8,8 @@ using namespace std;
 class piece
 {
 	int ri, ci;
+	int InitialRow, InitialCol;
+	int CellIndx;
 	Texture P;
 	Sprite Pc;
 	Color C;
@@ -18,4 +20,13 @@ public:
 	Color getColor();
 	bool Contains(int ri, int ci);
 	void setPosition(int ci, int ri);
+	int getInitialRow();
+	int getInitialCol();
+	void setCellIndex(int ci);
+	int getCellIndex();
+	void setRow(int r);
+	void setCol(int c);
+	int  GetRow();
+	int GetCol();
+
 };

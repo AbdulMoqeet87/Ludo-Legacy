@@ -43,3 +43,13 @@ void player::setHasKilled(bool _kill)
 {
 	this->HasKilled = _kill;
 }
+
+bool player::canMove()
+{
+	return CanMove;
+}
+
+void player::setCanMove(bool _Move)
+{
+	this->CanMove = _Move;
+}

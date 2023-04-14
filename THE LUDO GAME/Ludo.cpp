@@ -2,7 +2,6 @@
 #include"Dice.h"
 #include"player.h"
 #include"board.h"
-
 #include"piece.h"
 #include"home.h"
 #include<fstream>
@@ -31,9 +30,11 @@ Ludo::Ludo()
 	Ps[4] = new player("Minahil", dark_grey);
 	Ps[5] = new player("Fahira", navy_blue);
 	B = new board();
-	Ds[0] = new Dice(1000,300);
-	Ds[1] = new Dice(1100,300);
-	Ds[2] = new Dice(1200,300);
+	dice = new Dice(1150, 500);
+	dice->setDiceValue(2);
+	Ds[0] = new Dice(1098,100);
+	Ds[1] = new Dice(1201,100);
+	Ds[2] = new Dice(1304,100);
 	Turn = 0;
 	sri = 0, sci = 0;
 }
@@ -69,43 +70,282 @@ void Ludo::turnChange()
 //		return false;
 //	}
 //}
+
 bool Ludo::isValidSc(int &indx)
 {
-
 	for (int i = Turn * 4; i < (Turn * 4) + 4; i++)
 	{
-
 		if (B->getPiece(i)->Contains(sri, sci))
 		{
-
 			indx = i;
 			return true;
 		}
 	}
 	return false;
-
 }
-void Ludo::RollDice(sf::RenderWindow& window)
+
+void Ludo::RollDice(sf::RenderWindow& window, int di)
 {
-	int di = 0;
-	Ds[di]->rollDice(B, window);
-	if (Ds[di]->getDiceValue() == 6)
-	{
-		di++;
-	}
+	dice->rollDice(B, window);
+	Ds[di]->setDiceValue(dice->getDiceValue());
+	/*if (Ds[di]->getDiceValue() == 6)
+		di++;*/
 }
 
-void Ludo::Move(int indx)
+void Ludo::DrawDice(sf::RenderWindow& window)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (Ds[i]->getDiceValue() != 0)
+			Ds[i]->drawDice(window);
+		
+	}
+	dice->drawDice(window);
+}
+
+bool Ludo::Move(int indx,int DiceIndx)
+{
+	int ir = B->getPiece(indx)->getInitialRow();
+	int ic = B->getPiece(indx)->getInitialCol();
+	int curr_r = B->getPiece(indx)->GetRow();
+	int curr_c = B->getPiece(indx)->GetCol();
+
+	if (Ds[DiceIndx]->getDiceValue() == 6 && ir==curr_r && ic == curr_c)
+	{
+		B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38, B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
+		B->getPiece(indx)->setCellIndex(B->getHome(Turn)->getInitialPos());
+	//---------------------------------setting row col of piece
+		 B->getPiece(indx)->setRow(B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
+		 B->getPiece(indx)->setCol(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38);
+		 return true;
+	}
+	else if ((ir != curr_r || ic != curr_c))
+	{
+		
+		int NewCell_indx = B->getPiece(indx)->getCellIndex() + Ds[DiceIndx]->getDiceValue();
+		if (NewCell_indx > 89)
+			NewCell_indx -= 90;
+		B->getPiece(indx)->setCellIndex(NewCell_indx);
+		B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);
+		return true;
+	}
+	return false;
+}
+
+bool Ludo::clickedDice()
+{
+	if (dice->isClicked(sri,sci))
+		return true;
+	return false;
+}
+
+bool Ludo::canMove()
+{
+	bool AllatHomee = true;
+	bool Sixspotted = false;
+	for (int i = Turn * 4; i < (Turn * 4) + 4; i++)
+	{
+		int init_r = B->getPiece(i)->getInitialRow();
+		int init_c = B->getPiece(i)->getInitialCol();
+		int Curr_r = B->getPiece(i)->GetRow();
+		int Curr_c = B->getPiece(i)->GetCol();
+		
+		if (init_r != Curr_r || init_c != Curr_c)
+			AllatHomee = false;
+	}
+	for (int j = 0; j < 3; j++)
+	{
+		if (Ds[j]->getDiceValue() == 6)
+			Sixspotted = true;
+	}
+
+
+	if ((AllatHomee) && (!Sixspotted))
+		return false;
+	 return true;
+
+	//if (!Ps[Turn]->canMove() && Ds[0]->getDiceValue() == 6)
+	//{
+	//	Ps[Turn]->setCanMove(true);
+	//	return true;
+	//}
+	//else if (Ps[Turn]->canMove())
+	//	return true;
+	//else
+	//	return false;
+}
+
+void Ludo::selectDiceValue(int& DiceIndx)
+{
+	cout << "Entered Select Value\n";
+	//bool breakAll = false;
+	//while (window.isOpen())
+	//{
+	//
+	//	sf::Event event;
+	//	while (window.pollEvent(event))
+	//	{
+	//		if (event.type == sf::Event::Closed)
+	//			window.close();
+	//		if (event.type == Event::MouseButtonPressed)
+	//		{
+	//			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+	//			sri = mousePos.y;
+	//			sci = mousePos.x;
+
+	//
+	//			for (int i = 0; i < 3; i++)
+	//			{
+	//				cout << "Dice value  " << Ds[i]->getDiceValue() << endl;
+	//				if (Ds[i]->isClicked(sri, sci))
+	//				{
+	//					DiceIndx = i;
+	//					breakAll = true;
+	//					break;
+	//					cout << " \n\nValueSelected\n";
+	//				}
+	//			}
+	//		
+	//		
+	//		}
+	//		if (breakAll)break;
+	//	}
+
+	//	if (breakAll)break;
+	//	window.clear();
+	//	B->drawBoard(window);
+	//	DrawDice(window);
+	//	window.display();
+
+	//}
+
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Dice value  " << Ds[i]->getDiceValue()<<endl;
+		if (Ds[i]->isClicked(sri, sci))
+		{
+			DiceIndx = i;
+			cout << " \n\nValueSelected\n";
+		}
+	}
+	cout << "sri" << sri << endl;
+	cout << "sci" << sci << endl;
+
+	//if ((sri >= 99 && sri < 200) && (sci >= 1098 && sri < 1200))
+	//{
+	//	DiceIndx = 0;
+	//}
+	//else if ((sri >= 99 && sri < 200) && (sri >= 1201 && sri < 1303))
+	//{
+	//	DiceIndx = 1;
+	//}
+	//else if ((sri >= 99 && sri < 200) && (sri >= 1304 && sri < 1406))
+	//{
+	//	DiceIndx = 2;
+	//}
+
+
+	cout << "Exit Selected Value\n";
+
+
+
+//void Ludo::play(sf::RenderWindow& window)
+//{
+//	int indx = -1;
+//	int DiceIndx = 0;
+//	bool selected = false;
+//	bool diceRolled = false;
+//	int di = 0;
+//	bool canSelect = false;
+//	while (window.isOpen())
+//	{
+//		sf::Event event;
+//		while (window.pollEvent(event))
+//		{
+//			if (event.type == sf::Event::Closed)
+//				window.close();
+//			if (event.type == Event::MouseButtonPressed)
+//			{
+//				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+//				sri = mousePos.y;
+//				sci = mousePos.x;
+//				selected = true;
+//				if (!canSelect)
+//				{
+//					if (clickedDice())
+//					{
+//						RollDice(window, di);
+//						if (Ds[di]->getDiceValue() != 6)
+//							diceRolled = true, canSelect = true;
+//						else
+//							di++,diceRolled = false;
+//						selected = false;
+//					}
+//				}
+//				else
+//				{
+//					if (diceRolled)
+//					{
+//						selectDiceValue(DiceIndx);
+//						diceRolled = false;
+//						selected = false;
+//					}
+//					if (selected)
+//					{
+//						if (canMove())
+//						{
+//							if (isValidSc(indx))
+//							{
+//								//B->getPiece(indx)->setPosition(B->getHome(Turn)->getInitialPos());
+//								//B->setCellColor(B->getHome(Turn)->getSafeSpot());
+//								//RollDice(window);
+//								Move(indx, DiceIndx);
+//								turnChange();
+//								selected = false;
+//								indx = -1;
+//								di = 0;
+//							}
+//						}
+//						else
+//						{
+//							turnChange();
+//							selected = false;
+//							indx = -1;
+//							di = 0;
+//						}
+//					}
+//				}
+//			}
+//		}
+//		window.clear();
+//		B->drawBoard(window);
+//		DrawDice(window);
+//		window.display();
+//	}
+//}
+}
+bool Ludo::DiceIsEmpty()
 {
 	
-	B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()), B->getCellRow(B->getHome(Turn)->getInitialPos()));
-
+	if ((Ds[0]->getDiceValue() == 0) && (Ds[1]->getDiceValue() == 0) && (Ds[2]->getDiceValue() == 0))
+		return true;
+	return false;
 }
-
+void Ludo::EraseDice()
+{
+	Ds[0] = 0; Ds[1] = 0; Ds[2] = 0;
+}
 void Ludo::play(sf::RenderWindow& window)
 {
 	int indx = -1;
+	int DiceIndx = 0;
 	bool selected = false;
+	bool diceRolled = false;
+	int di = 0;
+	bool canSelect = false;
+	bool rollingDice = true;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -113,38 +353,131 @@ void Ludo::play(sf::RenderWindow& window)
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == Event::MouseButtonPressed)
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-			/*	sri = mousePos.y+40;
-				sci = mousePos.x+40;
-			*/
-				sri = mousePos.y ;
+				sri = mousePos.y;
 				sci = mousePos.x;
-				selected = true;
-
-			
-			}
-			if (selected)
-			{
-				if (isValidSc(indx))
+				if (rollingDice)
 				{
-					//B->getPiece(indx)->setPosition(B->getHome(Turn)->getInitialPos());
-					//B->setCellColor(B->getHome(Turn)->getSafeSpot());
-					Move(indx);
-					turnChange();
-					selected = false;
-					indx = -1;
+					cout << "rollingDice\n";
+					if (clickedDice())
+					{
+						cout << "isclickedDice\n";
+						RollDice(window, di);
+
+						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
+
+						if (Ds[di]->getDiceValue() == 6 && di != 2)
+						{
+							cout << "di++\n";
+							di++;
+						}
+						else
+						{
+							cout << "no ++\n";
+							rollingDice = false, diceRolled = true;
+						}
+					}
 				}
-				
 			
+			if (diceRolled)
+			{
+				cout << "ifDiceRolled\n";
+				selectDiceValue(DiceIndx);
+				if (canMove())
+				{
+					cout << "canMOve\n";
+
+					if (isValidSc(indx))
+					{
+						Move(indx, DiceIndx);
+						Ds[DiceIndx]->setDiceValue(0);
+						if (DiceIsEmpty())
+						{
+							turnChange();
+							di = 0;
+							rollingDice = true;
+							diceRolled = false;
+						}
+					}
+				}
+				else
+				{
+					cout << "CanNotMove\n";
+					turnChange();
+					di = 0;
+					rollingDice = true;
+					diceRolled = false;
+					//EraseDice();
+				}
 			}
+
 			
+
+			/*	if (diceRolled)
+				{
+					if (DiceIsEmpty())
+					{
+						diceRolled = false;
+						rollingDice = true;
+						canSelect = false;
+					}
+					if (!canMove())
+					{
+						cout << "cannotMove\n";
+						diceRolled = false;
+						rollingDice = true;
+						turnChange();
+						di = 0;
+					}
+					else
+					{
+						cout << "CanMove\n";
+						if (!DiceIsEmpty())
+							cout << "Dice index Before " << DiceIndx<<endl;
+						selectDiceValue(DiceIndx, window);
+						cout << "Dice index After " << DiceIndx<< endl;
+						diceRolled = false;
+						canSelect = true;
+					}
+				}
+
+				if (canSelect)
+				{
+					cout << "Entered CanSelect\n";
+					if (isValidSc(indx))
+					{
+						cout << "isValidSource\n";
+
+						if (Move(indx, DiceIndx))
+							Ds[DiceIndx]->setDiceValue(0);
+
+						if (!DiceIsEmpty())
+						{
+							diceRolled = true;
+						}
+						else
+						{
+							turnChange();
+							canSelect = false;
+							diceRolled = false;
+							rollingDice = true;
+						}
+					}
+					else if(DiceIsEmpty())
+					{
+						turnChange();
+						canSelect = false;
+						diceRolled = false;
+						rollingDice = true;
+					}
+				}*/
+			}
 		}
-
-
 		window.clear();
 		B->drawBoard(window);
+		DrawDice(window);
 		window.display();
 	}
 }
