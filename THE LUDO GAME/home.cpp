@@ -5,10 +5,11 @@
 using namespace sf;
 using namespace std;
 
-home::home(istream& rdr, int IP, int SP,Color _C,string fileName,int pic_c,int pic_r)
+home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName,int pic_c,int pic_r)
 {
 	this->InitialPos = IP;
 	this->SafeSpot = SP;
+	this->TurningPos = TP;
 	this->C = _C;
 		
 
@@ -75,6 +76,12 @@ bool home::IsInitSpot(int indx)
 		return true;
 	return false;
 }
+bool home::IsTurningSpot(int indx)
+{
+	if (indx == TurningPos)
+		return true;
+	return false;
+}
 sf::Color home::getHOmeColor()
 {
 	return this->C;
@@ -95,5 +102,22 @@ bool home::clickedHomePiece(int ri,int ci,int& pi)
 		if (Circles[i].getLocalBounds().contains(ri, ci));
 	}
 	return 0;//
+}
+
+bool home::isHomeCell(int r, int c)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (Cs[i]->getRow() == r && Cs[i]->getCol() == c)
+			return true;
+	}
+	return false;
+}
+
+void home::HomeCellPos(int i,int& r, int& c)
+{
+	r = Cs[i]->getRow();
+	c = Cs[i]->getCol();
+	//r = ri, c = ci;
 }
 

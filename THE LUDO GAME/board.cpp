@@ -23,12 +23,12 @@ board::board()
 	ifstream rdr("Cells.txt");
 	
 	Hs = new home*[6];
-	Hs[0] = new home(rdr, 3,88,maroon, "Player1_bg.png",-15,15);
-	Hs[1] = new home(rdr,16,11,purple,"elephantfront.png",350,15);
-	Hs[2] = new home(rdr, 35,30,dark_green, "tiger2.png",720,15);
-	Hs[3] = new home(rdr, 48,43,golden_yellow, "shark.png",720,380);
-	Hs[4] = new home(rdr, 61,56,dark_grey, "lionC.png",350,385);
-	Hs[5] = new home(rdr,80,75,navy_blue,"p2.png", -35, 395);
+	Hs[0] = new home(rdr, 3,88,1,maroon, "Player1_bg.png",-15,15);
+	Hs[1] = new home(rdr,16,11,14,purple,"elephantfront.png",350,15);
+	Hs[2] = new home(rdr, 35,30,33,dark_green, "tiger2.png",720,15);
+	Hs[3] = new home(rdr, 48,43,46,golden_yellow, "shark.png",720,380);
+	Hs[4] = new home(rdr, 61,56,59,dark_grey, "lionC.png",350,385);
+	Hs[5] = new home(rdr,80,75,78,navy_blue,"p2.png", -35, 395);
 
 	int j = 0; bool clrHai = false;
 	Cs = new Cell * [90];

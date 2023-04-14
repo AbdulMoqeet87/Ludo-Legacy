@@ -20,7 +20,8 @@ private:
 public:
 	Ludo();
 	void turnChange();
-	bool isValidSc(int &indx);
+	bool isValidSc(int &indx, int DiceIndx);
+	//bool isValidSc(int &indx);
 	void play(sf::RenderWindow& window);
 	void RollDice(sf::RenderWindow& window, int di);
 	void DrawDice(sf::RenderWindow& window);
