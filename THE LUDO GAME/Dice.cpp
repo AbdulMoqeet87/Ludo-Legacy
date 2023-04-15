@@ -138,7 +138,7 @@ void Dice::drawDice(RenderWindow& window)
 	}
 	TexPic.loadFromFile(filename);
 	D.setTexture(TexPic);
-	D.setScale(0.2, 0.2);
+	D.setScale(0.15, 0.15);
 	D.setPosition(ri, ci);
 	//dice.setSize(Vector2f(100, 100));
 	window.draw(D);

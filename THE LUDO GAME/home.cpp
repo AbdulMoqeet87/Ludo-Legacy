@@ -16,7 +16,7 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName,int pic_
 	rdr >> ci >> ri;
 	Background = new Cell(ri, ci, 235,_C);
 	Background->setOutlSize(5);
-	Background->setOutlClr(sf::Color::Blue);
+	Background->setOutlClr(sf::Color::White);
 	//sf::Texture Tex;
 	Tex.loadFromFile(fileName);
 	Pic.setTexture(Tex);
@@ -121,3 +121,12 @@ void home::HomeCellPos(int i,int& r, int& c)
 	//r = ri, c = ci;
 }
 
+void home::HighlightHome()
+{
+	this->Background->setOutlClr(sf::Color::Green);
+}
+void home::UnHighlightHome()
+{
+	this->Background->setOutlClr(sf::Color::White);
+
+}

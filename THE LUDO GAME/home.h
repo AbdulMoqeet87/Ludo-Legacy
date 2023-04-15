@@ -36,5 +36,8 @@ public:
 	bool clickedHomePiece(int ri, int ci, int& pi);
 	bool isHomeCell(int r, int c);
 	void HomeCellPos(int i, int& r, int& c);
+	void HighlightHome();
+	void UnHighlightHome();
+
 };
 

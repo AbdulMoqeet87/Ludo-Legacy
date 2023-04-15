@@ -30,11 +30,11 @@ Ludo::Ludo()
 	Ps[4] = new player("Minahil", dark_grey);
 	Ps[5] = new player("Fahira", navy_blue);
 	B = new board();
-	dice = new Dice(1150, 500);
+	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
-	Ds[0] = new Dice(1098, 100);
-	Ds[1] = new Dice(1201, 100);
-	Ds[2] = new Dice(1304, 100);
+	Ds[0] = new Dice(1070, 180);
+	Ds[1] = new Dice(1160, 180);
+	Ds[2] = new Dice(1250, 180);
 	Turn = 0;
 	sri = 0, sci = 0;
 }
@@ -421,11 +421,12 @@ void Ludo::play(sf::RenderWindow& window)
 					cout << "rollingDice\n";
 					if (clickedDice())
 					{
+						B->getHome(Turn)->HighlightHome();
 						cout << "isclickedDice\n";
-						int s = 0;
-						cin >> s;
-						//RollDice(window, di);
-						Ds[di]->setDiceValue(s);
+						//int s = 0;
+						//cin >> s;
+						RollDice(window, di);
+						//Ds[di]->setDiceValue(s);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
@@ -456,6 +457,8 @@ void Ludo::play(sf::RenderWindow& window)
 							Ds[DiceIndx]->setDiceValue(0);
 							if (DiceIsEmpty())
 							{
+								B->getHome(Turn)->UnHighlightHome();
+
 								turnChange();
 								di = 0;
 								rollingDice = true;
@@ -467,6 +470,7 @@ void Ludo::play(sf::RenderWindow& window)
 					else
 					{
 						cout << "CanNotMove\n";
+						B->getHome(Turn)->UnHighlightHome();
 						turnChange();
 						di = 0;
 						rollingDice = true;
