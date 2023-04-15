@@ -87,7 +87,7 @@ Dice::Dice(int r, int c)
 	TextureSize.y /= 3;
 }
 
-void Dice::rollDice(board* B, RenderWindow& window, Sprite BG)
+void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
 {
 	srand(time(0));
 	this->DiceValue = rand() % 6 + 1;
@@ -106,7 +106,7 @@ void Dice::rollDice(board* B, RenderWindow& window, Sprite BG)
 			dice.setTextureRect(IntRect(TextureSize.x * c, TextureSize.y * r, TextureSize.x, TextureSize.y));
 			window.draw(BG);
 			window.draw(dice);
-			B->drawBoard(window);
+			B->drawBoard(window, NOP);
 			window.display();
 		}
 	}

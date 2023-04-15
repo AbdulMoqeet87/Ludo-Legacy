@@ -17,7 +17,7 @@ private:
 public:
 	Dice(int r, int c);
 	int getDiceValue();
-	void rollDice(board* B, RenderWindow& window,Sprite BG);
+	void rollDice(board* B, RenderWindow& window,Sprite BG,int NOP);
 	void drawDice(RenderWindow& window);
 	void setDiceValue(int d);
 	bool isClicked(int ri, int ci);

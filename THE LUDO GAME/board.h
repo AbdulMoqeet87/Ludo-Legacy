@@ -12,13 +12,13 @@ class board
 		home** Hs;
 		piece** Ps;
 	public:
-		board();
+		board(int NOP);
 		//piece* getPiece(int ri,int ci);
 		piece* getPiece(int indx);
-		void drawBoard(sf::RenderWindow& window);
+		void drawBoard(sf::RenderWindow& window, int NOP);
 		bool isValidMove(int sri, int sci);
 		void Move(int sri, int sci,int DValue);
-		void drawHome(sf::RenderWindow& window);
+		void drawHome(sf::RenderWindow& window, int NOP);
 		void setPiece(piece* P, int i);
 		home* getHome(int i);
 		void setCellColor(int ind);
