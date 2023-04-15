@@ -65,6 +65,10 @@ bool Cell::isClicked(int ri, int ci)
     return Rec.getLocalBounds().contains(ci, ri);
 
 }
+void Cell::setFill_Cl(sf::Color C)
+{
+    this->Rec.setFillColor(C);
+}
 //piece* Cell::getPiece()
 //{
 //    return P;

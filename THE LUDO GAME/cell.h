@@ -27,5 +27,6 @@ public:
 	bool isClicked(int ri, int ci);
 	void setPiece(piece* NP);
 	piece* getPiece();
+	void setFill_Cl(sf::Color c);
 };
 

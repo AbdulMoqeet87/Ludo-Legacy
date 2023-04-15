@@ -5,9 +5,9 @@
 using namespace sf;
 using namespace std;
 
-
+class board;
 class Cell;
-
+class Ludo;
 class home
 {
 private:
@@ -22,6 +22,8 @@ private:
 	Sprite Pic;
 	Texture Circ;
 	Sprite* Circles;
+	sf::ConvexShape Arrow;
+	bool hasKilled;
 public:
 	home(istream& rdr, int IP, int SP, int TP, Color _C, string FileName, int pc, int pr);
 	void Draw(RenderWindow& window);
@@ -38,6 +40,7 @@ public:
 	void HomeCellPos(int i, int& r, int& c);
 	void HighlightHome();
 	void UnHighlightHome();
+	void Blink(sf::RenderWindow &window,board *b,Ludo *L);
 
 };
 

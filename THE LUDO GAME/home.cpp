@@ -1,17 +1,32 @@
 #include "home.h"
+#include "board.h"
+#include "Ludo.h"
 #include"cell.h"
 #include<SFML/Graphics.hpp>
 #include<string>
+#include<iostream>
 using namespace sf;
 using namespace std;
 
 home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName,int pic_c,int pic_r)
 {
+	sf::Color greyish_green(64, 96, 64);
+	sf::Color dark_yellow(153, 153, 0);
+	sf::Color dark_green(0, 100, 0);
+	sf::Color maroon(128, 0, 0);
+	sf::Color navy_blue(0, 0, 128);
+	sf::Color mustard(204, 187, 68);
+	sf::Color metallic_grey(139, 139, 131);
+	sf::Color dark_grey(64, 64, 64);
+	sf::Color golden_yellow(255, 215, 0);
+	sf::Color more_yellowish_yellow(255, 255, 51);
+	sf::Color purple(128, 0, 128);
+	//--------------------------------
 	this->InitialPos = IP;
 	this->SafeSpot = SP;
 	this->TurningPos = TP;
 	this->C = _C;
-		
+	this->hasKilled = false;
 
 	rdr >> ci >> ri;
 	Background = new Cell(ri, ci, 235,_C);
@@ -30,13 +45,68 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName,int pic_
 	Circ.loadFromFile("WhiteCircle.png");
 	Circles = new Sprite[4];
 	for(int i=0;i<4;i++)
-	Circles[i].setTexture(Circ);
-		
-	
+	Circles[i].setTexture(Circ);	
+	//-----------------------------------
 	Circles[0].setPosition(ci + 53, ri + 52);
 	Circles[1].setPosition(ci + 213, ri + 52);
 	Circles[2].setPosition(ci + 53, ri + 213);
 	Circles[3].setPosition(ci + 213, ri + 213);
+//------------------------------------------
+	Arrow.setPointCount(3);
+	if(C==maroon)
+	{
+		int r =Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c+10, r+10));
+		Arrow.setPoint(1, sf::Vector2f(c+30, r+20));
+		Arrow.setPoint(2, sf::Vector2f(c+10, r+30));
+		Arrow.setFillColor(maroon);
+		Arrow.setPosition(0, 40);
+	}
+	else if(C==purple)
+	{
+		int r =Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c+10, r+10));
+		Arrow.setPoint(1, sf::Vector2f(c+20, r+30));
+		Arrow.setPoint(2, sf::Vector2f(c+30, r+10));
+		Arrow.setFillColor(purple);
+		Arrow.setPosition(40, 0);
+	}
+	else if(C==dark_green)
+	{
+		int r = Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c + 10, r + 10));
+		Arrow.setPoint(1, sf::Vector2f(c + 20, r + 30));
+		Arrow.setPoint(2, sf::Vector2f(c + 30, r + 10));
+		Arrow.setFillColor(dark_green);
+		Arrow.setPosition(40, 0);
+	}
+	else if(C==golden_yellow)
+	{
+		int r =Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c+30, r+10));
+		Arrow.setPoint(1, sf::Vector2f(c+10, r+20));
+		Arrow.setPoint(2, sf::Vector2f(c+30, r+30));
+		Arrow.setFillColor(golden_yellow);
+		Arrow.setPosition(80, 40);
+	}
+	else if(C==dark_grey)
+	{
+		int r =Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c+10, r+30));
+		Arrow.setPoint(1, sf::Vector2f(c+20, r+10));
+		Arrow.setPoint(2, sf::Vector2f(c+30, r+30));
+		Arrow.setFillColor(dark_green);
+		Arrow.setPosition(40, 80);
+	}
+	else if (C == navy_blue)
+	{
+		int r = Cs[0]->getRow(), c = Cs[0]->getCol();
+		Arrow.setPoint(0, sf::Vector2f(c + 10, r + 30));
+		Arrow.setPoint(1, sf::Vector2f(c + 20, r + 10));
+		Arrow.setPoint(2, sf::Vector2f(c + 30, r + 30));
+		Arrow.setFillColor(navy_blue);
+		Arrow.setPosition(40, 80);
+	}
 }
 
 int home::getSafeSpot()
@@ -61,7 +131,8 @@ void home::Draw(RenderWindow& window)
 	{
 		Cs[i]->Draw(window);
 	}
-
+	if (hasKilled)
+		window.draw(Arrow);
 }
 
 bool home::IsSafeSpot(int indx)
@@ -128,5 +199,64 @@ void home::HighlightHome()
 void home::UnHighlightHome()
 {
 	this->Background->setOutlClr(sf::Color::White);
+
+}
+
+void home::Blink(sf::RenderWindow & window,board *b,Ludo *L)
+{
+	if(!hasKilled)
+	{
+		int j = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			window.clear();
+			if (i % 2 == 0)
+				Cs[j]->setFill_Cl(sf::Color::Green);
+			else
+			{
+				Cs[j]->setFill_Cl(this->C);
+				j++;
+			}
+			sleep(sf::seconds(0.02));
+			window.clear();
+			b->drawBoard(window);
+			L->DrawDice(window);
+			window.display();
+
+		}
+		j--;
+		for (int i = 0; i < 10; i++)
+		{
+			window.clear();
+			if (i % 2 == 0)
+				Cs[j]->setFill_Cl(sf::Color::Green);
+			else
+			{
+				Cs[j]->setFill_Cl(this->C);
+				j--;
+			}
+			sleep(sf::seconds(0.02));
+			window.clear();
+			b->drawBoard(window);
+			L->DrawDice(window);
+			window.display();
+		}
+		hasKilled = true;
+		for (int i = 0; i < 10; i++)
+		{
+			window.clear();
+			if (i % 2 == 0)
+				Arrow.setFillColor(sf::Color::Green);
+			else
+				Arrow.setFillColor(C);
+			sleep(sf::seconds(0.02));
+			window.clear();
+			b->drawBoard(window);
+			L->DrawDice(window);
+			window.display();
+		}
+	}
+	
+
 
 }

@@ -117,7 +117,7 @@ void Ludo::DrawDice(sf::RenderWindow& window)
 	dice->drawDice(window);
 }
 
-void Ludo::Move(int indx, int DiceIndx)
+void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 {
 	bool canEnterHome = false;
 	int enterHomeAt = 0, HomeCellri, HomeCellci;
@@ -131,6 +131,7 @@ void Ludo::Move(int indx, int DiceIndx)
 
 	if (Ds[DiceIndx]->getDiceValue() == 6 && B->getPiece(indx)->atIntialPos(curr_r, curr_c))//ir==curr_r && ic == curr_c)
 	{
+		
 		B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38, B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
 		B->getPiece(indx)->setCellIndex(B->getHome(Turn)->getInitialPos());
 		//---------------------------------setting row col of piece
@@ -173,14 +174,35 @@ void Ludo::Move(int indx, int DiceIndx)
 			B->getHome(Turn)->HomeCellPos(Ds[DiceIndx]->getDiceValue() - enterHomeAt - 1, HomeCellri, HomeCellci);
 			B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			B->getPiece(indx)->setCellIndex((Ds[DiceIndx]->getDiceValue() - enterHomeAt) + 90);
+		
 		}
 		else
 		{
-			int NewCell_indx = B->getPiece(indx)->getCellIndex() + Ds[DiceIndx]->getDiceValue();
-			if (NewCell_indx > 89)
-				NewCell_indx -= 90;
+			int NewCell_indx = B->getPiece(indx)->getCellIndex()+ Ds[DiceIndx]->getDiceValue();
+	/*		if (NewCell_indx > 89)
+				NewCell_indx -= 90;*/
+			
+
+			for (int ci = B->getPiece(indx)->getCellIndex(); ci <= NewCell_indx; ci++)
+			{
+				cout << "entered Move Loop\n";
+				if(ci>89)
+				{			
+					ci = 0;
+					NewCell_indx -= 90;
+				}
+				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
+				window.clear();
+				B->drawBoard(window);
+				DrawDice(window);
+				window.display();
+				sleep(sf::seconds(0.04));
+			}
 			B->getPiece(indx)->setCellIndex(NewCell_indx);
-			B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);
+			
+			
+			
+			//B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);
 			
 			//-----Checking for safe spot
 			for (int i = 0; i < 6; i++)
@@ -203,6 +225,7 @@ void Ludo::Move(int indx, int DiceIndx)
 							Ps[Turn]->setHasKilled(true);
 							B->getPiece(i)->setPosition(B->getPiece(i)->getInitialCol(), B->getPiece(i)->getInitialRow());
 							B->getPiece(i)->setCellIndex(-1);
+							B->getHome(Turn)->Blink(window,B,this);
 							break;
 						}
 					}
@@ -467,6 +490,7 @@ void Ludo::play(sf::RenderWindow& window)
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			B->getHome(Turn)->HighlightHome();
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -477,10 +501,9 @@ void Ludo::play(sf::RenderWindow& window)
 					cout << "rollingDice\n";
 					if (clickedDice())
 					{
-						B->getHome(Turn)->HighlightHome();
 						cout << "isclickedDice\n";
-						//int s = 0;
-						//cin >> s;
+						/*int s = 0;
+						cin >> s;*/
 						RollDice(window, di);
 						//Ds[di]->setDiceValue(s);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
@@ -509,7 +532,7 @@ void Ludo::play(sf::RenderWindow& window)
 
 						if (isValidSc(indx, DiceIndx))
 						{
-							Move(indx, DiceIndx);
+							Move(indx, DiceIndx,window);
 							indx = -1;
 							Ds[DiceIndx]->setDiceValue(0);
 							if (DiceIsEmpty())
@@ -606,6 +629,7 @@ void Ludo::play(sf::RenderWindow& window)
 			//window.display();
 			sleep(seconds(1));
 			EraseDice();
+			B->getHome(Turn)->UnHighlightHome();
 			turnChange();
 			di = 0;
 			rollingDice = true;
