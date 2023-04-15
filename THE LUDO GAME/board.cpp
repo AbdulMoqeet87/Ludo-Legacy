@@ -23,12 +23,12 @@ board::board()
 	ifstream rdr("Cells.txt");
 	
 	Hs = new home*[6];
-	Hs[0] = new home(rdr, 3,88,1,maroon, "Player1_bg.png",-15,15);
-	Hs[1] = new home(rdr,16,11,14,purple,"elephantfront.png",350,15);
-	Hs[2] = new home(rdr, 35,30,33,dark_green, "tiger2.png",720,15);
-	Hs[3] = new home(rdr, 48,43,46,golden_yellow, "shark.png",720,380);
-	Hs[4] = new home(rdr, 61,56,59,dark_grey, "lionC.png",350,385);
-	Hs[5] = new home(rdr,80,75,78,navy_blue,"p2.png", -35, 395);
+	Hs[0] = new home(rdr, 3,88,1,maroon, "Wolf_White.png","Wolf_Green.png", -15, 15);
+	Hs[1] = new home(rdr,16,11,14,purple,"Eleph_White.png","Eleph_green.png", 350, 15);
+	Hs[2] = new home(rdr, 35,30,33,dark_green, "tiger2.png", "tiger2.png",720,15);
+	Hs[3] = new home(rdr, 48,43,46,golden_yellow, "shark.png", "TheGreeShark.png",720,380);
+	Hs[4] = new home(rdr, 61,56,59,dark_grey, "Lion_White.png","Lion_Green.png", 350, 385);
+	Hs[5] = new home(rdr,80,75,78,navy_blue,"p2.png", "GreenHorse_.png", -35, 395);
 
 	int j = 0; bool clrHai = false;
 	Cs = new Cell * [90];
@@ -101,8 +101,10 @@ board::board()
 	}
 	/*Ps[1]->setCellIndex(86);
 	Ps[1]->setPosition(Cs[86]->getCol() + 38, Cs[86]->getRow() + 42);
-	Ps[5]->setCellIndex(88);
-	Ps[5]->setPosition(Cs[88]->getCol() + 38, Cs[88]->getRow() + 42);*/
+	Ps[5]->setCellIndex(12);
+	Ps[5]->setPosition(Cs[12]->getCol() + 38, Cs[12]->getRow() + 42);
+	Ps[6]->setCellIndex(89);
+	Ps[6]->setPosition(Cs[89]->getCol() + 38, Cs[89]->getRow() + 42);*/
 }
 
 void board::drawBoard(sf::RenderWindow& window)

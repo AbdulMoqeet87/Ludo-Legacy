@@ -13,12 +13,16 @@ private:
 	Dice* dice;
 	Dice* Ds[3];
 	board* B;
-	player* Ps[6];
+	player** Ps;
+	int NOP;
 	int Turn;
 	int sri;
 	int sci;
+	sf::Sprite BackG;
+	sf::Texture BG;
 public:
 	Ludo();
+	Ludo(int _NOP);
 	void turnChange();
 	bool isValidSc(int &indx, int DiceIndx);
 	//bool isValidSc(int &indx);
