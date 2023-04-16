@@ -92,15 +92,15 @@ Ludo::Ludo(int _NOP)
 	//WinPs.push_back(Ps[0]);
 	//Ps[1]->setHasKilled(true);
 	//Ps[1]->setIsWin(true);
-	S = new sf::SoundBuffer[2];
-	sounds = new sf::Sound[2];
+	S = new sf::SoundBuffer[3];
+	sounds = new sf::Sound[3];
 	S[0].loadFromFile("PunchSound.wav");
 	sounds[0].setBuffer(S[0]);
 	
 	S[1].loadFromFile("OhYeah.wav");
 	sounds[1].setBuffer(S[1]);
-
-
+	S[2].loadFromFile("pop.wav");
+	sounds[2].setBuffer(S[2]);
 
 	B = new board(NOP);
 	dice = new Dice(1140, 500);
@@ -109,7 +109,7 @@ Ludo::Ludo(int _NOP)
 	Ds[1] = new Dice(1160, 180);
 	Ds[2] = new Dice(1250, 180);
 
-	Turn = 1;
+	Turn = 0;
 	sri = 0, sci = 0;
 }
 
@@ -219,13 +219,16 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			{
 
 				B->getHome(Turn)->getHomeCellPos(ci - 90 - 1, HomeCellri, HomeCellci);
+				sounds[2].play();
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
 				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.03));
+				sleep(sf::seconds(0.05));
+				sounds[2].stop();
+
 			}
 			B->getHome(Turn)->getHomeCellPos(4, HomeCellri, HomeCellci);
 			B->getPiece(indx)->setPosition(HomeCellci + 78, HomeCellri + 82);
@@ -239,6 +242,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			{
 
 				B->getHome(Turn)->getHomeCellPos(ci - 90 - 1, HomeCellri, HomeCellci);
+				sounds[2].play();
+
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
@@ -246,7 +251,10 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.03));
+
+				sleep(sf::seconds(0.05));
+				sounds[2].stop();
+
 			}
 			//B->getPiece(indx)->setCellIndex(NewCell_indx);
 			B->getPiece(indx)->setCellIndex(Ds[DiceIndx]->getDiceValue() + (B->getPiece(indx)->getCellIndex()));
@@ -279,34 +287,46 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				if (ci > 89)
 					ci = 0,Nind-=90;
 				cout << "Moqeet k dimagh ma \n";
+				sounds[2].play();
+
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
 				window.clear();
 				window.draw(BackG);
 				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.03));
+				sounds[2].stop();
+				sleep(sf::seconds(0.05));
+				sounds[2].stop();
+
 			}
 			cout << "Amna k dimagh k bahir \n";
 			B->getHome(Turn)->getHomeCellPos(0, HomeCellri, HomeCellci);
+			sounds[2].play();
+
 			B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			window.clear();
 			window.draw(BackG);
 			B->drawBoard(window, NOP);
 			DrawDice(window);
 			window.display();
-			sleep(sf::seconds(0.03));
+			sleep(sf::seconds(0.05));
+			sounds[2].stop();
 			for (int ci = 92 ; ci <= (Ds[DiceIndx]->getDiceValue() - enterHomeAt) + 90; ci++)
 			{
 
 				B->getHome(Turn)->getHomeCellPos(ci - 90 - 1, HomeCellri, HomeCellci);
+			
+				sounds[2].play();
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
 				B->drawBoard(window,NOP);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.03));
+				sleep(sf::seconds(0.05));
+				sounds[2].stop();
+
 			}
 			//B->getPiece(indx)->setCellIndex(NewCell_indx);
 			B->getPiece(indx)->setCellIndex((Ds[DiceIndx]->getDiceValue() - enterHomeAt) + 90);
@@ -325,6 +345,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 					ci = 0;
 					NewCell_indx -= 90;
 				}
+				sounds[2].play();
+
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
 				
 				window.clear();
@@ -332,7 +354,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->drawBoard(window,NOP);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.03));
+				sleep(sf::seconds(0.05));
+				sounds[2].stop();
 			}
 			B->getPiece(indx)->setCellIndex(NewCell_indx);
 			
@@ -706,10 +729,10 @@ void Ludo::play(sf::RenderWindow& window)
 					if (clickedDice())
 					{
 						cout << "isclickedDice\n";
-						int s = 0;
+						/*int s = 0;
 						cin >> s;
-						Ds[di]->setDiceValue(s);
-						//RollDice(window, di);
+						Ds[di]->setDiceValue(s);*/
+						RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)

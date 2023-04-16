@@ -14,6 +14,8 @@ private:
 	RectangleShape dice;
 	Texture TexPic;
 	Sprite D;
+	SoundBuffer DR;
+	Sound DiceRoll;
 	Vector2u TextureSize;
 	int ri, ci;
 public:

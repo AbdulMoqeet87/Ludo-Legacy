@@ -85,6 +85,8 @@ Dice::Dice(int r, int c)
 	TextureSize = Tex.getSize();
 	TextureSize.x /= 3;
 	TextureSize.y /= 3;
+	DR.loadFromFile("DiceRoll.wav");
+	DiceRoll.setBuffer(DR);
 }
 
 void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
@@ -92,6 +94,7 @@ void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
 	srand(time(0));
 	this->DiceValue = rand() % 6 + 1;
 	//int r= rand() % 4;
+	DiceRoll.play();
 	for (int r = 0; r < 3; r++)
 	{
 		for (int c = 0; c < 3; c++)

@@ -36,7 +36,7 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 	//sf::Texture Tex;
 	GU.loadFromFile("GateUnlocked_.wav");
 	GateUnlocked.setBuffer(GU);
-U.loadFromFile("UfoSound.wav");
+	U.loadFromFile("UfoSound.wav");
 	ufo.setBuffer(U);
 	Tex.loadFromFile(fileName1);
 	Tex2.loadFromFile(fileName2);
