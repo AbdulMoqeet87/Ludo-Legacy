@@ -600,10 +600,10 @@ void Ludo::play(sf::RenderWindow& window)
 					if (clickedDice())
 					{
 						cout << "isclickedDice\n";
-						int s = 0;
-						cin >> s;
-						Ds[di]->setDiceValue(s);
-						//RollDice(window, di);
+						//int s = 0;
+						//cin >> s;
+						//Ds[di]->setDiceValue(s);
+						RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)

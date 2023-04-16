@@ -25,7 +25,7 @@ board::board()
 	Hs = new home*[6];
 	Hs[0] = new home(rdr, 3,88,1,maroon, "Wolf_White.png","Wolf_Green.png", -15, 15);
 	Hs[1] = new home(rdr,16,11,14,purple,"Eleph_White.png","Eleph_green.png", 350, 15);
-	Hs[2] = new home(rdr, 35,30,33,dark_green, "tiger2.png", "tiger2.png",720,15);
+	Hs[2] = new home(rdr, 35,30,33,dark_green, "TheWhiteTiger.png", "TheGreenTiger.png",720,15);
 	Hs[3] = new home(rdr, 48,43,46,golden_yellow, "shark.png", "TheGreeShark.png",720,380);
 	Hs[4] = new home(rdr, 61,56,59,dark_grey, "Lion_White.png","Lion_Green.png", 350, 385);
 	Hs[5] = new home(rdr,80,75,78,navy_blue,"p2.png", "GreenHorse_.png", -35, 395);

@@ -232,6 +232,7 @@ void home::getHomeCellPos(int i,int& r, int& c)
 
 void home::HighlightHome()
 {
+	sf::Color dark_green(0, 100, 0);
 	sf::Color navy_blue(0, 0, 128);
 	sf::Color maroon(128, 0, 0);
 	if (C == navy_blue)
@@ -241,17 +242,19 @@ void home::HighlightHome()
 	Pic.setPosition(pic_c+34 , pic_r+42 );
 	if (C == navy_blue)
 	Pic.setPosition(pic_c+20 , pic_r+24 );
+	if (C == dark_green)
+		Pic.setPosition(pic_c + 36, pic_r + 45);
 	this->Background->setOutlClr(sf::Color::Green);
 }
 void home::UnHighlightHome()
 {
 	sf::Color navy_blue(0, 0, 128);
-
+	sf::Color dark_green(0, 100, 0);
 	if (C == navy_blue)
 		Pic.setScale(0.7, 0.7);
 	sf::Color maroon(128, 0, 0);
 	this->Pic.setTexture(this->Tex);
-	if (C == maroon||C==navy_blue)
+	if (C == maroon||C==navy_blue||C==dark_green)
 	Pic.setPosition(pic_c + 40, pic_r + 40);
 	this->Background->setOutlClr(sf::Color::White);
 }
