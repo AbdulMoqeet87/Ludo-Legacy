@@ -65,7 +65,7 @@ Ludo::Ludo(int _NOP)
 
 	BG.loadFromFile("StarryBack.jpg");
 	BackG.setTexture(BG);
-
+	BackG.setScale(0.7,0.7);
 	Ps = new player * [NOP];
 	if (NOP == 6)
 	{
