@@ -1,7 +1,7 @@
 #pragma once
 #include"board.h"
 #include<SFML/Graphics.hpp>
-
+#include<vector>
 
 class board;
 class player;
@@ -20,6 +20,10 @@ private:
 	int sci;
 	sf::Sprite BackG;
 	sf::Texture BG;
+	std::vector<player*> WinPs;
+	sf::Sprite Win;
+	sf::Texture WinTex;
+
 public:
 	Ludo();
 	Ludo(int _NOP);
@@ -37,5 +41,7 @@ public:
 	void EraseDice();
 	bool AllSix();
 	bool isWin();
+	void DrawWinner(sf::RenderWindow& window);
+	bool GameEnded();
 };
 

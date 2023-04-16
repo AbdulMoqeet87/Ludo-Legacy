@@ -6,6 +6,7 @@
 #include"home.h"
 #include<fstream>
 #include<string>
+//#include<vector>
 using namespace sf;
 using namespace std;
 
@@ -36,7 +37,7 @@ Ludo::Ludo()
 	//Ps[0]->setHasKilled(true);
 	//Ps[1]->setHasKilled(true);
 	//Ps[1]->setIsWin(true);
-	B = new board();
+	B = new board(2);
 	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
 	Ds[0] = new Dice(1070, 180);
@@ -66,16 +67,32 @@ Ludo::Ludo(int _NOP)
 	BackG.setTexture(BG);
 
 	Ps = new player * [NOP];
-	Ps[0] = new player("Amna", maroon);
-	Ps[1] = new player("Moqeet", purple);
-	Ps[2] = new player("Abaid", dark_green);
-	Ps[3] = new player("Mahnoor", golden_yellow);
-	Ps[4] = new player("Minahil", dark_grey);
-	Ps[5] = new player("Fahira", navy_blue);
+	if (NOP == 6)
+	{
+		Ps[0] = new player("Amna", maroon);
+		Ps[1] = new player("Moqeet", purple);
+		Ps[2] = new player("Abaid", dark_green);
+		Ps[3] = new player("Mahnoor", golden_yellow);
+		Ps[4] = new player("Minahil", dark_grey);
+		Ps[5] = new player("Fahira", navy_blue);
+	}
+	else if (NOP == 4)
+	{
+		Ps[0] = new player("Amna", maroon);
+		Ps[1] = new player("Moqeet", dark_green);
+		Ps[2] = new player("Abaid", golden_yellow);
+		Ps[3] = new player("Mahnoor", navy_blue);
+	}
+	else if (NOP == 2)
+	{
+		Ps[0] = new player("Amna", maroon);
+		Ps[1] = new player("Moqeet", golden_yellow);
+	}
 	//Ps[0]->setHasKilled(true);
+	//WinPs.push_back(Ps[0]);
 	//Ps[1]->setHasKilled(true);
-	Ps[1]->setIsWin(true);
-	B = new board();
+	//Ps[1]->setIsWin(true);
+	B = new board(NOP);
 	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
 	Ds[0] = new Dice(1070, 180);
@@ -144,7 +161,7 @@ bool Ludo::isValidSc(int& indx, int DiceIndx)
 
 void Ludo::RollDice(sf::RenderWindow& window, int di)
 {
-	dice->rollDice(B, window,BackG);
+	dice->rollDice(B, window,BackG,NOP);
 	Ds[di]->setDiceValue(dice->getDiceValue());
 	/*if (Ds[di]->getDiceValue() == 6)
 		di++;*/
@@ -195,7 +212,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window);
+				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.03));
@@ -216,7 +233,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				window.clear();
 				window.draw(BackG);
 
-				B->drawBoard(window);
+				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.03));
@@ -255,7 +272,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window);
+				B->drawBoard(window, NOP);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.03));
@@ -265,7 +282,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			window.clear();
 			window.draw(BackG);
-			B->drawBoard(window);
+			B->drawBoard(window, NOP);
 			DrawDice(window);
 			window.display();
 			sleep(sf::seconds(0.03));
@@ -276,7 +293,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window);
+				B->drawBoard(window,NOP);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.03));
@@ -301,7 +318,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window);
+				B->drawBoard(window,NOP);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.03));
@@ -324,7 +341,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			//------Checking if piece is killed
 			if(!isSafeSpot)
 			{
-				for (int i = 0; i < 24; i++)
+				for (int i = 0; i < NOP*4; i++)
 				{
 					if (B->getPiece(i)->getCellIndex() == B->getPiece(indx)->getCellIndex())
 					{
@@ -333,7 +350,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 							Ps[Turn]->setHasKilled(true);
 							B->getPiece(i)->setPosition(B->getPiece(i)->getInitialCol(), B->getPiece(i)->getInitialRow());
 							B->getPiece(i)->setCellIndex(-1);
-							B->getHome(Turn)->Blink(window,B,this,BackG);
+							B->getHome(Turn)->Blink(window,B,this,BackG,NOP);
 							break;
 						}
 					}
@@ -569,7 +586,37 @@ bool Ludo::isWin()
 			return false;
 	}
 	Ps[Turn]->setIsWin(true);
+	WinPs.push_back(Ps[Turn]);
 	return true;
+}
+
+void Ludo::DrawWinner(sf::RenderWindow& window)
+{
+	string fn;
+	for (int i = 0; i < WinPs.size(); i++)
+	{
+		switch (i)
+		{
+		case 0:
+			fn = "first.png";
+			break;
+		/*case 1:
+			fn = "second.png";
+			break;*/
+		}
+		WinTex.loadFromFile(fn);
+		Win.setTexture(WinTex);
+		Win.setScale(0.4, 0.4);
+		Win.setPosition(B->getHome(i)->getCol()+50, B->getHome(i)->getRow()+50);
+		window.draw(Win);
+	}
+}
+
+bool Ludo::GameEnded()
+{
+	if (WinPs.size() == NOP - 2)
+		return true;
+	return false;
 }
 
 void Ludo::play(sf::RenderWindow& window)
@@ -600,9 +647,9 @@ void Ludo::play(sf::RenderWindow& window)
 					if (clickedDice())
 					{
 						cout << "isclickedDice\n";
-						//int s = 0;
-						//cin >> s;
-						//Ds[di]->setDiceValue(s);
+						/*int s = 0;
+						cin >> s;
+						Ds[di]->setDiceValue(s);*/
 						RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
@@ -719,7 +766,8 @@ void Ludo::play(sf::RenderWindow& window)
 		}
 		window.clear();
 		window.draw(BackG);
-		B->drawBoard(window);
+		B->drawBoard(window,NOP);
+		DrawWinner(window);
 		DrawDice(window);
 		window.display();
 		if (AllSix())
@@ -734,6 +782,10 @@ void Ludo::play(sf::RenderWindow& window)
 			rollingDice = true;
 			diceRolled = false;
 			indx = -1;
+		}
+		if (GameEnded())
+		{
+			//some graphics
 		}
 	}
 }

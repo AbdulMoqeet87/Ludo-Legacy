@@ -43,7 +43,7 @@ public:
 	void getHomeCellPos(int i, int& r, int& c);
 	void HighlightHome();
 	void UnHighlightHome();
-	void Blink(sf::RenderWindow& window, board* b, Ludo* L, Sprite BG);
+	void Blink(sf::RenderWindow& window, board* b, Ludo* L, Sprite BG,int NOP);
 
 };
 

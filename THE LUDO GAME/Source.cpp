@@ -297,7 +297,7 @@ int main2()
     
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
-    board B;
+    board B(2);
     while (window.isOpen())
     {
         sf::Event event;
@@ -307,8 +307,8 @@ int main2()
                 window.close();
         }
 
-        B.drawBoard(window);
-        B.drawHome(window);
+        B.drawBoard(window,2);
+        B.drawHome(window,2);
        
         window.display();
     }
@@ -323,8 +323,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
     Dice D(1150, 500);
-    board B;
-    Ludo L;
+    board B(2);
+    Ludo L(4);
     while (window.isOpen())
     {
         sf::Event event;

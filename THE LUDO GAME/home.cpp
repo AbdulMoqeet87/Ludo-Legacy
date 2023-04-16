@@ -259,7 +259,7 @@ void home::UnHighlightHome()
 	this->Background->setOutlClr(sf::Color::White);
 }
 
-void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG)
+void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 {
 	if(!hasKilled)
 	{
@@ -277,7 +277,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG)
 			sleep(sf::seconds(0.02));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window);
+			b->drawBoard(window,NOP);
 			L->DrawDice(window);
 			window.display();
 
@@ -296,7 +296,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG)
 			sleep(sf::seconds(0.02));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window);
+			b->drawBoard(window,NOP);
 			L->DrawDice(window);
 			window.display();
 		}
@@ -311,7 +311,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG)
 			sleep(sf::seconds(0.02));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window);
+			b->drawBoard(window,NOP);
 			L->DrawDice(window);
 			window.display();
 		}
