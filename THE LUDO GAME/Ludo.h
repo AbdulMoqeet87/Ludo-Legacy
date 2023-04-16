@@ -1,6 +1,8 @@
 #pragma once
 #include"board.h"
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
+
 #include<vector>
 
 class board;
@@ -18,6 +20,8 @@ private:
 	int Turn;
 	int sri;
 	int sci;
+	sf::SoundBuffer* S;
+	sf::Sound *sounds;
 	sf::Sprite BackG;
 	sf::Texture BG;
 	std::vector<player*> WinPs;

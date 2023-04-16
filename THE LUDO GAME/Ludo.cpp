@@ -92,6 +92,16 @@ Ludo::Ludo(int _NOP)
 	//WinPs.push_back(Ps[0]);
 	//Ps[1]->setHasKilled(true);
 	//Ps[1]->setIsWin(true);
+	S = new sf::SoundBuffer[2];
+	sounds = new sf::Sound[2];
+	S[0].loadFromFile("PunchSound.wav");
+	sounds[0].setBuffer(S[0]);
+	
+	S[1].loadFromFile("OhYeah.wav");
+	sounds[1].setBuffer(S[1]);
+
+
+
 	B = new board(NOP);
 	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
@@ -99,7 +109,7 @@ Ludo::Ludo(int _NOP)
 	Ds[1] = new Dice(1160, 180);
 	Ds[2] = new Dice(1250, 180);
 
-	Turn = 0;
+	Turn = 1;
 	sri = 0, sci = 0;
 }
 
@@ -185,7 +195,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 	bool isSafeSpot = false;
 	int Temp_indx = B->getPiece(indx)->getCellIndex() - 1;
 	int NewCell_indx = B->getPiece(indx)->getCellIndex() + Ds[DiceIndx]->getDiceValue();
-	//int Temp_indx = indx;
+		//int Temp_indx = indx;
 	//int ir = B->getPiece(indx)->getInitialRow();
 	//int ic = B->getPiece(indx)->getInitialCol();
 	int curr_r = B->getPiece(indx)->GetRow();
@@ -193,7 +203,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 
 	if (Ds[DiceIndx]->getDiceValue() == 6 && B->getPiece(indx)->atIntialPos(curr_r, curr_c))//ir==curr_r && ic == curr_c)
 	{
-		
+		sounds[1].play();
 		B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38, B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
 		B->getPiece(indx)->setCellIndex(B->getHome(Turn)->getInitialPos());
 		//---------------------------------setting row col of piece
@@ -316,6 +326,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 					NewCell_indx -= 90;
 				}
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
+				
 				window.clear();
 				window.draw(BackG);
 				B->drawBoard(window,NOP);
@@ -341,20 +352,68 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			//------Checking if piece is killed
 			if(!isSafeSpot)
 			{
-				for (int i = 0; i < NOP*4; i++)
+				int id=-4;
+				for (int _i = 0; _i < NOP*4; _i++)
 				{
-					if (B->getPiece(i)->getCellIndex() == B->getPiece(indx)->getCellIndex())
+					if (B->getPiece(_i)->getCellIndex() == B->getPiece(indx)->getCellIndex())
 					{
-						if (B->getPiece(i)->getClr() != B->getPiece(indx)->getClr())
+						if (B->getPiece(_i)->getClr() != B->getPiece(indx)->getClr())
 						{
+							 id = _i;
 							Ps[Turn]->setHasKilled(true);
-							B->getPiece(i)->setPosition(B->getPiece(i)->getInitialCol(), B->getPiece(i)->getInitialRow());
-							B->getPiece(i)->setCellIndex(-1);
-							B->getHome(Turn)->Blink(window,B,this,BackG,NOP);
+							sounds[0].play();
 							break;
 						}
 					}
 				}
+			
+			
+				if(Ps[Turn]->hasKilled())
+				{
+					int init_r = B->getPiece(id)->getInitialRow(), init_c = B->getPiece(id)->getInitialCol();
+					for (int kr = B->getPiece(id)->GetRow(), kc = B->getPiece(id)->GetCol(); kr != B->getPiece(id)->getInitialRow() || kc != B->getPiece(id)->getInitialCol();)
+					{
+						//window.clear();
+						B->getPiece(id)->setPosition(kc, kr);
+						if ( abs(kr - init_r) < 20)
+						{
+							if (kr > init_r)
+								kr--; else if (kr < init_r) kr++;
+						}
+						else
+						{
+								if (kr > init_r)
+									kr -= 19; else if (kr < init_r) kr += 19;
+						}
+							
+						if(abs(kc - init_c) < 20)
+						{
+
+							if (kc > init_c)
+								kc--; else if (kc < init_c) kc++;
+						}
+						else
+						{
+
+							if (kc > init_c)
+								kc -= 19; else if (kc < init_c) kc += 19;
+						}
+					
+						window.clear();
+						window.draw(BackG);
+						B->drawBoard(window, NOP);
+						DrawDice(window);
+						window.display();
+						//sleep(sf::seconds(-0.03));
+					}
+
+					B->getPiece(id)->setPosition(B->getPiece(id)->getInitialCol(), B->getPiece(id)->getInitialRow());
+					B->getPiece(id)->setCellIndex(-1);
+					B->getHome(Turn)->Blink(window, B, this, BackG, NOP);
+
+				}
+			
+			
 			}
 		}
 	}
@@ -647,10 +706,10 @@ void Ludo::play(sf::RenderWindow& window)
 					if (clickedDice())
 					{
 						cout << "isclickedDice\n";
-						/*int s = 0;
+						int s = 0;
 						cin >> s;
-						Ds[di]->setDiceValue(s);*/
-						RollDice(window, di);
+						Ds[di]->setDiceValue(s);
+						//RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)

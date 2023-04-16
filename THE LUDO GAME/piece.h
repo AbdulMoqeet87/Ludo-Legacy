@@ -1,6 +1,8 @@
 #pragma once
 #include"utility.h"
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
+
 #include<fstream>;
 #include<iostream>
 using namespace sf;

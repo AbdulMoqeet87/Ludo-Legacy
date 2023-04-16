@@ -1,6 +1,8 @@
 #pragma once
 #include<fstream>
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
+
 #include<string>
 using namespace sf;
 using namespace std;
@@ -24,6 +26,10 @@ private:
 	Sprite Pic;
 	Texture Circ;
 	Sprite* Circles;
+	sf::SoundBuffer GU;
+	sf::Sound GateUnlocked;
+	sf::SoundBuffer U;
+	sf::Sound ufo;
 	sf::ConvexShape Arrow;
 	sf::ConvexShape WinTri;
 	bool hasKilled;

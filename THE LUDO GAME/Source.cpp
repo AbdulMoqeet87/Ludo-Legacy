@@ -1,5 +1,6 @@
 #include<iostream>
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
 #include"board.h"
 #include"Dice.h"
 #include"Ludo.h"
@@ -324,7 +325,7 @@ int main()
     window.setPosition(sf::Vector2i(-10, 0));
     Dice D(1150, 500);
     board B(2);
-    Ludo L(4);
+    Ludo L(6);
     while (window.isOpen())
     {
         sf::Event event;

@@ -34,6 +34,10 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 	Background->setOutlSize(5);
 	Background->setOutlClr(sf::Color::White);
 	//sf::Texture Tex;
+	GU.loadFromFile("GateUnlocked_.wav");
+	GateUnlocked.setBuffer(GU);
+U.loadFromFile("UfoSound.wav");
+	ufo.setBuffer(U);
 	Tex.loadFromFile(fileName1);
 	Tex2.loadFromFile(fileName2);
 	Pic.setTexture(Tex);
@@ -263,6 +267,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 {
 	if(!hasKilled)
 	{
+		ufo.play();
 		int j = 0;
 		for (int i = 0; i < 10; i++)
 		{
@@ -274,7 +279,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 				Cs[j]->setFill_Cl(this->C);
 				j++;
 			}
-			sleep(sf::seconds(0.02));
+			sleep(sf::seconds(0.01));
 			window.clear();
 			window.draw(BG);
 			b->drawBoard(window,NOP);
@@ -293,7 +298,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 				Cs[j]->setFill_Cl(this->C);
 				j--;
 			}
-			sleep(sf::seconds(0.02));
+			sleep(sf::seconds(0.01));
 			window.clear();
 			window.draw(BG);
 			b->drawBoard(window,NOP);
@@ -315,8 +320,6 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 			L->DrawDice(window);
 			window.display();
 		}
+		GateUnlocked.play();
 	}
-	
-
-
 }
