@@ -254,10 +254,7 @@ board::board(int NOP)
 	//Ps[1]->setCellIndex(86);
 	//Ps[1]->setPosition(Cs[86]->getCol() + 38, Cs[86]->getRow() + 42);
 	
-	//Ps[1]->setCellIndex(47);
-	//Ps[1]->setPosition(Cs[47]->getCol() + 38, Cs[47]->getRow() + 42);
-	//Ps[6]->setCellIndex(44);
-	//Ps[6]->setPosition(Cs[44]->getCol() + 38, Cs[44]->getRow() + 42);
+	
 }
 
 void board::drawBoard(sf::RenderWindow& window,int NOP)

@@ -103,6 +103,12 @@ Ludo::Ludo(int _NOP)
 	sounds[2].setBuffer(S[2]);
 
 	B = new board(NOP);
+
+	B->getPiece(9)->setCellIndex(47);
+	B->getPiece(9)->setPosition(B->getCellCol(47)+ 38, B->getCellRow(47) + 42);
+	B->getPiece(6)->setCellIndex(44);
+	B->getPiece(6)->setPosition(B->getCellCol(44) + 38, B->getCellRow(44) + 42);
+
 	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
 	Ds[0] = new Dice(1070, 180);
@@ -391,7 +397,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				}
 			
 			
-				if(Ps[Turn]->hasKilled())
+				if(Ps[Turn]->hasKilled() && id!=-4)
 				{
 					int init_r = B->getPiece(id)->getInitialRow(), init_c = B->getPiece(id)->getInitialCol();
 					for (int kr = B->getPiece(id)->GetRow(), kc = B->getPiece(id)->GetCol(); kr != B->getPiece(id)->getInitialRow() || kc != B->getPiece(id)->getInitialCol();)
