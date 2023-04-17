@@ -96,6 +96,7 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		Arrow.setPoint(0, sf::Vector2f(c + 10, r + 10));
 		Arrow.setPoint(1, sf::Vector2f(c + 20, r + 30));
 		Arrow.setPoint(2, sf::Vector2f(c + 30, r + 10));
+		Arrow.setPosition(40, 0);
 		Arrow.setFillColor(dark_green);
 		
 		WinTri.setPoint(0, sf::Vector2f(c, r + 245));
@@ -123,7 +124,7 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		Arrow.setPoint(0, sf::Vector2f(c+10, r+30));
 		Arrow.setPoint(1, sf::Vector2f(c+20, r+10));
 		Arrow.setPoint(2, sf::Vector2f(c+30, r+30));
-		Arrow.setFillColor(dark_green);
+		Arrow.setFillColor(dark_grey);
 		Arrow.setPosition(40, 80);
 		WinTri.setPoint(0, sf::Vector2f(c, r - 125));
 		WinTri.setPoint(1, sf::Vector2f(c + 61.5, r - 186.5));
