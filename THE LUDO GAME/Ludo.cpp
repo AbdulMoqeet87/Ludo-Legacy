@@ -397,7 +397,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				}
 			
 			
-				if(Ps[Turn]->hasKilled() && id!=-4)
+				if(Ps[Turn]->hasKilled()&&id!=-4)
 				{
 					int init_r = B->getPiece(id)->getInitialRow(), init_c = B->getPiece(id)->getInitialCol();
 					for (int kr = B->getPiece(id)->GetRow(), kc = B->getPiece(id)->GetCol(); kr != B->getPiece(id)->getInitialRow() || kc != B->getPiece(id)->getInitialCol();)
@@ -737,7 +737,8 @@ void Ludo::play(sf::RenderWindow& window)
 						cout << "isclickedDice\n";
 						/*int s = 0;
 						cin >> s;
-						Ds[di]->setDiceValue(s);*/
+						Ds[di]->setDiceValue(s);
+						*/
 						RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 

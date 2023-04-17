@@ -6,7 +6,6 @@
 #include"Ludo.h"
 using namespace std;
 //using namespace sf;
-
 int main1()
 {
     //AMNA
@@ -317,10 +316,87 @@ int main2()
     return 0;
 }
 
+void Amna_Moqeet(sf::RenderWindow& window, sf::Text& RG, sf::Text &A_M, sf::Sound &StrangerT)
+{
+    StrangerT.play();
+    RG.setFillColor(sf::Color::White);
+            int r = 0;
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+
+            }
+    while (window.isOpen())
+    {
+        if (r == 1000)break;
+        window.clear();
+        r++;
+     
+        //window.clear(navy_blue);
+        window.draw(RG);
+           window.draw(A_M);
+            window.display();
+    }
+   sf::sleep(sf::seconds(3.5));
+
+}
+void RisingGeeks(sf::RenderWindow& window,sf::Text &RG,sf::Sound Glitch)
+{
+    int j = 0;
+    Glitch.play();
+    while (window.isOpen())
+    {
+     
+       sf::Event event;
+       while (window.pollEvent(event))
+       {
+           if (event.type == sf::Event::Closed)
+               window.close();
+    }
+       if (j % 7 == 0)
+           RG.setFillColor(sf::Color::White);
+       else
+           RG.setFillColor(sf::Color::Black);
+      if (j == 3000)
+          break;
+      window.clear();
+        j++;
+       
+        //window.clear(navy_blue);
+      window.draw(RG);
+      
+      //window.draw(A_M);
+      window.display();
+    }
+   RG.setFillColor(sf::Color::Black);
+   Glitch.stop();
+  sf:: sleep(sf::seconds(2.5));
+
+}
+
+
 int main()
 {
    
+    sf::Font GOT;
+    
+    GOT.loadFromFile("GameOfThrones.ttf");
+    sf::Color navy_blue(0, 0, 128);
 
+    sf::Text RisingGeek("RISING   GEEKS", GOT, 80);
+    RisingGeek.setPosition(360, 190);
+    RisingGeek.setFillColor(sf::Color::White);
+    sf::SoundBuffer Gl;
+    sf::SoundBuffer ST;
+    Gl.loadFromFile("Glitch.wav");
+    ST.loadFromFile("StrangerThingsOrg.wav");
+    sf::Sound Glitch(Gl);
+    sf::Sound StrangerT(ST);
+    sf::Text Amna_MOq("AMNA   and   MOQEET", GOT, 30);
+    Amna_MOq.setPosition(500, 390);
+    Amna_MOq.setFillColor(sf::Color::White);
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
     window.setPosition(sf::Vector2i(-10, 0));
     Dice D(1150, 500);
@@ -328,6 +404,7 @@ int main()
     Ludo L(6);
     while (window.isOpen())
     {
+  
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -343,6 +420,8 @@ int main()
         for (long long i = 0; i < 1000000000; i++);*/
 
         window.clear();
+        RisingGeeks(window,RisingGeek,Glitch);
+        Amna_Moqeet(window, RisingGeek, Amna_MOq,StrangerT);
         L.play(window);
         window.display();
 
@@ -352,3 +431,4 @@ int main()
 
     return 0;
 }
+
