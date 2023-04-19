@@ -32,4 +32,5 @@ public:
 	int GetCol();
 	bool atIntialPos(int r, int c);
 	Color getClr();
+	void setSize(int s);
 };

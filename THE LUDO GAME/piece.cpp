@@ -13,6 +13,7 @@ piece::piece(istream&Rdr, sf::Color _C,string Cn)
 	this->C = _C;
 	this->P.loadFromFile(Cn);
 	this->Pc.setTexture(P);
+	Pc.setScale(1.3, 1.3);
 	Pc.setPosition(ci, ri);
 }
 
@@ -99,4 +100,8 @@ bool piece::atIntialPos(int r, int c)
 Color piece::getClr()
 {
 	return C;
+}
+void piece::setSize(int s)
+{
+	Pc.setScale(s, s);
 }

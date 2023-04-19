@@ -3,6 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include<time.h>
 #include<iostream>
+#include<vector>
 using namespace sf;
 using namespace std;
 //
@@ -89,7 +90,7 @@ Dice::Dice(int r, int c)
 	DiceRoll.setBuffer(DR);
 }
 
-void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
+void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP, std::vector<int> JootaIndx, std::vector<player*> WinPs)
 {
 	srand(time(0));
 	this->DiceValue = rand() % 6 + 1;
@@ -109,7 +110,7 @@ void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
 			dice.setTextureRect(IntRect(TextureSize.x * c, TextureSize.y * r, TextureSize.x, TextureSize.y));
 			window.draw(BG);
 			window.draw(dice);
-			B->drawBoard(window, NOP);
+			B->drawBoard(window, NOP,JootaIndx,WinPs);
 			window.display();
 		}
 	}

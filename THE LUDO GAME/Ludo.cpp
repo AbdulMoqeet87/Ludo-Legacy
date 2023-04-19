@@ -88,10 +88,20 @@ Ludo::Ludo(int _NOP)
 		Ps[0] = new player("Amna", maroon);
 		Ps[1] = new player("Moqeet", golden_yellow);
 	}
-	//Ps[0]->setHasKilled(true);
-	//WinPs.push_back(Ps[0]);
-	//Ps[1]->setHasKilled(true);
-	//Ps[1]->setIsWin(true);
+	/*Ps[0]->setHasKilled(true);
+	WinPs.push_back(Ps[0]);
+	Ps[1]->setHasKilled(true);
+	Ps[2]->setHasKilled(true);
+	Ps[3]->setHasKilled(true);
+	WinPs.push_back(Ps[1]);
+	WinPs.push_back(Ps[2]);
+	WinPs.push_back(Ps[3]);
+
+	//WinPs.erase(WinPs.begin()+1);
+	Ps[0]->setIsWin(true);
+	Ps[1]->setIsWin(true);
+	Ps[2]->setIsWin(true);
+	Ps[3]->setIsWin(true);*/
 	S = new sf::SoundBuffer[3];
 	sounds = new sf::Sound[3];
 	S[0].loadFromFile("PunchSound.wav");
@@ -104,10 +114,20 @@ Ludo::Ludo(int _NOP)
 
 	B = new board(NOP);
 
-	B->getPiece(9)->setCellIndex(47);
-	B->getPiece(9)->setPosition(B->getCellCol(47)+ 38, B->getCellRow(47) + 42);
-	B->getPiece(6)->setCellIndex(44);
-	B->getPiece(6)->setPosition(B->getCellCol(44) + 38, B->getCellRow(44) + 42);
+	B->getPiece(9)->setCellIndex(3);
+	B->getPiece(9)->setPosition(B->getCellCol(3)+ 38, B->getCellRow(3) + 42);
+	B->getPiece(6)->setCellIndex(1);
+	B->getPiece(6)->setPosition(B->getCellCol(1) + 38, B->getCellRow(1) + 42);
+
+	B->getPiece(0)->setCellIndex(5);
+	B->getPiece(0)->setPosition(B->getCellCol(5) + 38, B->getCellRow(5) + 42);
+	B->getPiece(1)->setCellIndex(6);
+	B->getPiece(1)->setPosition(B->getCellCol(6) + 38, B->getCellRow(6) + 42);
+
+	B->getPiece(4)->setCellIndex(8);
+	B->getPiece(4)->setPosition(B->getCellCol(8) + 38, B->getCellRow(8) + 42);
+	B->getPiece(5)->setCellIndex(9);
+	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
 
 	dice = new Dice(1140, 500);
 	dice->setDiceValue(2);
@@ -118,7 +138,6 @@ Ludo::Ludo(int _NOP)
 	Turn = 0;
 	sri = 0, sci = 0;
 }
-
 
 void Ludo::turnChange()
 {
@@ -134,25 +153,55 @@ void Ludo::turnChange()
 		turnChange();
 }
 
-//bool Ludo::isValidSc()
-//{
-//	int pi;
-//	if (B->getPiece(sri, sci) != nullptr)
-//	{
-//		if (B->getPiece(sri, sci)->getColor() == Ps[Turn]->getColor())
-//		{
-//			return true;
-//		}
-//	}
-//	else if (B->getHome(Turn)->clickedHomePiece(sri,sci,pi))
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
+bool Ludo::isLegalMove(int indx, int DiceIndx)
+{
+	bool isJoota = false;
+	for (int x = 0; x < JootaIndx.size(); x++)
+	{
+		if (B->getPiece(indx)->getCellIndex() == JootaIndx[x])
+		{
+			isJoota = true;
+			break;
+		}
+	}
+	if(!isJoota)
+	{
+		
+		for (int x = 0; x < JootaIndx.size(); x++)
+		{
+			for (int i = 0; i <= Ds[DiceIndx]->getDiceValue(); i++)
+			{
+				if ((B->getPiece(indx)->getCellIndex() + i) == JootaIndx[x])
+				{
+					int count = 0;
+					for (int i = Turn * 4; i < (Turn * 4) + 4; i++)
+					{
+						if (B->getPiece(i)->getCellIndex()!=-1)
+						{
+							count++;
+						}
+					}
+					if (count <= 1 && (Ds[DiceIndx]->getDiceValue() != 6))
+					{
+						//MoveFailed = false;
+						EraseDice();
+						/*B->getHome(Turn)->UnHighlightHome();
+						turnChange();*/
+					}
+					return false;
+				}
+			}
+		}
+	}
+	if (isJoota)
+	{
+		if (Ds[DiceIndx]->getDiceValue() % 2 != 0)
+			return false;
+		else
+			Ds[DiceIndx]->setDiceValue(Ds[DiceIndx]->getDiceValue() / 2);
+	}
+	return true;
+}
 
 bool Ludo::isValidSc(int& indx, int DiceIndx)
 {
@@ -164,12 +213,17 @@ bool Ludo::isValidSc(int& indx, int DiceIndx)
 			//return true;
 		}
 	}
+	
 	if (indx != -1)
 	{
+		if (B->getPiece(indx)->getCellIndex() == -1 && Ds[DiceIndx]->getDiceValue() != 6)
+			return false;
 		if (B->getPiece(indx)->getCellIndex() == -2)
 			return false;
 		if ((B->getPiece(indx)->getCellIndex() > 90)  && (B->getPiece(indx)->getCellIndex() + Ds[DiceIndx]->getDiceValue()) > 96)
 			return false;
+		/*if (!isLegalMove(indx, DiceIndx))
+			return false;*/
 		return true;
 	}
 	return false;
@@ -177,7 +231,7 @@ bool Ludo::isValidSc(int& indx, int DiceIndx)
 
 void Ludo::RollDice(sf::RenderWindow& window, int di)
 {
-	dice->rollDice(B, window,BackG,NOP);
+	dice->rollDice(B, window,BackG,NOP, JootaIndx, WinPs);
 	Ds[di]->setDiceValue(dice->getDiceValue());
 	/*if (Ds[di]->getDiceValue() == 6)
 		di++;*/
@@ -201,13 +255,33 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 	bool isSafeSpot = false;
 	int Temp_indx = B->getPiece(indx)->getCellIndex() - 1;
 	int NewCell_indx = B->getPiece(indx)->getCellIndex() + Ds[DiceIndx]->getDiceValue();
-		//int Temp_indx = indx;
-	//int ir = B->getPiece(indx)->getInitialRow();
-	//int ic = B->getPiece(indx)->getInitialCol();
 	int curr_r = B->getPiece(indx)->GetRow();
 	int curr_c = B->getPiece(indx)->GetCol();
 
-	if (Ds[DiceIndx]->getDiceValue() == 6 && B->getPiece(indx)->atIntialPos(curr_r, curr_c))//ir==curr_r && ic == curr_c)
+	//-----------Checking if a joota is Moved
+	bool isJoota = false;
+	int JIndx = -4;
+	int JPc2 = -4;
+	for (int x = 0; x < JootaIndx.size(); x++)
+	{
+		if (B->getPiece(indx)->getCellIndex() == JootaIndx[x])
+		{
+			isJoota = true;
+			JIndx = x;
+			break;
+		}
+	}
+
+	//-----------Finding the 2nd piece in joota
+	for (int i = Turn * 4; i < Turn * 4 + 4; i++)
+	{
+		if (i != indx && B->getPiece(i)->getCellIndex() == B->getPiece(indx)->getCellIndex())
+			JPc2 = i;
+	}
+
+
+	//-----------Movementof piece from the home
+	if (Ds[DiceIndx]->getDiceValue() == 6 && B->getPiece(indx)->atIntialPos(curr_r, curr_c))
 	{
 		sounds[1].play();
 		B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38, B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
@@ -217,8 +291,13 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 		//B->getPiece(indx)->setCol(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38);
 
 	}
+
+
+	//--------------Movement of piece inside the home cells
 	else if (B->getPiece(indx)->getCellIndex() > 90)
 	{
+
+		//----------------Movement of Winning Piece
 		if ((Ds[DiceIndx]->getDiceValue() + (B->getPiece(indx)->getCellIndex())) == 96)
 		{
 			for (int ci = B->getPiece(indx)->getCellIndex(); ci <= NewCell_indx - 1; ci++)
@@ -229,7 +308,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window, NOP);
+				B->drawBoard(window, NOP,JootaIndx,WinPs);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.05));
@@ -240,6 +319,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			B->getPiece(indx)->setPosition(HomeCellci + 78, HomeCellri + 82);
 			B->getPiece(indx)->setCellIndex(-2);
 		}
+
+		//--------------Movement of piece within the home cells
 		else
 		{
 			//B->getHome(Turn)->getHomeCellPos(Ds[DiceIndx]->getDiceValue() + (B->getPiece(indx)->getCellIndex()) - 90 - 1, HomeCellri, HomeCellci);
@@ -254,7 +335,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				window.clear();
 				window.draw(BackG);
 
-				B->drawBoard(window, NOP);
+				B->drawBoard(window, NOP, JootaIndx, WinPs);
 				DrawDice(window);
 				window.display();
 
@@ -267,7 +348,9 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 
 		}
 	}
-	else if (!B->getPiece(indx)->atIntialPos(curr_r, curr_c))//(ir != curr_r || ic != curr_c))
+
+	//-----------Movement of piece on the board
+	else if (!B->getPiece(indx)->atIntialPos(curr_r, curr_c))
 	{
 		for (int i = 0; i < Ds[DiceIndx]->getDiceValue(); i++)
 		{
@@ -281,6 +364,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				break;
 			}
 		}
+
+		//--------------Movement if Entering the home
 		if (Ps[Turn]->hasKilled() && canEnterHome)
 		{
 			//B->getHome(Turn)->getHomeCellPos(Ds[DiceIndx]->getDiceValue() - enterHomeAt - 1, HomeCellri, HomeCellci);
@@ -298,7 +383,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window, NOP);
+				B->drawBoard(window, NOP, JootaIndx, WinPs);
 				DrawDice(window);
 				window.display();
 				sounds[2].stop();
@@ -313,7 +398,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			window.clear();
 			window.draw(BackG);
-			B->drawBoard(window, NOP);
+			B->drawBoard(window, NOP, JootaIndx, WinPs);
 			DrawDice(window);
 			window.display();
 			sleep(sf::seconds(0.05));
@@ -327,7 +412,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window,NOP);
+				B->drawBoard(window,NOP, JootaIndx, WinPs);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.05));
@@ -337,6 +422,8 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			//B->getPiece(indx)->setCellIndex(NewCell_indx);
 			B->getPiece(indx)->setCellIndex((Ds[DiceIndx]->getDiceValue() - enterHomeAt) + 90);
 		}
+
+		//------------movement on the board
 		else
 		{
 	        /*if (NewCell_indx > 89)
@@ -354,20 +441,42 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				sounds[2].play();
 
 				B->getPiece(indx)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
-				
+				if (isJoota)
+				{
+					B->getPiece(JPc2)->setPosition(B->getCellCol(ci) + 38, B->getCellRow(ci) + 42);
+					JootaIndx[JIndx] += 1;
+					if (JootaIndx[JIndx] >= 90)
+						JootaIndx[JIndx] -= 90;
+				}
+
 				window.clear();
 				window.draw(BackG);
-				B->drawBoard(window,NOP);
+				B->drawBoard(window,NOP,JootaIndx,WinPs);
 				DrawDice(window);
 				window.display();
 				sleep(sf::seconds(0.05));
 				sounds[2].stop();
 			}
 			B->getPiece(indx)->setCellIndex(NewCell_indx);
+			if(isJoota)
+			{
+				B->getPiece(JPc2)->setCellIndex(NewCell_indx);
+				JootaIndx[JIndx] = NewCell_indx;
+			}
+
 			
-			
-			
-			//B->getPiece(indx)->setPosition(B->getCellCol(B->getPiece(indx)->getCellIndex()) + 38, B->getCellRow(B->getPiece(indx)->getCellIndex()) + 42);
+			//--------Checking if joota is made
+			if(!isJoota)
+			{
+				for (int i = Turn * 4; i < (Turn * 4) + 4; i++)
+				{
+					if (i != indx)
+					{
+						if (B->getPiece(indx)->getCellIndex() == B->getPiece(i)->getCellIndex())
+							JootaIndx.push_back(B->getPiece(indx)->getCellIndex());
+					}
+				}
+			}
 			
 			//-----Checking for safe spot
 			for (int i = 0; i < 6; i++)
@@ -378,6 +487,14 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				}
 			}
 
+			//-----------Checking if a joota is broken
+			if (isJoota && isSafeSpot)
+			{
+				JootaIndx[JIndx] = -5;
+			}
+
+			bool jootaKilled = false;
+			int KillP2 = -4, j = 0, KillIndx = -4;
 			//------Checking if piece is killed
 			if(!isSafeSpot)
 			{
@@ -388,17 +505,42 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 					{
 						if (B->getPiece(_i)->getClr() != B->getPiece(indx)->getClr())
 						{
-							 id = _i;
-							Ps[Turn]->setHasKilled(true);
-							sounds[0].play();
-							break;
+							for (int x = 0; x < JootaIndx.size(); x++)
+							{
+								if (B->getPiece(_i)->getCellIndex() == JootaIndx[x])
+								{
+									jootaKilled = true;
+									KillIndx = x;
+									//JootaIndx[x] = -5;
+								}
+							}
+							if (jootaKilled)
+							{
+								if (j == 0)
+									id = _i, j++;
+								else if (j == 1)
+								{
+									KillP2 = _i, j = 0;
+									Ps[Turn]->setHasKilled(true);
+									sounds[0].play();
+									JootaIndx[KillIndx] = -5;
+									break;
+								}
+							}
+							else
+							{
+								id = _i;
+								Ps[Turn]->setHasKilled(true);
+								sounds[0].play();
+								break;
+							}
 						}
 					}
 				}
-			
-			
+				
 				if(Ps[Turn]->hasKilled()&&id!=-4)
 				{
+					
 					int init_r = B->getPiece(id)->getInitialRow(), init_c = B->getPiece(id)->getInitialCol();
 					for (int kr = B->getPiece(id)->GetRow(), kc = B->getPiece(id)->GetCol(); kr != B->getPiece(id)->getInitialRow() || kc != B->getPiece(id)->getInitialCol();)
 					{
@@ -430,19 +572,62 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 					
 						window.clear();
 						window.draw(BackG);
-						B->drawBoard(window, NOP);
+						B->drawBoard(window, NOP, JootaIndx, WinPs);
 						DrawDice(window);
 						window.display();
 						//sleep(sf::seconds(-0.03));
 					}
+					
+					if (jootaKilled)
+					{
+						int init_r = B->getPiece(KillP2)->getInitialRow(), init_c = B->getPiece(KillP2)->getInitialCol();
+						for (int kr = B->getPiece(KillP2)->GetRow(), kc = B->getPiece(KillP2)->GetCol(); kr != B->getPiece(KillP2)->getInitialRow() || kc != B->getPiece(KillP2)->getInitialCol();)
+						{
+							//window.clear();
+							B->getPiece(KillP2)->setPosition(kc, kr);
+							if (abs(kr - init_r) < 20)
+							{
+								if (kr > init_r)
+									kr--; else if (kr < init_r) kr++;
+							}
+							else
+							{
+								if (kr > init_r)
+									kr -= 19; else if (kr < init_r) kr += 19;
+							}
+
+							if (abs(kc - init_c) < 20)
+							{
+
+								if (kc > init_c)
+									kc--; else if (kc < init_c) kc++;
+							}
+							else
+							{
+
+								if (kc > init_c)
+									kc -= 19; else if (kc < init_c) kc += 19;
+							}
+
+							window.clear();
+							window.draw(BackG);
+							B->drawBoard(window, NOP, JootaIndx, WinPs);
+							DrawDice(window);
+							window.display();
+							//sleep(sf::seconds(-0.03));
+						}
+					}
 
 					B->getPiece(id)->setPosition(B->getPiece(id)->getInitialCol(), B->getPiece(id)->getInitialRow());
 					B->getPiece(id)->setCellIndex(-1);
-					B->getHome(Turn)->Blink(window, B, this, BackG, NOP);
+					if(jootaKilled)
+					{
+						B->getPiece(KillP2)->setPosition(B->getPiece(KillP2)->getInitialCol(), B->getPiece(KillP2)->getInitialRow());
+						B->getPiece(KillP2)->setCellIndex(-1);
+					}
+					B->getHome(Turn)->Blink(window, B, this, BackG, NOP, JootaIndx, WinPs);
 
 				}
-			
-			
 			}
 		}
 	}
@@ -471,12 +656,6 @@ bool Ludo::canMove()
 	}
 	if (Ds[0]->getDiceValue() == 6)
 		Sixspotted = true;
-	/*for (int j = 0; j < 3; j++)
-	{
-		if (Ds[j]->getDiceValue() == 6)
-			Sixspotted = true;
-	}*/
-
 
 	if ((AllatHomee) && (!Sixspotted))
 		return false;
@@ -678,28 +857,6 @@ bool Ludo::isWin()
 	return true;
 }
 
-void Ludo::DrawWinner(sf::RenderWindow& window)
-{
-	string fn;
-	for (int i = 0; i < WinPs.size(); i++)
-	{
-		switch (i)
-		{
-		case 0:
-			fn = "first.png";
-			break;
-		/*case 1:
-			fn = "second.png";
-			break;*/
-		}
-		WinTex.loadFromFile(fn);
-		Win.setTexture(WinTex);
-		Win.setScale(0.4, 0.4);
-		Win.setPosition(B->getHome(i)->getCol()+50, B->getHome(i)->getRow()+50);
-		window.draw(Win);
-	}
-}
-
 bool Ludo::GameEnded()
 {
 	if (WinPs.size() == NOP - 2)
@@ -716,6 +873,7 @@ void Ludo::play(sf::RenderWindow& window)
 	int di = 0;
 	bool canSelect = false;
 	bool rollingDice = true;
+	bool moveCanceled = false;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -735,11 +893,11 @@ void Ludo::play(sf::RenderWindow& window)
 					if (clickedDice())
 					{
 						cout << "isclickedDice\n";
-						/*int s = 0;
+						int s = 0;
 						cin >> s;
 						Ds[di]->setDiceValue(s);
-						*/
-						RollDice(window, di);
+						
+						//RollDice(window, di);
 						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
@@ -760,25 +918,34 @@ void Ludo::play(sf::RenderWindow& window)
 				{
 					cout << "ifDiceRolled\n";
 					selectDiceValue(DiceIndx);
-					if (canMove())
+					if (canMove() && moveCanceled==false)
 					{
 						cout << "canMOve\n";
 
 						if (isValidSc(indx, DiceIndx))
 						{
-							Move(indx, DiceIndx,window);
-							indx = -1;
-							Ds[DiceIndx]->setDiceValue(0);
-							if (DiceIsEmpty())
+							cout << "Valid source" << endl;
+							if (isLegalMove(indx, DiceIndx))
 							{
-								B->getHome(Turn)->UnHighlightHome();
-
-								turnChange();
-								di = 0;
-								rollingDice = true;
-								diceRolled = false;
+								cout << "LegalMove" << endl;
+								Move(indx, DiceIndx, window);
 								indx = -1;
+								Ds[DiceIndx]->setDiceValue(0);
+								if (DiceIsEmpty())
+								{
+									B->getHome(Turn)->UnHighlightHome();
+
+									turnChange();
+									di = 0;
+									rollingDice = true;
+									diceRolled = false;
+									indx = -1;
+									moveCanceled = false;
+								}
+								moveCanceled = false;
 							}
+							else
+								moveCanceled = true;
 						}
 					}
 					else
@@ -790,79 +957,29 @@ void Ludo::play(sf::RenderWindow& window)
 						rollingDice = true;
 						diceRolled = false;
 						indx = -1;
+						moveCanceled = false;
 						//EraseDice();
 					}
-				}
-				/*	if (diceRolled)
+					if (moveCanceled)
 					{
-						if (DiceIsEmpty())
-						{
-							diceRolled = false;
-							rollingDice = true;
-							canSelect = false;
-						}
-						if (!canMove())
-						{
-							cout << "cannotMove\n";
-							diceRolled = false;
-							rollingDice = true;
-							turnChange();
-							di = 0;
-						}
-						else
-						{
-							cout << "CanMove\n";
-							if (!DiceIsEmpty())
-								cout << "Dice index Before " << DiceIndx<<endl;
-							selectDiceValue(DiceIndx, window);
-							cout << "Dice index After " << DiceIndx<< endl;
-							diceRolled = false;
-							canSelect = true;
-						}
+						B->getHome(Turn)->UnHighlightHome();
+						turnChange();
+						di = 0;
+						rollingDice = true;
+						diceRolled = false;
+						indx = -1;
+						moveCanceled = false;
 					}
-
-					if (canSelect)
-					{
-						cout << "Entered CanSelect\n";
-						if (isValidSc(indx))
-						{
-							cout << "isValidSource\n";
-
-							if (Move(indx, DiceIndx))
-								Ds[DiceIndx]->setDiceValue(0);
-
-							if (!DiceIsEmpty())
-							{
-								diceRolled = true;
-							}
-							else
-							{
-								turnChange();
-								canSelect = false;
-								diceRolled = false;
-								rollingDice = true;
-							}
-						}
-						else if(DiceIsEmpty())
-						{
-							turnChange();
-							canSelect = false;
-							diceRolled = false;
-							rollingDice = true;
-						}
-					}*/
+				}
 			}
 		}
 		window.clear();
 		window.draw(BackG);
-		B->drawBoard(window,NOP);
-		DrawWinner(window);
+		B->drawBoard(window,NOP, JootaIndx,WinPs);
 		DrawDice(window);
 		window.display();
 		if (AllSix())
 		{
-			//DrawDice(window);
-			//window.display();
 			sleep(seconds(1));
 			EraseDice();
 			B->getHome(Turn)->UnHighlightHome();
@@ -879,15 +996,3 @@ void Ludo::play(sf::RenderWindow& window)
 	}
 }
 
-//bool Ludo::isValidSc(int& indx)
-//{
-//	for (int i = Turn * 4; i < (Turn * 4) + 4; i++)
-//	{
-//		if (B->getPiece(i)->Contains(sri, sci))
-//		{
-//			indx = i;
-//			return true;
-//		}
-//	}
-//	return false;
-//}
