@@ -616,17 +616,17 @@ int Game(bool Restarted)
     sf::Texture Dc;
     Dc.loadFromFile("UniqDixe.png");
     sf::Sprite _Dice(Dc);
-   // Dice.setScale(0.55, 0.55);
+    // Dice.setScale(0.55, 0.55);
     _Dice.setPosition(830, 220);
-    _Dice.setScale(0.9,0.9);
+    _Dice.setScale(0.9, 0.9);
     sf::Texture NS;
     NS.loadFromFile("NeonSky_.png");
     sf::Sprite NeonSky(NS);
     NeonSky.setScale(0.35, 0.35);
     NeonSky.setPosition(5, 0);
-	sf::Color blur = sf::Color(255, 255, 255, 130);
+    sf::Color blur = sf::Color(255, 255, 255, 130);
     //----------------------------
-   
+
     //----------------------------
     sf::ConvexShape PlayButton;
     PlayButton.setPointCount(3);
@@ -661,14 +661,14 @@ int Game(bool Restarted)
     sf::Text Amna_MOq("AMNA   and   MOQEET", GOT, 30);
     Amna_MOq.setPosition(500, 350);
     Amna_MOq.setFillColor(sf::Color::White);
- 
-  // Dice D(1150, 500);
-   // board B(NOP);
-    //-----------------------------------------
+
+    // Dice D(1150, 500);
+     // board B(NOP);
+      //-----------------------------------------
     sf::Text SelectP("SELECT  PLAYERS", GOT, 80);
     //SelectP.setPosition(345, 100);
     SelectP.setFillColor(neonPurple);
-    SelectP.setPosition(335 , 100 );
+    SelectP.setPosition(335, 100);
     //-----------------------------
     sf::Text P2("2 PLAYERS", Lato, 40);
     P2.setPosition(130, 350);
@@ -687,7 +687,7 @@ int Game(bool Restarted)
     SP.loadFromFile("SelectPlayer.jpg");
     sf::Sprite SPl(SP);
 
-//-------------------------------------
+    //-------------------------------------
     while (window.isOpen())
     {
         sf::Event event;
@@ -698,21 +698,23 @@ int Game(bool Restarted)
         }
 
         window.clear();
-        if(!Restarted)
-        {
-        /*    RisingGeeks(window, RisingGeek, Glitch);
-            Amna_Moqeet(window, RisingGeek, Amna_MOq, StrangerT, NeonSky);
-            MajesticMoves(window, Majestic, Moves, Neon, PlayButton, PlayButton2);
-        */}
-        //SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6, StrangerT);
-        Ludo L(NOP);
-        L.play(window,Ending,StrangerT);      
-        if (Ending == 0 || Ending == 1)
-            return Ending;
-        window.display();
+        /* if(!Restarted)
+         {
+         /*    RisingGeeks(window, RisingGeek, Glitch);
+             Amna_Moqeet(window, RisingGeek, Amna_MOq, StrangerT, NeonSky);
+             MajesticMoves(window, Majestic, Moves, Neon, PlayButton, PlayButton2);
+         */
     }
-    return 0;
+    //SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6, StrangerT);
+    Ludo L(NOP);
+    L.play(window, Ending, StrangerT);
+    if (Ending == 0 || Ending == 1)
+        return Ending;
+    window.display();
 }
+    
+
+
 
 int main()
 {
