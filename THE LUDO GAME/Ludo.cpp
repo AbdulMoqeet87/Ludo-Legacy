@@ -119,7 +119,7 @@ Ludo::Ludo(int _NOP)
 
 	B = new board(NOP);
 
-	B->getPiece(9)->setCellIndex(3);
+	/*B->getPiece(9)->setCellIndex(3);
 	B->getPiece(9)->setPosition(B->getCellCol(3)+ 38, B->getCellRow(3) + 42);
 	B->getPiece(6)->setCellIndex(1);
 	B->getPiece(6)->setPosition(B->getCellCol(1) + 38, B->getCellRow(1) + 42);
@@ -132,7 +132,34 @@ Ludo::Ludo(int _NOP)
 	B->getPiece(4)->setCellIndex(8);
 	B->getPiece(4)->setPosition(B->getCellCol(8) + 38, B->getCellRow(8) + 42);
 	B->getPiece(5)->setCellIndex(9);
-	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
+	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);*/
+	/*int ri, ci;
+	B->getPiece(0)->setCellIndex(91);
+	B->getHome(Turn)->getHomeCellPos(0, ri, ci);
+	B->getPiece(0)->setPosition(ci + 38, ri + 42);
+	B->getPiece(1)->setCellIndex(92);
+	B->getHome(Turn)->getHomeCellPos(1, ri, ci);
+	B->getPiece(1)->setPosition(ci + 38, ri + 42);
+	B->getPiece(2)->setCellIndex(93);
+	B->getHome(Turn)->getHomeCellPos(2, ri, ci);
+	B->getPiece(2)->setPosition(ci + 38, ri + 42);
+	B->getPiece(3)->setCellIndex(94);
+	B->getHome(Turn)->getHomeCellPos(3, ri, ci);
+	B->getPiece(3)->setPosition(ci + 38, ri + 42);*/
+
+	int ri, ci;
+	B->getPiece(4)->setCellIndex(91);
+	B->getHome(1)->getHomeCellPos(0, ri, ci);
+	B->getPiece(4)->setPosition(ci + 38, ri + 42);
+	B->getPiece(5)->setCellIndex(92);
+	B->getHome(1)->getHomeCellPos(1, ri, ci);
+	B->getPiece(5)->setPosition(ci + 38, ri + 42);
+	B->getPiece(6)->setCellIndex(93);
+	B->getHome(1)->getHomeCellPos(2, ri, ci);
+	B->getPiece(6)->setPosition(ci + 38, ri + 42);
+	B->getPiece(7)->setCellIndex(94);
+	B->getHome(1)->getHomeCellPos(3, ri, ci);
+	B->getPiece(7)->setPosition(ci + 38, ri + 42);
 
 	dice = new Dice(1160, 500);
 	dice->setDiceValue(2);
@@ -149,6 +176,7 @@ Ludo::Ludo(int _NOP)
 
 void Ludo::turnChange()
 {
+	if (isWin());
 	if (Turn == (NOP-1))
 	{
 		Turn = 0;
@@ -324,9 +352,11 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				sounds[2].stop();
 
 			}
-			B->getHome(Turn)->getHomeCellPos(4, HomeCellri, HomeCellci);
-			B->getPiece(indx)->setPosition(HomeCellci + 78, HomeCellri + 82);
+			B->getHome(Turn)->getWinningPos(HomeCellri, HomeCellci);
+			//B->getHome(Turn)->getHomeCellPos(4, HomeCellri, HomeCellci);
+			B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			B->getPiece(indx)->setCellIndex(-2);
+
 		}
 
 		//--------------Movement of piece within the home cells
@@ -742,6 +772,7 @@ bool Ludo::isWin()
 	}
 	Ps[Turn]->setIsWin(true);
 	WinPs.push_back(Ps[Turn]);
+	//B->drawBoard(window, NOP, JootaIndx, WinPs);
 	return true;
 }
 
@@ -956,6 +987,7 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 		}
 		if (GameEnded())
 		{
+			ending = 0;
 			//some graphics
 		}
 	}

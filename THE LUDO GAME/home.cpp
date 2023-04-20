@@ -48,6 +48,9 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 	{
 		Cs[i] = new Cell(rdr, C);
 	}
+
+
+	//----------------------------------
 	Circ.loadFromFile("WhiteCircle.png");
 	Circles = new Sprite[4];
 	for(int i=0;i<4;i++)
@@ -73,7 +76,12 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(1, sf::Vector2f(c + 307.5, r + 61.5));
 		WinTri.setPoint(2, sf::Vector2f(c + 245, r + 123));
 		WinTri.setFillColor(maroon);
-		
+
+		WinPos.push_back({ Cs[4]->getRow() - 27,Cs[4]->getCol() + 36 });
+		WinPos.push_back({ Cs[4]->getRow(),Cs[4]->getCol() + 36 });
+		WinPos.push_back({ Cs[4]->getRow() + 27,Cs[4]->getCol() + 36 });
+		WinPos.push_back({ Cs[4]->getRow(),Cs[4]->getCol() + 60 });
+	
 	}
 	else if(C==purple)
 	{
@@ -89,6 +97,11 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(2, sf::Vector2f(c+121, r+245));
 		WinTri.setFillColor(purple);
 	
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() - 27 });
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() });
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() + 27 });
+		WinPos.push_back({ Cs[4]->getRow() + 60,Cs[4]->getCol() });
+
 	}
 	else if(C==dark_green)
 	{
@@ -104,6 +117,11 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(2, sf::Vector2f(c + 123, r + 245));
 		WinTri.setFillColor(dark_green);
 
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() - 27 });
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() });
+		WinPos.push_back({ Cs[4]->getRow() + 36,Cs[4]->getCol() + 27 });
+		WinPos.push_back({ Cs[4]->getRow() + 60,Cs[4]->getCol() });
+
 	}
 	else if(C==golden_yellow)
 	{
@@ -117,6 +135,12 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(1, sf::Vector2f(c - 185.5, r + 61.5));
 		WinTri.setPoint(2, sf::Vector2f(c - 125, r + 123));
 		WinTri.setFillColor(golden_yellow);
+
+		WinPos.push_back({ Cs[4]->getRow() - 27,Cs[4]->getCol() - 36 });
+		WinPos.push_back({ Cs[4]->getRow(),Cs[4]->getCol() - 36 });
+		WinPos.push_back({ Cs[4]->getRow() + 27,Cs[4]->getCol() - 36 });
+		WinPos.push_back({ Cs[4]->getRow(),Cs[4]->getCol() - 60 });
+
 	}
 	else if(C==dark_grey)
 	{
@@ -130,6 +154,11 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(1, sf::Vector2f(c + 61.5, r - 186.5));
 		WinTri.setPoint(2, sf::Vector2f(c + 123, r - 125));
 		WinTri.setFillColor(dark_grey);
+
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() - 27 });
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() });
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() + 27 });
+		WinPos.push_back({ Cs[4]->getRow() - 60,Cs[4]->getCol() });
 
 	}
 	else if (C == navy_blue)
@@ -146,6 +175,11 @@ home::home(istream& rdr, int IP, int SP,int TP,Color _C,string fileName1, string
 		WinTri.setPoint(2, sf::Vector2f(c + 122, r - 125));
 		WinTri.setFillColor(navy_blue);
 		//Arrow.setPosition(40, 80);
+
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() - 27 });
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() });
+		WinPos.push_back({ Cs[4]->getRow() - 36,Cs[4]->getCol() + 27 });
+		WinPos.push_back({ Cs[4]->getRow() - 60,Cs[4]->getCol() });
 
 	}
 
@@ -323,4 +357,14 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP, s
 		}
 		GateUnlocked.play();
 	}
+}
+
+void home::getWinningPos(int& r, int& c)
+{
+	vector<int> Pos = WinPos.back();
+	WinPos.pop_back();
+	r = Pos[0];
+	c = Pos[1];
+	cout << "row given" << r << endl;
+	cout << "col given" << c << endl;
 }

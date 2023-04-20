@@ -507,7 +507,14 @@ void board::DrawWinner(std::vector<player*> WinPs,sf::RenderWindow& window)
 		WinTex.loadFromFile(fn);
 		Win.setTexture(WinTex);
 		Win.setScale(0.4, 0.4);
-		Win.setPosition(Hs[i]->getCol() + 50, Hs[i]->getRow() + 50);
+		for (int hi = 0; hi < 4; hi++)
+		{
+			if (WinPs[i]->getColor() == Hs[hi]->getHOmeColor())
+			{
+				Win.setPosition(Hs[hi]->getCol() + 50, Hs[hi]->getRow() + 50);
+				break;
+			}
+		}
 		window.draw(Win);
 	}
 }

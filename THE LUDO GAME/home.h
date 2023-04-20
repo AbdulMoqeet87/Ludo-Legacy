@@ -34,6 +34,7 @@ private:
 	sf::ConvexShape Arrow;
 	sf::ConvexShape WinTri;
 	bool hasKilled;
+	vector<vector<int>>WinPos;
 public:
 	home(istream& rdr, int IP, int SP, int TP, Color _C, string FileName, string FileName2, int pc, int pr);
 	void Draw(RenderWindow& window);
@@ -51,6 +52,6 @@ public:
 	void HighlightHome();
 	void UnHighlightHome();
 	void Blink(sf::RenderWindow& window, board* b, Ludo* L, Sprite BG,int NOP, std::vector<int> JootaIndx, std::vector<player*> WinPs);
-
+	void getWinningPos(int& r, int& c);
 };
 
