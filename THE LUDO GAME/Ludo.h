@@ -27,6 +27,7 @@ private:
 	std::vector<player*> WinPs;
 	sf::Sprite Win;
 	sf::Texture WinTex;
+	sf::RectangleShape DHi;
 
 public:
 	Ludo();

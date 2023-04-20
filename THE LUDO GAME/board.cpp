@@ -18,6 +18,8 @@ board::board(int NOP)
 	sf::Color golden_yellow(255, 215, 0);
 	sf::Color more_yellowish_yellow(255, 255, 51);
 	sf::Color purple(128, 0, 128);
+	sf::Color neonPurple(205, 0, 205);
+	sf::Color neonBlue(0, 246, 255);
 
 
 	ifstream rdr("Cells.txt");
@@ -51,6 +53,28 @@ board::board(int NOP)
 		Hs[5] = new home(rdr, 61, 56, 59, dark_grey, "Lion_White.png", "Lion_Green.png", 350, 385);
 		Hs[3] = new home(rdr, 80, 75, 78, navy_blue, "p2.png", "GreenHorse_.png", -35, 395);
 	}
+	//-----------initializing board Outline boxes
+	sf::Color blur = sf::Color(255, 255, 255, 128);
+	sf::Color neon_red(255, 38, 0);
+	
+	BigBox.setSize(sf::Vector2f(997, 629));
+	BigBox.setFillColor(sf::Color::Transparent);
+	BigBox.setOutlineColor(sf::Color::White);
+	BigBox.setOutlineThickness(2);
+	BigBox.setPosition(33, 33);
+
+	BigBox2.setSize(sf::Vector2f(991, 623));
+	BigBox2.setFillColor(sf::Color::Transparent);
+	BigBox2.setOutlineColor(navy_blue);
+	BigBox2.setOutlineThickness(9);
+	BigBox2.setPosition(36, 36);
+	
+	BigBox3.setSize(sf::Vector2f(991, 623));
+	BigBox3.setFillColor(sf::Color::Transparent);
+	BigBox3.setOutlineColor(blur);
+	BigBox3.setOutlineThickness(9);
+	BigBox3.setPosition(36, 36);
+
 
 	//-------initializing cells
 	int j = 0; bool clrHai = false;
@@ -262,12 +286,28 @@ board::board(int NOP)
 
 void board::drawBoard(sf::RenderWindow& window,int NOP)
 {
+	sf::Color blur= sf::Color(255, 255, 255, 128); // White with alpha 128
+
+	sf::Color transparentLightGrey = sf::Color(128, 128, 128, 128);
+	sf::Color transparent_gray(128, 128, 128, 160);
+	sf::Color maroon(128, 0, 0);
+	sf::Color navy_blue(0, 0, 128);
+	sf::RectangleShape B3;
+	
+	B3.setSize(sf::Vector2f(1600, 950));
+	B3.setFillColor(transparent_gray);
+	B3.setPosition(0,0);
 
 	for (int i = 0; i < 90; i++)
 	{
 		Cs[i]->Draw(window);
 	}
+	
 	drawHome(window,NOP);
+	window.draw(BigBox2);
+	//window.draw(BigBox3);
+	window.draw(BigBox);
+	//window.draw(B3);
 
 }
 

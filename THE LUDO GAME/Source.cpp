@@ -316,34 +316,43 @@ int main2()
     return 0;
 }
 
-void Amna_Moqeet(sf::RenderWindow& window, sf::Text& RG, sf::Text &A_M, sf::Sound &StrangerT)
+void Amna_Moqeet(sf::RenderWindow& window, sf::Text& RG, sf::Text &A_M, sf::Sound &StrangerT,  sf::Sprite Neonsky)
 {
+    sf::Color neonPurple(205, 0, 205);
+    sf::Color neonBlue(0, 246, 255);
     StrangerT.play();
+    
+         RG.setOutlineThickness(4);
+         RG.setOutlineColor(neonPurple);
     RG.setFillColor(sf::Color::White);
-            int r = 0;
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-
-            }
+    A_M.setFillColor(neonBlue);
+      int r = 0;
+          
     while (window.isOpen())
     {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
         if (r == 1000)break;
         window.clear();
         r++;
      
-        //window.clear(navy_blue);
-        window.draw(RG);
-           window.draw(A_M);
-            window.display();
+
+         window.draw(Neonsky);
+         window.draw(RG);
+         window.draw(A_M);
+         window.display();
+     
     }
-   sf::sleep(sf::seconds(3.5));
+   sf::sleep(sf::seconds(1));
 
 }
 void RisingGeeks(sf::RenderWindow& window,sf::Text &RG,sf::Sound Glitch)
 {
+
     int j = 0;
     Glitch.play();
     while (window.isOpen())
@@ -359,35 +368,285 @@ void RisingGeeks(sf::RenderWindow& window,sf::Text &RG,sf::Sound Glitch)
            RG.setFillColor(sf::Color::White);
        else
            RG.setFillColor(sf::Color::Black);
-      if (j == 3000)
+      if (j == 2200)
           break;
       window.clear();
         j++;
        
         //window.clear(navy_blue);
-      window.draw(RG);
+       
+        window.draw(RG);
       
       //window.draw(A_M);
       window.display();
     }
    RG.setFillColor(sf::Color::Black);
    Glitch.stop();
-  sf:: sleep(sf::seconds(2.5));
+  sf:: sleep(sf::seconds(1.5));
 
 }
+void MajesticMoves(sf::RenderWindow& window, sf::Text& Majestic, sf::Text& Moves,sf::Sprite Neon, sf::ConvexShape _PlayButton, sf::ConvexShape PlayButton2)
+{
+    //StrangerT.play();
+    Majestic.setFillColor(sf::Color::White);
+    sf::Color neonPurple(205, 0, 205);
+    sf::Color neonBlue(0, 246, 255);
+    int r = 0; bool Button_pressed = false;;
+    //_PlayButton.setScale(1.5, 1.5);
 
+    while (window.isOpen())
+    {
+        sf::Event evnt;
+        window.clear();
+        while (window.pollEvent(evnt))
+        {
+            if (evnt.type == sf::Event::Closed)
+                window.close();
+            if (evnt.type == Event::MouseMoved)
+            {
+                sf::Vector2i P = sf::Mouse::getPosition(window);
+              
+                if (_PlayButton.getLocalBounds().contains(P.x, P.y))
+                {
+                    _PlayButton.setPoint(0, sf::Vector2f(645, 530));
+                    _PlayButton.setPoint(1, sf::Vector2f(725, 570));
+                    _PlayButton.setPoint(2, sf::Vector2f(645, 610));
+                    //----------------------------------------------
+                    PlayButton2.setPoint(0, sf::Vector2f(650, 535));
+                    PlayButton2.setPoint(1, sf::Vector2f(720, 570));
+                    PlayButton2.setPoint(2, sf::Vector2f(650, 605));
+
+                }
+               else
+                {
+                    _PlayButton.setPoint(0, sf::Vector2f(660, 540));
+                    _PlayButton.setPoint(1, sf::Vector2f(720, 570));
+                    _PlayButton.setPoint(2, sf::Vector2f(660, 600));
+                    //----------------------------
+                    PlayButton2.setPoint(0, sf::Vector2f(665, 545));
+                    PlayButton2.setPoint(1, sf::Vector2f(715, 570));
+                    PlayButton2.setPoint(2, sf::Vector2f(665, 595));
+                }
+            }
+
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                sf::Vector2i P = sf::Mouse::getPosition(window);
+
+                if (PlayButton2.getLocalBounds().contains(P.x, P.y))
+                {
+                    Button_pressed = true;
+                    break;
+                }
+            
+            }
+        }
+        r++;
+        if (Button_pressed)break;
+
+        if (r > 2000)
+        {
+            Majestic.setFillColor(sf::Color::White);
+            //Moves.setFillColor(sf::Color::White);
+
+            window.draw(Neon);
+            Majestic.setOutlineThickness(3);
+            Majestic.setOutlineColor(neonPurple);
+            Moves.setOutlineThickness(3);
+            Moves.setOutlineColor(neonPurple);
+
+            /*Moves2.setOutlineThickness(3);
+            Moves2.setOutlineColor(sf::Color::Black);*/
+        }
+        if (r >2200 )
+        {
+         
+            window.draw(PlayButton2);
+            window.draw(_PlayButton);
+
+        }
+        if (r >= 1000)
+        window.draw(Majestic);
+       
+        if(r>=1500)
+        window.draw(Moves);
+        window.display();
+    }
+    //sf::sleep(sf::seconds(1));
+
+}
+void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text PT, sf::Text PF,Text &PS)
+{
+    sf::Color neonPurple(205, 0, 205);
+    sf::Color neonBlue(0, 246, 255);
+
+    SP.setScale(0.25, 0.25);
+    SP.setPosition(5, 0);
+
+    //-------------------------
+    
+    //-----------------------------
+    bool break_ = false;
+    while (window.isOpen())
+    {
+       
+        sf::Event evnt;
+        while (window.pollEvent(evnt))
+        {
+            if (evnt.type == sf::Event::Closed)
+                window.close();
+        
+            if (evnt.type == Event::MouseMoved)
+            {
+                sf::Vector2i mouseP = sf::Mouse::getPosition(window);
+
+
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 353 && mouseP.y < 394))
+                {
+                    PT.setFillColor(sf::Color::Red);
+                    PT.setCharacterSize(45);
+                }
+                else  
+                {
+                    PT.setFillColor(neonBlue);
+                    PT.setCharacterSize(40);
+                }
+
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 453 && mouseP.y < 494))
+                {
+                    PF.setFillColor(sf::Color::Red);
+                    PF.setCharacterSize(45);
+                }
+
+                else
+                {
+                    PF.setFillColor(neonBlue);
+                    PF.setCharacterSize(40);
+                }
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 553 && mouseP.y < 594))
+                {
+                    PS.setFillColor(sf::Color::Red);
+                    PS.setCharacterSize(45);
+                
+                }
+                else
+                {
+                    PS.setFillColor(neonBlue);
+                    PS.setCharacterSize(40);
+                }
+              
+            }
+             if (evnt.type == Event::MouseButtonPressed)
+            {
+                sf::Vector2i mouseP = sf::Mouse::getPosition(window);
+
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 353 && mouseP.y < 394))
+                {
+                    break_ = true;
+                    Nop = 2; break;
+                }
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 453 && mouseP.y < 494))
+                {
+                    break_ = true;
+                    Nop = 4;
+                    break;
+                }
+                if ((mouseP.x >= 130 && mouseP.x < 333) && (mouseP.y >= 553 && mouseP.y < 594))
+                {
+                    break_ = true;
+                    Nop = 6;
+                    break;
+                }
+           
+            }
+            if(break_ == true)
+                break;
+        
+        }
+
+        if (break_ == true)
+            break;
+
+        window.clear();
+        window.draw(SP);
+        window.draw(SelectP);
+        window.draw(PT);
+        window.draw(PF);
+        window.draw(PS);
+
+        window.display();
+    }
+}
 
 int main()
 {
-   
+
+    sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
+    window.setPosition(sf::Vector2i(-10, 0));
+
+    sf::Color neonPurple(205, 0, 205);
     sf::Font GOT;
-    
+    sf::Font Lato;
+    Lato.loadFromFile("Lato.ttf");
     GOT.loadFromFile("GameOfThrones.ttf");
     sf::Color navy_blue(0, 0, 128);
+    sf::Color neonBlue(0, 246, 255);
 
     sf::Text RisingGeek("RISING   GEEKS", GOT, 80);
     RisingGeek.setPosition(360, 190);
     RisingGeek.setFillColor(sf::Color::White);
+    sf::Text Majestic("LUDO", GOT, 80);
+    Majestic.setPosition(535, 250);
+    Majestic.setFillColor(neonPurple);
+    sf::Text Moves("LEGACY", GOT, 80);
+    Moves.setPosition(500, 360);
+    Moves.setFillColor(neonBlue);
+    sf::Text Moves2("M   VES", GOT, 80);
+    Moves2.setPosition(770, 250);
+    Moves2.setFillColor(sf::Color::White);
+    sf::Texture NE;
+    NE.loadFromFile("NeonP1.png");
+    sf::Sprite Neon(NE);
+    Neon.setScale(0.35, 0.35);
+    Neon.setPosition(5, 0);
+    sf::Texture Dc;
+    Dc.loadFromFile("UniqDixe.png");
+    sf::Sprite _Dice(Dc);
+   // Dice.setScale(0.55, 0.55);
+    _Dice.setPosition(830, 220);
+    _Dice.setScale(0.9,0.9);
+    sf::Texture NS;
+    NS.loadFromFile("NeonSky_.png");
+    sf::Sprite NeonSky(NS);
+    NeonSky.setScale(0.35, 0.35);
+    NeonSky.setPosition(5, 0);
+	sf::Color blur = sf::Color(255, 255, 255, 130);
+    //----------------------------
+
+    //----------------------------
+    sf::ConvexShape PlayButton;
+    PlayButton.setPointCount(3);
+    //===============================
+
+    PlayButton.setOutlineThickness(3);
+    PlayButton.setPoint(0, sf::Vector2f(660, 540));
+    PlayButton.setPoint(1, sf::Vector2f(720, 570));
+    PlayButton.setPoint(2, sf::Vector2f(660, 600));
+    PlayButton.setFillColor(blur);
+    PlayButton.setOutlineColor(neonPurple);
+    //PlayButton.setPosition(40, 80);
+    //--------------------
+    sf::ConvexShape PlayButton2;
+    PlayButton2.setPointCount(3);
+    PlayButton2.setPoint(0, sf::Vector2f(665, 545));
+    PlayButton2.setPoint(1, sf::Vector2f(715, 570));
+    PlayButton2.setPoint(2, sf::Vector2f(665, 595));
+    PlayButton2.setOutlineThickness(7);
+    PlayButton2.setOutlineColor(neonBlue);
+    PlayButton2.setFillColor(blur);
+
+    //---------------------------------
+    int NOP = 0;
     sf::SoundBuffer Gl;
     sf::SoundBuffer ST;
     Gl.loadFromFile("Glitch.wav");
@@ -395,40 +654,52 @@ int main()
     sf::Sound Glitch(Gl);
     sf::Sound StrangerT(ST);
     sf::Text Amna_MOq("AMNA   and   MOQEET", GOT, 30);
-    Amna_MOq.setPosition(500, 390);
+    Amna_MOq.setPosition(500, 350);
     Amna_MOq.setFillColor(sf::Color::White);
-    sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
-    window.setPosition(sf::Vector2i(-10, 0));
-    Dice D(1150, 500);
-    board B(2);
-    Ludo L(6);
+ 
+  // Dice D(1150, 500);
+   // board B(NOP);
+    //-----------------------------------------
+    sf::Text SelectP("SELECT  PLAYERS", GOT, 80);
+    //SelectP.setPosition(345, 100);
+    SelectP.setFillColor(neonPurple);
+    SelectP.setPosition(335 , 100 );
+    //-----------------------------
+    sf::Text P2("2 PLAYERS", Lato, 40);
+    P2.setPosition(130, 350);
+    P2.setFillColor(neonBlue);
+    //-----------------------------
+    sf::Text P4("4 PLAYERS", Lato, 40);
+    P4.setPosition(130, 450);
+    P4.setFillColor(neonBlue);
+    //-----------------------------
+    sf::Text P6("6 PLAYERS", Lato, 40);
+    P6.setPosition(130, 550);
+    P6.setFillColor(neonBlue);
+
+    //---------------------------------
+    sf::Texture SP;
+    SP.loadFromFile("SelectPlayer.jpg");
+    sf::Sprite SPl(SP);
+
+//-------------------------------------
     while (window.isOpen())
     {
-  
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-        
         }
-       /* window.clear();
-        D.rollDice(&B,window);
-        B.drawBoard(window);
-        D.drawDice(window);
-        window.display();
-        for (long long i = 0; i < 1000000000; i++);*/
 
         window.clear();
         RisingGeeks(window,RisingGeek,Glitch);
-        Amna_Moqeet(window, RisingGeek, Amna_MOq,StrangerT);
-        L.play(window);
+        Amna_Moqeet(window, RisingGeek, Amna_MOq,StrangerT, NeonSky); 
+        MajesticMoves(window, Majestic, Moves,Neon,PlayButton,PlayButton2);
+        SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6);
+        Ludo L(NOP);
+        L.play(window);      
         window.display();
-
-
-
     }
-
     return 0;
 }
-

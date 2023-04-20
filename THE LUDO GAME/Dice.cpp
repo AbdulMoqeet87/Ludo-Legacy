@@ -87,7 +87,11 @@ Dice::Dice(int r, int c)
 	TextureSize.y /= 3;
 	DR.loadFromFile("DiceRoll.wav");
 	DiceRoll.setBuffer(DR);
+	Dh.loadFromFile("Neon__Box2.png");
+	DiceHigh.setTexture(Dh);
+	DiceHigh.setPosition(1139, 479);
 }
+
 
 void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
 {
@@ -108,7 +112,9 @@ void Dice::rollDice(board* B, RenderWindow& window, Sprite BG,int NOP)
 				dice.setPosition(1150, 500 + (c * 8));
 			dice.setTextureRect(IntRect(TextureSize.x * c, TextureSize.y * r, TextureSize.x, TextureSize.y));
 			window.draw(BG);
+			
 			window.draw(dice);
+
 			B->drawBoard(window, NOP);
 			window.display();
 		}
@@ -144,8 +150,10 @@ void Dice::drawDice(RenderWindow& window)
 	D.setTexture(TexPic);
 	D.setScale(0.15, 0.15);
 	D.setPosition(ri, ci);
-	//dice.setSize(Vector2f(100, 100));
+
+	//window.draw(DiceHigh);
 	window.draw(D);
+	
 }
 
 void Dice::setDiceValue(int d)
@@ -164,6 +172,16 @@ bool Dice::isClicked(int ri, int ci)
 	return false;
 }
 
+void Dice::HighlightDice(sf::RenderWindow& window)
+{
+	window.draw(DiceHigh);
+}
+bool Dice::Contains(int ri, int ci)
+{
+	if (this->D.getGlobalBounds().contains(ci, ri))
+		return true;
+	return false;
+}
 //void Dice::drawDiceNum(RenderWindow& window,int ri,int ci)
 //{
 //	string filename;

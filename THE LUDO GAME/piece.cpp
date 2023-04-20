@@ -25,6 +25,7 @@ piece::piece(int c,int r, sf::Color _C,string Cn)
 	this->C = _C;
 	this->P.loadFromFile(Cn);
 	this->Pc.setTexture(P);
+	Pc.setScale(1, 1);
 	Pc.setPosition(ci, ri);
 }
 

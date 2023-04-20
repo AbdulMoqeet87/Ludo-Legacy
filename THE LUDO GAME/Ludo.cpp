@@ -63,7 +63,7 @@ Ludo::Ludo(int _NOP)
 	sf::Color more_yellowish_yellow(255, 255, 51);
 	sf::Color purple(128, 0, 128);
 
-	BG.loadFromFile("StarryBack.jpg");
+	BG.loadFromFile("StarryBack2.jpg");
 	BackG.setTexture(BG);
 	BackG.setScale(0.7,0.7);
 	Ps = new player * [NOP];
@@ -88,8 +88,9 @@ Ludo::Ludo(int _NOP)
 		Ps[0] = new player("Amna", maroon);
 		Ps[1] = new player("Moqeet", golden_yellow);
 	}
-	//Ps[0]->setHasKilled(true);
-	//WinPs.push_back(Ps[0]);
+	/*Ps[0]->setHasKilled(true);
+	WinPs.push_back(Ps[0]);
+	WinPs.push_back(Ps[1]);*/
 	//Ps[1]->setHasKilled(true);
 	//Ps[1]->setIsWin(true);
 	S = new sf::SoundBuffer[3];
@@ -103,16 +104,18 @@ Ludo::Ludo(int _NOP)
 	sounds[2].setBuffer(S[2]);
 
 	B = new board(NOP);
-	dice = new Dice(1140, 500);
+	dice = new Dice(1160, 500);
 	dice->setDiceValue(2);
 	Ds[0] = new Dice(1070, 180);
 	Ds[1] = new Dice(1160, 180);
 	Ds[2] = new Dice(1250, 180);
-
+	DHi.setSize(Vector2f(80, 80));
+	DHi.setFillColor(sf::Color::Transparent);
+	DHi.setOutlineThickness(3);
+	DHi.setOutlineColor(sf::Color::Transparent);
 	Turn = 0;
 	sri = 0, sci = 0;
 }
-
 
 void Ludo::turnChange()
 {
@@ -127,26 +130,6 @@ void Ludo::turnChange()
 	if (isWin())
 		turnChange();
 }
-
-//bool Ludo::isValidSc()
-//{
-//	int pi;
-//	if (B->getPiece(sri, sci) != nullptr)
-//	{
-//		if (B->getPiece(sri, sci)->getColor() == Ps[Turn]->getColor())
-//		{
-//			return true;
-//		}
-//	}
-//	else if (B->getHome(Turn)->clickedHomePiece(sri,sci,pi))
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
 
 bool Ludo::isValidSc(int& indx, int DiceIndx)
 {
@@ -183,7 +166,6 @@ void Ludo::DrawDice(sf::RenderWindow& window)
 	{
 		if (Ds[i]->getDiceValue() != 0)
 			Ds[i]->drawDice(window);
-
 	}
 	dice->drawDice(window);
 }
@@ -682,9 +664,9 @@ void Ludo::DrawWinner(sf::RenderWindow& window)
 		case 0:
 			fn = "first.png";
 			break;
-		/*case 1:
-			fn = "second.png";
-			break;*/
+		case 1:
+			fn = "first.png";
+			break;
 		}
 		WinTex.loadFromFile(fn);
 		Win.setTexture(WinTex);
@@ -703,11 +685,27 @@ bool Ludo::GameEnded()
 
 void Ludo::play(sf::RenderWindow& window)
 {
+	sf::Color greyish_green(64, 96, 64);
+	sf::Color dark_yellow(153, 153, 0);
+	sf::Color dark_green(0, 100, 0);
+	sf::Color maroon(128, 0, 0);
+	sf::Color navy_blue(0, 0, 128);
+	sf::Color mustard(204, 187, 68);
+	sf::Color metallic_grey(139, 139, 131);
+	sf::Color dark_grey(64, 64, 64);
+	sf::Color golden_yellow(255, 215, 0);
+	sf::Color more_yellowish_yellow(255, 255, 51);
+	sf::Color purple(128, 0, 128);
+	sf::Color neonPurple(205, 0, 205);
+	sf::Color neonBlue(0, 246, 255);
+	sf::Color blur = sf::Color(255, 255, 255, 155);
+	
+
 	int indx = -1;
 	int DiceIndx = 0;
 	bool selected = false;
 	bool diceRolled = false;
-	int di = 0;
+	int di = 0; bool ClickClick = false;
 	bool canSelect = false;
 	bool rollingDice = true;
 	while (window.isOpen())
@@ -717,7 +715,33 @@ void Ludo::play(sf::RenderWindow& window)
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			
 			B->getHome(Turn)->HighlightHome();
+			if (event.type == Event::MouseMoved && diceRolled)
+			{
+				sf::Vector2i P = sf::Mouse::getPosition(window);
+				if (Ds[0]->Contains(P.y, P.x)&&Ds[0]->getDiceValue()!=0)
+				{
+					DHi.setPosition(1069, 178);
+					DHi.setOutlineColor(sf::Color::Red);
+				}
+				else if (Ds[1]->Contains(P.y, P.x) && Ds[1]->getDiceValue() != 0)
+				{
+					DHi.setPosition(1159, 178);
+					DHi.setOutlineColor(sf::Color::Red);
+				}
+				else if (Ds[2]->Contains(P.y, P.x) && Ds[2]->getDiceValue() != 0)
+				{
+					DHi.setPosition(1249, 178);
+					DHi.setOutlineColor(sf::Color::Red);
+				}
+				else 
+					DHi.setOutlineColor(sf::Color::Transparent);
+			
+			
+			
+			}
+
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -725,16 +749,17 @@ void Ludo::play(sf::RenderWindow& window)
 				sci = mousePos.x;
 				if (rollingDice)
 				{
-					cout << "rollingDice\n";
 					if (clickedDice())
 					{
-						cout << "isclickedDice\n";
 						/*int s = 0;
 						cin >> s;
 						Ds[di]->setDiceValue(s);
 						*/
 						RollDice(window, di);
-						cout << "getDiceValue :" << Ds[di]->getDiceValue() << endl;
+						if (Ds[di]->getDiceValue() == 6)
+						{
+							Ds[di]->HighlightDice(window);
+						}
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
 						{
@@ -847,10 +872,15 @@ void Ludo::play(sf::RenderWindow& window)
 					}*/
 			}
 		}
+		//BigBox.setOutlineColor(B->getHome(Turn)->getHOmeColor());
 		window.clear();
 		window.draw(BackG);
+	
 		B->drawBoard(window,NOP);
 		DrawWinner(window);
+		window.draw(DHi);
+		if (rollingDice)
+			Ds[0]->HighlightDice(window);
 		DrawDice(window);
 		window.display();
 		if (AllSix())
