@@ -475,7 +475,7 @@ void MajesticMoves(sf::RenderWindow& window, sf::Text& Majestic, sf::Text& Moves
     //sf::sleep(sf::seconds(1));
 
 }
-void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text PT, sf::Text PF,Text &PS)
+void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text PT, sf::Text PF,Text &PS,sf::Sound& S)
 {
     sf::Color neonPurple(205, 0, 205);
     sf::Color neonBlue(0, 246, 255);
@@ -559,13 +559,17 @@ void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text 
                 }
            
             }
+
             if(break_ == true)
                 break;
         
         }
 
         if (break_ == true)
+        {
+            S.setVolume(20);
             break;
+        }
 
         window.clear();
         window.draw(SP);
@@ -578,7 +582,7 @@ void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text 
     }
 }
 
-int main()
+int Game(bool Restarted)
 {
 
     sf::RenderWindow window(sf::VideoMode(1375, 696), "Ludo Game", sf::Style::Close | sf::Style::Resize);
@@ -622,7 +626,7 @@ int main()
     NeonSky.setPosition(5, 0);
 	sf::Color blur = sf::Color(255, 255, 255, 130);
     //----------------------------
-
+   
     //----------------------------
     sf::ConvexShape PlayButton;
     PlayButton.setPointCount(3);
@@ -646,7 +650,8 @@ int main()
     PlayButton2.setFillColor(blur);
 
     //---------------------------------
-    int NOP = 0;
+    int Ending = -1;//quit or Restart
+    int NOP = 6;
     sf::SoundBuffer Gl;
     sf::SoundBuffer ST;
     Gl.loadFromFile("Glitch.wav");
@@ -693,13 +698,33 @@ int main()
         }
 
         window.clear();
-        RisingGeeks(window,RisingGeek,Glitch);
-        Amna_Moqeet(window, RisingGeek, Amna_MOq,StrangerT, NeonSky); 
-        MajesticMoves(window, Majestic, Moves,Neon,PlayButton,PlayButton2);
-        SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6);
+        if(!Restarted)
+        {
+            RisingGeeks(window, RisingGeek, Glitch);
+            Amna_Moqeet(window, RisingGeek, Amna_MOq, StrangerT, NeonSky);
+            MajesticMoves(window, Majestic, Moves, Neon, PlayButton, PlayButton2);
+        }
+        SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6, StrangerT);
         Ludo L(NOP);
-        L.play(window);      
+        L.play(window,Ending);      
+        if (Ending == 0 || Ending == 1)
+            return Ending;
         window.display();
+    }
+    return 0;
+}
+
+int main()
+{
+    int G = 1;
+    bool restarted = false;
+    while (true)
+    {
+        G=Game(restarted);
+        if (G == 0)
+            break;
+        if (G == 1)
+            restarted = true;
     }
     return 0;
 }

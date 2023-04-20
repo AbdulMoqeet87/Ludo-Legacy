@@ -16,10 +16,15 @@ class board
 		piece** Ps;
 		sf::Sprite Win;
 		sf::Texture WinTex;
-	public:
+
 		sf::RectangleShape BigBox3;
 		sf::RectangleShape BigBox2;
 		sf::RectangleShape BigBox;
+		sf::Texture PB;
+		sf::Sprite PowerButton;
+		sf::Texture Bi;
+		sf::Sprite BlurrImage;
+		sf::RectangleShape DialougeBox;
 public:
 		board(int NOP);
 		//piece* getPiece(int ri,int ci);
@@ -36,6 +41,7 @@ public:
 		int getCellRow(int indx);
 		int getCellCol(int indx);
 		void DrawWinner(std::vector<player*> WinPs,sf::RenderWindow& window);
-
+		bool PowerButtonClicked(int r, int c);
+		void DrawRestart(sf::RenderWindow& window,int &Ending);
 };
 

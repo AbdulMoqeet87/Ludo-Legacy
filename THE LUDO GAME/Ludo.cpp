@@ -51,6 +51,7 @@ Ludo::Ludo()
 Ludo::Ludo(int _NOP)
 {
 	NOP = _NOP;
+	hasmoved = false;
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
 	sf::Color dark_green(0, 100, 0);
@@ -285,6 +286,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 	//-----------Movementof piece from the home
 	if (Ds[DiceIndx]->getDiceValue() == 6 && B->getPiece(indx)->atIntialPos(curr_r, curr_c))
 	{
+		hasmoved = true;
 		sounds[1].play();
 		B->getPiece(indx)->setPosition(B->getCellCol(B->getHome(Turn)->getInitialPos()) + 38, B->getCellRow(B->getHome(Turn)->getInitialPos()) + 42);
 		B->getPiece(indx)->setCellIndex(B->getHome(Turn)->getInitialPos());
@@ -298,7 +300,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 	//--------------Movement of piece inside the home cells
 	else if (B->getPiece(indx)->getCellIndex() > 90)
 	{
-
+		hasmoved = true;
 		//----------------Movement of Winning Piece
 		if ((Ds[DiceIndx]->getDiceValue() + (B->getPiece(indx)->getCellIndex())) == 96)
 		{
@@ -313,7 +315,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 				B->drawBoard(window, NOP,JootaIndx,WinPs);
 				DrawDice(window);
 				window.display();
-				sleep(sf::seconds(0.05));
+				sf::sleep(sf::seconds(0.05));
 				sounds[2].stop();
 
 			}
@@ -354,6 +356,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 	//-----------Movement of piece on the board
 	else if (!B->getPiece(indx)->atIntialPos(curr_r, curr_c))
 	{
+		hasmoved = true;
 		for (int i = 0; i < Ds[DiceIndx]->getDiceValue(); i++)
 		{
 			Temp_indx += 1;
@@ -370,6 +373,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 		//--------------Movement if Entering the home
 		if (Ps[Turn]->hasKilled() && canEnterHome)
 		{
+
 			//B->getHome(Turn)->getHomeCellPos(Ds[DiceIndx]->getDiceValue() - enterHomeAt - 1, HomeCellri, HomeCellci);
 			//B->getPiece(indx)->setPosition(HomeCellci + 38, HomeCellri + 42);
 			//B->getPiece(indx)->setCellIndex((Ds[DiceIndx]->getDiceValue() - enterHomeAt) + 90);
@@ -428,6 +432,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 		//------------movement on the board
 		else
 		{
+			hasmoved = true;
 	        /*if (NewCell_indx > 89)
 				NewCell_indx -= 90;*/
 			
@@ -633,6 +638,7 @@ void Ludo::Move(int indx, int DiceIndx,sf::RenderWindow &window)
 			}
 		}
 	}
+
 }
 
 bool Ludo::clickedDice()
@@ -883,12 +889,12 @@ bool Ludo::isWin()
 
 bool Ludo::GameEnded()
 {
-	if (WinPs.size() == NOP - 2)
+	if (WinPs.size() == NOP - 1)
 		return true;
 	return false;
 }
 
-void Ludo::play(sf::RenderWindow& window)
+void Ludo::play(sf::RenderWindow& window, int &ending)
 {
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
@@ -905,7 +911,7 @@ void Ludo::play(sf::RenderWindow& window)
 	sf::Color neonBlue(0, 246, 255);
 	sf::Color blur = sf::Color(255, 255, 255, 155);
 	
-
+	bool RestartPressed = false;
 	int indx = -1;
 	int DiceIndx = 0;
 	bool selected = false;
@@ -943,9 +949,6 @@ void Ludo::play(sf::RenderWindow& window)
 				}
 				else 
 					DHi.setOutlineColor(sf::Color::Transparent);
-			
-			
-			
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -953,6 +956,10 @@ void Ludo::play(sf::RenderWindow& window)
 				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 				sri = mousePos.y;
 				sci = mousePos.x;
+				if (B->PowerButtonClicked(sri, sci))
+					RestartPressed = true;
+				else RestartPressed = false;
+
 				if (rollingDice)
 				{
 					if (clickedDice())
@@ -965,36 +972,33 @@ void Ludo::play(sf::RenderWindow& window)
 					
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
-						{
-							cout << "di++\n";
 							di++;
-						}
+						
 						else
-						{
-							cout << "no ++\n";
 							rollingDice = false, diceRolled = true;
-						}
 						
 					}
 				}
 
 				if (diceRolled)
 				{
-					cout << "ifDiceRolled\n";
+				
 					selectDiceValue(DiceIndx);
 					if (canMove() && moveCanceled==false)
 					{
-						cout << "canMOve\n";
+						
 
 						if (isValidSc(indx, DiceIndx))
 						{
-							cout << "Valid source" << endl;
+						
 							if (isLegalMove(indx, DiceIndx))
 							{
-								cout << "LegalMove" << endl;
+							
 								Move(indx, DiceIndx, window);
-								indx = -1;
+								if(hasmoved)
 								Ds[DiceIndx]->setDiceValue(0);
+								hasmoved = false;
+								indx = -1;
 								if (DiceIsEmpty())
 								{
 									B->getHome(Turn)->UnHighlightHome();
@@ -1014,7 +1018,7 @@ void Ludo::play(sf::RenderWindow& window)
 					}
 					else
 					{
-						cout << "CanNotMove\n";
+						
 						B->getHome(Turn)->UnHighlightHome();
 						turnChange();
 						di = 0;
@@ -1037,8 +1041,14 @@ void Ludo::play(sf::RenderWindow& window)
 				}
 			}
 		}
-		//BigBox.setOutlineColor(B->getHome(Turn)->getHOmeColor());
+	
 		window.clear();
+		if (RestartPressed)
+			B->DrawRestart(window,ending);
+		if(ending==0 ||ending==1)
+			break;
+		
+		RestartPressed = false;
 		window.draw(BackG);
 		B->drawBoard(window,NOP, JootaIndx,WinPs);
 		window.draw(DHi);
@@ -1046,6 +1056,8 @@ void Ludo::play(sf::RenderWindow& window)
 			Ds[0]->HighlightDice(window);
 		DrawDice(window);
 		window.display();
+	
+		//----------------------------
 		if (AllSix())
 		{
 			sleep(seconds(1));

@@ -161,6 +161,20 @@ board::board(int NOP)
 		Ps[i + 2] = new piece(_c + 55, _r + 220, C, fn);
 		Ps[i + 3] = new piece(_c + 215, _r + 220, C, fn);
 	}
+	PB.loadFromFile("P-Butt_N.png");
+	PowerButton.setTexture(PB);
+	PowerButton.setPosition(sf::Vector2f(1230,30));
+	Bi.loadFromFile("BlurrBoard.png");
+	BlurrImage.setTexture(Bi);
+	BlurrImage.setScale(1, 1);
+	BlurrImage.setPosition(0, 0);
+
+	DialougeBox.setFillColor(sf::Color::Black);
+	DialougeBox.setOutlineColor(neonPurple);
+	DialougeBox.setOutlineThickness(10);
+	DialougeBox.setSize(sf::Vector2f(700, 500));
+	DialougeBox.setPosition(sf::Vector2f(300, 80));
+
 	//if (NOP == 2)
 	//{
 	//	for (int i = 0; i < NOP*4; i += 4)
@@ -297,6 +311,83 @@ board::board(int NOP)
 //
 //}
 
+void board::DrawRestart(sf::RenderWindow& window, int& Ending)
+{
+	sf::Font GOT;
+	sf::Font Lato;
+	sf::Color neonPurple(205, 0, 205);
+	Lato.loadFromFile("Lato.ttf");
+	GOT.loadFromFile("GameOfThrones.ttf");
+	sf::Text RESTART("RESTART ", GOT, 50);
+	sf::Text QUIT("QUIT ", GOT, 50);
+	RESTART.setPosition(sf::Vector2f(515,230));
+	QUIT.setPosition(sf::Vector2f(565,380));
+	bool Break = false;
+	
+
+	while(window.isOpen())
+	{
+
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+			if (event.type == sf::Event::MouseMoved)
+			{
+				sf::Vector2i P = sf::Mouse::getPosition(window);
+
+				if ((P.x >= 515 && P.x < 800) && (P.y >= 230 && P.y < 281))
+					RESTART.setFillColor(neonPurple);
+				else
+					RESTART.setFillColor(sf::Color::White);
+
+				if ((P.x >= 565 && P.x < 700) && (P.y >= 380 && P.y < 431))
+					QUIT.setFillColor(neonPurple);
+				else
+					QUIT.setFillColor(sf::Color::White);
+			}
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				sf::Vector2i P = sf::Mouse::getPosition(window);
+
+				if ((P.x >= 515 && P.x < 800) && (P.y >= 230 && P.y < 281))  //Pressed Restart
+				{
+					Break = true;
+					Ending = 1;
+					break;
+				}
+				if ((P.x >= 565 && P.x < 700) && (P.y >= 380 && P.y < 431))  //Pressed Quit 
+				{
+					Break = true;
+					Ending = 0;
+					break;
+				}
+				
+				else if ((P.x < 300 || P.x > 1000) || (P.y <80 || P.y> 580))
+				{
+					Break = true;
+					Ending = -1;
+					break;
+				}
+			
+			}
+		
+
+		}
+
+		if (Break)
+			break;
+		window.clear();
+		window.draw(BlurrImage);
+		window.draw(DialougeBox);
+		window.draw(RESTART);
+		window.draw(QUIT);
+		window.display();
+	}
+
+}
+
 void board::drawBoard(sf::RenderWindow& window, int NOP, vector<int> JootaIndx, vector<player*> WinPs)
 {
 	sf::Color blur= sf::Color(255, 255, 255, 128); // White with alpha 128
@@ -318,10 +409,10 @@ void board::drawBoard(sf::RenderWindow& window, int NOP, vector<int> JootaIndx, 
 	drawHome(window, NOP, JootaIndx);
 	DrawWinner(WinPs, window);
 	
-	
 	window.draw(BigBox2);
 	//window.draw(BigBox3);
 	window.draw(BigBox);
+	window.draw(PowerButton);
 	//window.draw(B3);
 
 }
@@ -447,4 +538,11 @@ int board::getCellCol(int indx)
 {
 	return this->Cs[indx]->getCol();
 
+}
+
+bool board::PowerButtonClicked(int r, int c)
+{
+	if (PowerButton.getGlobalBounds().contains(c, r))
+		return true;
+	return false;
 }

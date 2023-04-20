@@ -20,6 +20,7 @@ private:
 	int Turn;
 	int sri;
 	int sci;
+	bool hasmoved;
 	sf::SoundBuffer* S;
 	sf::Sound *sounds;
 	sf::Sprite BackG;
@@ -37,7 +38,7 @@ public:
 	bool isValidSc(int &indx, int DiceIndx);
 	bool isLegalMove(int indx, int DiceIndx);
 	//bool isValidSc(int &indx);
-	void play(sf::RenderWindow& window);
+	void play(sf::RenderWindow& window, int &ending);
 	void RollDice(sf::RenderWindow& window, int di);
 	void DrawDice(sf::RenderWindow& window);
 	void  Move(int indx, int DiceIndx, sf::RenderWindow &winidow);
