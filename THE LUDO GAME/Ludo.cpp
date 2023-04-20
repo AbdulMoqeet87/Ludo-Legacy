@@ -844,9 +844,9 @@ void Ludo::displayScoreCard(sf::RenderWindow& window)
 
 bool Ludo::GameEnded()
 {
-	//if (WinPs.size() == NOP - 1)
+	if (WinPs.size() == NOP - 1)
 		return true;
-	//return false;
+	return false;
 }
 
 void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
@@ -925,11 +925,11 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 				{
 					if (clickedDice())
 					{
-						int s = 0;
+						/*int s = 0;
 						cin >> s;
-						Ds[di]->setDiceValue(s);
+						Ds[di]->setDiceValue(s);*/
 						
-						//RollDice(window, di);
+						RollDice(window, di);
 					
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
@@ -1033,12 +1033,11 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 		if (GameEnded())
 		{
 
-			for (int i = 0; i < 5; i++)
+			/*for (int i = 0; i < 5; i++)
 			{
 				WinPs.push_back(Ps[i]);
 			}
-		
-
+		*/
 			displayScoreCard(window);
 			ending = 1;
 			break;
