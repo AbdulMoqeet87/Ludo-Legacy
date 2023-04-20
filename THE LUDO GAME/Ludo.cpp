@@ -92,6 +92,7 @@ Ludo::Ludo(int _NOP)
 		Ps[0] = new player("Amna", maroon);
 		Ps[1] = new player("Moqeet", golden_yellow);
 	}
+	//Ps[1]->setHasKilled(true);
 	/*Ps[0]->setHasKilled(true);
 	WinPs.push_back(Ps[0]);
 	Ps[1]->setHasKilled(true);
@@ -160,7 +161,7 @@ void Ludo::turnChange()
 		turnChange();
 }
 
-bool Ludo::isLegalMove(int indx, int DiceIndx)
+bool Ludo::isLegalMove(int indx, int DiceIndx,bool& isCanceled)
 {
 	bool isJoota = false;
 	for (int x = 0; x < JootaIndx.size(); x++)
@@ -191,7 +192,8 @@ bool Ludo::isLegalMove(int indx, int DiceIndx)
 					if (count <= 1 && (Ds[DiceIndx]->getDiceValue() != 6))
 					{
 						//MoveFailed = false;
-						EraseDice();
+						//EraseDice();
+						isCanceled = true;
 						/*B->getHome(Turn)->UnHighlightHome();
 						turnChange();*/
 					}
@@ -686,43 +688,6 @@ bool Ludo::canMove()
 void Ludo::selectDiceValue(int& DiceIndx)
 {
 	cout << "Entered Select Value\n";
-	//bool breakAll = false;
-	//while (window.isOpen())
-	//{
-	//
-	//	sf::Event event;
-	//	while (window.pollEvent(event))
-	//	{
-	//		if (event.type == sf::Event::Closed)
-	//			window.close();
-	//		if (event.type == Event::MouseButtonPressed)
-	//		{
-	//			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	//			sri = mousePos.y;
-	//			sci = mousePos.x;
-	//
-	//			for (int i = 0; i < 3; i++)
-	//			{
-	//				cout << "Dice value  " << Ds[i]->getDiceValue() << endl;
-	//				if (Ds[i]->isClicked(sri, sci))
-	//				{
-	//					DiceIndx = i;
-	//					breakAll = true;
-	//					break;
-	//					cout << " \n\nValueSelected\n";
-	//				}
-	//			}
-	//		
-	//		
-	//		}
-	//		if (breakAll)break;
-	//	}
-	//	if (breakAll)break;
-	//	window.clear();
-	//	B->drawBoard(window);
-	//	DrawDice(window);
-	//	window.display();
-	//}
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -736,95 +701,7 @@ void Ludo::selectDiceValue(int& DiceIndx)
 	cout << "sri" << sri << endl;
 	cout << "sci" << sci << endl;
 
-	//if ((sri >= 99 && sri < 200) && (sci >= 1098 && sri < 1200))
-	//{
-	//	DiceIndx = 0;
-	//}
-	//else if ((sri >= 99 && sri < 200) && (sri >= 1201 && sri < 1303))
-	//{
-	//	DiceIndx = 1;
-	//}
-	//else if ((sri >= 99 && sri < 200) && (sri >= 1304 && sri < 1406))
-	//{
-	//	DiceIndx = 2;
-	//}
-
 	cout << "Exit Selected Value\n";
-
-	//void Ludo::play(sf::RenderWindow& window)
-	//{
-	//	int indx = -1;
-	//	int DiceIndx = 0;
-	//	bool selected = false;
-	//	bool diceRolled = false;
-	//	int di = 0;
-	//	bool canSelect = false;
-	//	while (window.isOpen())
-	//	{
-	//		sf::Event event;
-	//		while (window.pollEvent(event))
-	//		{
-	//			if (event.type == sf::Event::Closed)
-	//				window.close();
-	//			if (event.type == Event::MouseButtonPressed)
-	//			{
-	//				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	//				sri = mousePos.y;
-	//				sci = mousePos.x;
-	//				selected = true;
-	//				if (!canSelect)
-	//				{
-	//					if (clickedDice())
-	//					{
-	//						RollDice(window, di);
-	//						if (Ds[di]->getDiceValue() != 6)
-	//							diceRolled = true, canSelect = true;
-	//						else
-	//							di++,diceRolled = false;
-	//						selected = false;
-	//					}
-	//				}
-	//				else
-	//				{
-	//					if (diceRolled)
-	//					{
-	//						selectDiceValue(DiceIndx);
-	//						diceRolled = false;
-	//						selected = false;
-	//					}
-	//					if (selected)
-	//					{
-	//						if (canMove())
-	//						{
-	//							if (isValidSc(indx))
-	//							{
-	//								//B->getPiece(indx)->setPosition(B->getHome(Turn)->getInitialPos());
-	//								//B->setCellColor(B->getHome(Turn)->getSafeSpot());
-	//								//RollDice(window);
-	//								Move(indx, DiceIndx);
-	//								turnChange();
-	//								selected = false;
-	//								indx = -1;
-	//								di = 0;
-	//							}
-	//						}
-	//						else
-	//						{
-	//							turnChange();
-	//							selected = false;
-	//							indx = -1;
-	//							di = 0;
-	//						}
-	//					}
-	//				}
-	//			}
-	//		}
-	//		window.clear();
-	//		B->drawBoard(window);
-	//		DrawDice(window);
-	//		window.display();
-	//	}
-	//}
 }
 
 bool Ludo::DiceIsEmpty()
@@ -973,11 +850,11 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 				{
 					if (clickedDice())
 					{
-						/*int s = 0;
+						int s = 0;
 						cin >> s;
 						Ds[di]->setDiceValue(s);
-						*/
-						RollDice(window, di);
+						
+						//RollDice(window, di);
 					
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
@@ -1000,12 +877,12 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 						if (isValidSc(indx, DiceIndx))
 						{
 						
-							if (isLegalMove(indx, DiceIndx))
+							if (isLegalMove(indx, DiceIndx, moveCanceled))
 							{
-							
+
 								Move(indx, DiceIndx, window);
-								if(hasmoved)
-								Ds[DiceIndx]->setDiceValue(0);
+								if (hasmoved)
+									Ds[DiceIndx]->setDiceValue(0);
 								hasmoved = false;
 								indx = -1;
 								if (DiceIsEmpty())
@@ -1019,10 +896,8 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 									indx = -1;
 									moveCanceled = false;
 								}
-								moveCanceled = false;
+								//moveCanceled = false;
 							}
-							else
-								moveCanceled = true;
 						}
 					}
 					else
@@ -1041,6 +916,7 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 					{
 						B->getHome(Turn)->UnHighlightHome();
 						turnChange();
+						EraseDice();
 						di = 0;
 						rollingDice = true;
 						diceRolled = false;

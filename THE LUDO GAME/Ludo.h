@@ -37,7 +37,7 @@ public:
 	Ludo(int _NOP);
 	void turnChange();
 	bool isValidSc(int &indx, int DiceIndx);
-	bool isLegalMove(int indx, int DiceIndx);
+	bool isLegalMove(int indx, int DiceIndx,bool& isCancelled);
 	//bool isValidSc(int &indx);
 	void play(sf::RenderWindow& window, int &ending,sf::Sound &S);
 	void RollDice(sf::RenderWindow& window, int di);
