@@ -264,7 +264,7 @@ void home::UnHighlightHome()
 	this->Background->setOutlClr(sf::Color::White);
 }
 
-void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
+void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP, std::vector<int> JootaIndx, std::vector<player*> WinPs)
 {
 	if(!hasKilled)
 	{
@@ -283,7 +283,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 			sleep(sf::seconds(0.01));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window,NOP);
+			b->drawBoard(window,NOP,JootaIndx,WinPs);
 			L->DrawDice(window);
 			window.display();
 
@@ -302,7 +302,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 			sleep(sf::seconds(0.01));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window,NOP);
+			b->drawBoard(window,NOP, JootaIndx, WinPs);
 			L->DrawDice(window);
 			window.display();
 		}
@@ -317,7 +317,7 @@ void home::Blink(sf::RenderWindow & window,board *b,Ludo *L,Sprite BG,int NOP)
 			sleep(sf::seconds(0.02));
 			window.clear();
 			window.draw(BG);
-			b->drawBoard(window,NOP);
+			b->drawBoard(window,NOP, JootaIndx, WinPs);
 			L->DrawDice(window);
 			window.display();
 		}

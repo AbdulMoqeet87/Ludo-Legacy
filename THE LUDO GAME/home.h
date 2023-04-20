@@ -2,7 +2,7 @@
 #include<fstream>
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
-
+#include<vector>
 #include<string>
 using namespace sf;
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 class board;
 class Cell;
 class Ludo;
+class player;
 class home
 {
 private:
@@ -49,7 +50,7 @@ public:
 	void getHomeCellPos(int i, int& r, int& c);
 	void HighlightHome();
 	void UnHighlightHome();
-	void Blink(sf::RenderWindow& window, board* b, Ludo* L, Sprite BG,int NOP);
+	void Blink(sf::RenderWindow& window, board* b, Ludo* L, Sprite BG,int NOP, std::vector<int> JootaIndx, std::vector<player*> WinPs);
 
 };
 

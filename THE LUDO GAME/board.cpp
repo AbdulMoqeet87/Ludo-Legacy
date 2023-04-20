@@ -3,6 +3,8 @@
 #include"cell.h"
 #include"home.h"
 #include"piece.h"
+#include"player.h"
+#include<vector>
 using namespace std;
 
 board::board(int NOP)
@@ -278,13 +280,24 @@ board::board(int NOP)
 	//Ps[1]->setCellIndex(86);
 	//Ps[1]->setPosition(Cs[86]->getCol() + 38, Cs[86]->getRow() + 42);
 	
-	Ps[1]->setCellIndex(47);
+	/*Ps[1]->setCellIndex(47);
 	Ps[1]->setPosition(Cs[47]->getCol() + 38, Cs[47]->getRow() + 42);
 	Ps[6]->setCellIndex(44);
-	Ps[6]->setPosition(Cs[44]->getCol() + 38, Cs[44]->getRow() + 42);
+	Ps[6]->setPosition(Cs[44]->getCol() + 38, Cs[44]->getRow() + 42);*/
 }
 
-void board::drawBoard(sf::RenderWindow& window,int NOP)
+//void board::drawBoard(sf::RenderWindow& window,int NOP)
+//{
+//
+//	for (int i = 0; i < 90; i++)
+//	{
+//		Cs[i]->Draw(window);
+//	}
+//	drawHome(window,NOP);
+//
+//}
+
+void board::drawBoard(sf::RenderWindow& window, int NOP, vector<int> JootaIndx, vector<player*> WinPs)
 {
 	sf::Color blur= sf::Color(255, 255, 255, 128); // White with alpha 128
 
@@ -302,6 +315,8 @@ void board::drawBoard(sf::RenderWindow& window,int NOP)
 	{
 		Cs[i]->Draw(window);
 	}
+	drawHome(window, NOP, JootaIndx);
+	DrawWinner(WinPs, window);
 	
 	drawHome(window,NOP);
 	window.draw(BigBox2);
@@ -311,27 +326,96 @@ void board::drawBoard(sf::RenderWindow& window,int NOP)
 
 }
 
-void board::drawHome(sf::RenderWindow& window,int NOP)
+//void board::drawHome(sf::RenderWindow& window, int NOP)
+//{
+//
+//	for (int i = 0; i < 6; i++)
+//	{
+//		Hs[i]->Draw(window);
+//	}
+//	for (int i = 0; i < 4 * NOP; i++)
+//	{
+//		Ps[i]->Draw(window);
+//	}
+//}
+
+void board::drawHome(sf::RenderWindow& window,int NOP, vector<int> JootaIndx)
 {
 
 	for (int i = 0; i < 6; i++)
 	{
 		Hs[i]->Draw(window);
 	}
+	vector<vector<int>> Js;
+	bool foundJ = false;
+	int jp1, jp2, j = 0;
 	for (int i = 0; i < 4*NOP; i++)
 	{
-		Ps[i]->Draw(window);
+		bool isJoota = false;
+		for(int x=0;x< JootaIndx.size();x++)
+		{
+			if (Ps[i]->getCellIndex() == JootaIndx[x])
+			{
+				if (j == 0)
+					jp1 = i,j++;
+				else if (j == 1)
+				{
+					jp2 = i;
+					Js.push_back({ jp1,jp2 });
+					j = 0;
+				}
+				isJoota = true; foundJ = true;
+			}
+		}
+		if (!isJoota)
+			Ps[i]->Draw(window);
+	}
+	if(foundJ)
+	{
+		for (int j = 0; j < Js.size(); j++)
+		{
+			Ps[Js[j][0]]->setPosition(Ps[Js[j][0]]->GetCol(), Ps[Js[j][0]]->GetRow());
+			Ps[Js[j][0]]->Draw(window);
+
+			Ps[Js[j][1]]->setPosition(Ps[Js[j][1]]->GetCol(), Ps[Js[j][1]]->GetRow());
+			Ps[Js[j][1]]->Draw(window);
+		}
 	}
 }
 
-//piece* board::getPiece(int ri, int ci)
-//{
-//	for (int i = 0; i < 90; i++)
-//	{
-//		if (Cs[i]->isClicked(ri, ci))
-//			return Cs[i]->getPiece();
-//	}
-//}
+void board::DrawWinner(std::vector<player*> WinPs,sf::RenderWindow& window)
+{
+	string fn;
+	for (int i = 0; i < WinPs.size(); i++)
+	{
+		switch (i)
+		{
+		case 0:
+			fn = "first.png";
+			break;
+		case 1:
+			fn = "second.png";
+			break;
+		case 2:
+			fn = "third.png";
+			break;
+		case 3:
+			fn = "medal.png";
+			break;
+		case 4:
+			fn = "medal.png";
+			break;
+		case 5:
+			fn = "medal.png";
+			break;
+		}
+		WinTex.loadFromFile(fn);
+		Win.setTexture(WinTex);
+		Win.setScale(0.4, 0.4);
+		Win.setPosition(Hs[i]->getCol() + 50, Hs[i]->getRow() + 50);
+		window.draw(Win);
+	}
+}
 
 void board::setPiece(piece* P,int i)
 {

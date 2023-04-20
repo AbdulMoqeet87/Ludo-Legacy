@@ -29,11 +29,13 @@ private:
 	sf::Texture WinTex;
 	sf::RectangleShape DHi;
 
+	std::vector<int> JootaIndx;
 public:
 	Ludo();
 	Ludo(int _NOP);
 	void turnChange();
 	bool isValidSc(int &indx, int DiceIndx);
+	bool isLegalMove(int indx, int DiceIndx);
 	//bool isValidSc(int &indx);
 	void play(sf::RenderWindow& window);
 	void RollDice(sf::RenderWindow& window, int di);
@@ -46,7 +48,6 @@ public:
 	void EraseDice();
 	bool AllSix();
 	bool isWin();
-	void DrawWinner(sf::RenderWindow& window);
 	bool GameEnded();
 };
 
