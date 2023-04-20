@@ -29,7 +29,8 @@ private:
 	sf::Sprite Win;
 	sf::Texture WinTex;
 	sf::RectangleShape DHi;
-
+	sf::SoundBuffer BC_;
+	sf::Sound ButtonClick;
 	std::vector<int> JootaIndx;
 public:
 	Ludo();

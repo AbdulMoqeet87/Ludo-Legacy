@@ -16,7 +16,8 @@ class board
 		piece** Ps;
 		sf::Sprite Win;
 		sf::Texture WinTex;
-
+		sf::SoundBuffer BC_;
+		sf::Sound ButtonClick;
 		sf::RectangleShape BigBox3;
 		sf::RectangleShape BigBox2;
 		sf::RectangleShape BigBox;
