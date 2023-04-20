@@ -38,7 +38,7 @@ public:
 	bool isValidSc(int &indx, int DiceIndx);
 	bool isLegalMove(int indx, int DiceIndx);
 	//bool isValidSc(int &indx);
-	void play(sf::RenderWindow& window, int &ending);
+	void play(sf::RenderWindow& window, int &ending,sf::Sound &S);
 	void RollDice(sf::RenderWindow& window, int di);
 	void DrawDice(sf::RenderWindow& window);
 	void  Move(int indx, int DiceIndx, sf::RenderWindow &winidow);

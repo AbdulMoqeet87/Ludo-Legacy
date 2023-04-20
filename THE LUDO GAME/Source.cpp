@@ -567,7 +567,7 @@ void SelectPlayer( RenderWindow& window, Sprite SP,int &Nop, Text SelectP, Text 
 
         if (break_ == true)
         {
-            S.setVolume(20);
+           // S.setVolume(20);
             break;
         }
 
@@ -706,7 +706,7 @@ int Game(bool Restarted)
         }
         SelectPlayer(window,SPl, NOP,SelectP, P2, P4, P6, StrangerT);
         Ludo L(NOP);
-        L.play(window,Ending);      
+        L.play(window,Ending,StrangerT);      
         if (Ending == 0 || Ending == 1)
             return Ending;
         window.display();

@@ -894,8 +894,10 @@ bool Ludo::GameEnded()
 	return false;
 }
 
-void Ludo::play(sf::RenderWindow& window, int &ending)
+void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 {
+	S.setVolume(20);
+	S.setLoop(true);
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
 	sf::Color dark_green(0, 100, 0);
