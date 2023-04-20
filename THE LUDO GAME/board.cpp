@@ -315,9 +315,9 @@ board::board(int NOP)
 
 void board::DrawRestart(sf::RenderWindow& window, int& Ending)
 {
+	sf::Color neonPurple(205, 0, 205);
 	sf::Font GOT;
 	sf::Font Lato;
-	sf::Color neonPurple(205, 0, 205);
 	Lato.loadFromFile("Lato.ttf");
 	GOT.loadFromFile("GameOfThrones.ttf");
 	sf::Text RESTART("RESTART ", GOT, 50);

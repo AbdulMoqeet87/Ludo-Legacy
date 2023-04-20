@@ -53,8 +53,15 @@ Ludo::Ludo(int _NOP)
 	NOP = _NOP;
 	BC_.loadFromFile("ButtonPressed.wav");
 	ButtonClick.setBuffer(BC_);
+	//-------------------------------
+	
+	RB.loadFromFile("RedRibbonSmall2.png");
+	Ribbon.setTexture(RB);
+	Ribbon.setPosition(sf::Vector2f(290, 20));
 
+	//---------------------------------------
 	hasmoved = false;
+
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
 	sf::Color dark_green(0, 100, 0);
@@ -745,6 +752,70 @@ bool Ludo::isWin()
 	return true;
 }
 
+
+void Ludo::displayScoreCard(sf::RenderWindow& window)
+{
+	cout << "inside Display Card\n";
+
+	sf::Texture BlurB;
+	BlurB.loadFromFile("BlurrBoard.png");
+	sf::Sprite BlurBord(BlurB);
+	BlurBord.setPosition(0, 0);
+	BlurBord.setScale(1, 1);
+	sf::Font GOT;
+	sf::Font Lato;
+	Lato.loadFromFile("Lato.ttf");
+	GOT.loadFromFile("GameOfThrones.ttf");
+
+	sf::RectangleShape DialougeBox;
+	sf::Color neonPurple(205, 0, 205);
+	sf::Text Congrat("CONGRATULATIONS", GOT, 25);
+	Congrat.setPosition(sf::Vector2f(473, 100));;
+	Congrat.setFillColor(sf::Color::White);
+	sf::Text* names;
+	names = new Text[WinPs.size()];
+	for (int i = 0; i < WinPs.size(); i++)
+	{
+		cout <<"NAME " << WinPs[i]->getName() << endl;
+
+		names[i].setCharacterSize(30);
+		names[i].setFont(Lato);
+		names[i].setString(WinPs[i]->getName());
+		names[i].setPosition(sf::Vector2f(510, 175 + ((i + 1)*65)));
+		names[i].setFillColor(WinPs[i]->getColor());
+	}
+
+	DialougeBox.setFillColor(sf::Color::White);
+	DialougeBox.setOutlineColor(neonPurple);
+	DialougeBox.setOutlineThickness(10);
+	DialougeBox.setSize(sf::Vector2f(350, 500));
+	DialougeBox.setPosition(sf::Vector2f(470, 80));
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+
+		}
+	
+		window.clear();
+		window.draw(BlurBord);
+		window.draw(DialougeBox);
+		window.draw(Ribbon);
+		window.draw(Congrat);
+		for (int i = 0; i < WinPs.size(); i++)
+		{
+			window.draw(names[i]);
+		}
+		
+		window.display();
+	
+	}
+}
+
+
 //void Ludo::DrawWinner(sf::RenderWindow& window)
 //{
 //	string fn;
@@ -954,9 +1025,19 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 			diceRolled = false;
 			indx = -1;
 		}
+ 
 		if (GameEnded())
 		{
-			//some graphics
+
+		/*	for (int i = 0; i < 5; i++)
+			{
+				WinPs.push_back(Ps[i]);
+			}
+		*/
+
+			/*displayScoreCard(window);
+			ending = 1;
+			break;*/
 		}
 	}
 }

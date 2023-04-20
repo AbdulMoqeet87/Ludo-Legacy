@@ -32,6 +32,9 @@ private:
 	sf::SoundBuffer BC_;
 	sf::Sound ButtonClick;
 	std::vector<int> JootaIndx;
+	sf::Texture RB;
+	sf::Sprite Ribbon;
+
 public:
 	Ludo();
 	Ludo(int _NOP);
@@ -50,6 +53,7 @@ public:
 	void EraseDice();
 	bool AllSix();
 	bool isWin();
+	void displayScoreCard(sf::RenderWindow &window);
 	bool GameEnded();
 };
 
