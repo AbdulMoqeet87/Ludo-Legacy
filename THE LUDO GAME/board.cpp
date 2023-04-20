@@ -318,7 +318,7 @@ void board::drawBoard(sf::RenderWindow& window, int NOP, vector<int> JootaIndx, 
 	drawHome(window, NOP, JootaIndx);
 	DrawWinner(WinPs, window);
 	
-	drawHome(window,NOP);
+	
 	window.draw(BigBox2);
 	//window.draw(BigBox3);
 	window.draw(BigBox);

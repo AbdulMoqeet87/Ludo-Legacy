@@ -129,7 +129,7 @@ Ludo::Ludo(int _NOP)
 	B->getPiece(5)->setCellIndex(9);
 	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
 
-	dice = new Dice(1140, 500);
+	dice = new Dice(1160, 500);
 	dice->setDiceValue(2);
 	Ds[0] = new Dice(1070, 180);
 	Ds[1] = new Dice(1160, 180);
@@ -859,27 +859,27 @@ bool Ludo::isWin()
 	return true;
 }
 
-void Ludo::DrawWinner(sf::RenderWindow& window)
-{
-	string fn;
-	for (int i = 0; i < WinPs.size(); i++)
-	{
-		switch (i)
-		{
-		case 0:
-			fn = "first.png";
-			break;
-		case 1:
-			fn = "first.png";
-			break;
-		}
-		WinTex.loadFromFile(fn);
-		Win.setTexture(WinTex);
-		Win.setScale(0.4, 0.4);
-		Win.setPosition(B->getHome(i)->getCol()+50, B->getHome(i)->getRow()+50);
-		window.draw(Win);
-	}
-}
+//void Ludo::DrawWinner(sf::RenderWindow& window)
+//{
+//	string fn;
+//	for (int i = 0; i < WinPs.size(); i++)
+//	{
+//		switch (i)
+//		{
+//		case 0:
+//			fn = "first.png";
+//			break;
+//		case 1:
+//			fn = "first.png";
+//			break;
+//		}
+//		WinTex.loadFromFile(fn);
+//		Win.setTexture(WinTex);
+//		Win.setScale(0.4, 0.4);
+//		Win.setPosition(B->getHome(i)->getCol()+50, B->getHome(i)->getRow()+50);
+//		window.draw(Win);
+//	}
+//}
 
 bool Ludo::GameEnded()
 {
@@ -962,10 +962,7 @@ void Ludo::play(sf::RenderWindow& window)
 						Ds[di]->setDiceValue(s);
 						*/
 						RollDice(window, di);
-						if (Ds[di]->getDiceValue() == 6)
-						{
-							Ds[di]->HighlightDice(window);
-						}
+					
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
 						{
@@ -1044,6 +1041,9 @@ void Ludo::play(sf::RenderWindow& window)
 		window.clear();
 		window.draw(BackG);
 		B->drawBoard(window,NOP, JootaIndx,WinPs);
+		window.draw(DHi);
+		if (rollingDice)
+			Ds[0]->HighlightDice(window);
 		DrawDice(window);
 		window.display();
 		if (AllSix())
