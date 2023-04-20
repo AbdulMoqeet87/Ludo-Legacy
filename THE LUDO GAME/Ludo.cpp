@@ -844,9 +844,9 @@ void Ludo::displayScoreCard(sf::RenderWindow& window)
 
 bool Ludo::GameEnded()
 {
-	//if (WinPs.size() == NOP - 1)
+	if (WinPs.size() == NOP - 1)
 		return true;
-	//return false;
+	return false;
 }
 
 void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
@@ -1033,10 +1033,10 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 		if (GameEnded())
 		{
 
-			for (int i = 0; i < 5; i++)
+			/*for (int i = 0; i < 5; i++)
 			{
 				WinPs.push_back(Ps[i]);
-			}
+			}*/
 		
 
 			displayScoreCard(window);
