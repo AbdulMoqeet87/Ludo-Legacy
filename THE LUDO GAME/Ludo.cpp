@@ -118,20 +118,20 @@ Ludo::Ludo(int _NOP)
 
 	B = new board(NOP);
 
-	B->getPiece(9)->setCellIndex(3);
-	B->getPiece(9)->setPosition(B->getCellCol(3)+ 38, B->getCellRow(3) + 42);
-	B->getPiece(6)->setCellIndex(1);
-	B->getPiece(6)->setPosition(B->getCellCol(1) + 38, B->getCellRow(1) + 42);
+	//B->getPiece(9)->setCellIndex(3);
+	//B->getPiece(9)->setPosition(B->getCellCol(3)+ 38, B->getCellRow(3) + 42);
+	//B->getPiece(6)->setCellIndex(1);
+	//B->getPiece(6)->setPosition(B->getCellCol(1) + 38, B->getCellRow(1) + 42);
 
-	B->getPiece(0)->setCellIndex(5);
-	B->getPiece(0)->setPosition(B->getCellCol(5) + 38, B->getCellRow(5) + 42);
-	B->getPiece(1)->setCellIndex(6);
-	B->getPiece(1)->setPosition(B->getCellCol(6) + 38, B->getCellRow(6) + 42);
+	//B->getPiece(0)->setCellIndex(5);
+	//B->getPiece(0)->setPosition(B->getCellCol(5) + 38, B->getCellRow(5) + 42);
+	//B->getPiece(1)->setCellIndex(6);
+	//B->getPiece(1)->setPosition(B->getCellCol(6) + 38, B->getCellRow(6) + 42);
 
-	B->getPiece(4)->setCellIndex(8);
-	B->getPiece(4)->setPosition(B->getCellCol(8) + 38, B->getCellRow(8) + 42);
-	B->getPiece(5)->setCellIndex(9);
-	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
+	//B->getPiece(4)->setCellIndex(8);
+	//B->getPiece(4)->setPosition(B->getCellCol(8) + 38, B->getCellRow(8) + 42);
+	//B->getPiece(5)->setCellIndex(9);
+	//B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
 
 	dice = new Dice(1160, 500);
 	dice->setDiceValue(2);
