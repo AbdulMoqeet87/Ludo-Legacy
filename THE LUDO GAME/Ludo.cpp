@@ -51,6 +51,9 @@ Ludo::Ludo()
 Ludo::Ludo(int _NOP)
 {
 	NOP = _NOP;
+	BC_.loadFromFile("ButtonPressed.wav");
+	ButtonClick.setBuffer(BC_);
+
 	hasmoved = false;
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
@@ -691,8 +694,8 @@ void Ludo::selectDiceValue(int& DiceIndx)
 		cout << "Dice value  " << Ds[i]->getDiceValue() << endl;
 		if (Ds[i]->isClicked(sri, sci))
 		{
+			ButtonClick.play();
 			DiceIndx = i;
-			cout << " \n\nValueSelected\n";
 		}
 	}
 	cout << "sri" << sri << endl;
@@ -771,8 +774,10 @@ bool Ludo::GameEnded()
 	return false;
 }
 
-void Ludo::play(sf::RenderWindow& window, int &ending)
+void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 {
+	S.setVolume(20);
+	S.setLoop(true);
 	sf::Color greyish_green(64, 96, 64);
 	sf::Color dark_yellow(153, 153, 0);
 	sf::Color dark_green(0, 100, 0);
@@ -834,8 +839,12 @@ void Ludo::play(sf::RenderWindow& window, int &ending)
 				sri = mousePos.y;
 				sci = mousePos.x;
 				if (B->PowerButtonClicked(sri, sci))
+				{
+					ButtonClick.play();
 					RestartPressed = true;
+				}
 				else RestartPressed = false;
+
 
 				if (rollingDice)
 				{

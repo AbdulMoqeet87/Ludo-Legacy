@@ -23,6 +23,8 @@ board::board(int NOP)
 	sf::Color neonPurple(205, 0, 205);
 	sf::Color neonBlue(0, 246, 255);
 
+	BC_.loadFromFile("ButtonPressed.wav");
+	ButtonClick.setBuffer(BC_);
 
 	ifstream rdr("Cells.txt");
 	
@@ -354,17 +356,19 @@ void board::DrawRestart(sf::RenderWindow& window, int& Ending)
 				if ((P.x >= 515 && P.x < 800) && (P.y >= 230 && P.y < 281))  //Pressed Restart
 				{
 					Break = true;
+					ButtonClick.play();
 					Ending = 1;
 					break;
 				}
 				if ((P.x >= 565 && P.x < 700) && (P.y >= 380 && P.y < 431))  //Pressed Quit 
 				{
+					ButtonClick.play();
 					Break = true;
 					Ending = 0;
 					break;
 				}
 				
-				else if ((P.x < 300 || P.x > 1000) || (P.y <80 || P.y> 580))
+				else if ((P.x < 300 || P.x > 1000) || (P.y <80 || P.y> 580))   // clicked anywhere dialouge outside dialouse box
 				{
 					Break = true;
 					Ending = -1;

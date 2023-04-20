@@ -29,7 +29,8 @@ private:
 	sf::Sprite Win;
 	sf::Texture WinTex;
 	sf::RectangleShape DHi;
-
+	sf::SoundBuffer BC_;
+	sf::Sound ButtonClick;
 	std::vector<int> JootaIndx;
 public:
 	Ludo();
@@ -38,7 +39,7 @@ public:
 	bool isValidSc(int &indx, int DiceIndx);
 	bool isLegalMove(int indx, int DiceIndx,bool& isCancelled);
 	//bool isValidSc(int &indx);
-	void play(sf::RenderWindow& window, int &ending);
+	void play(sf::RenderWindow& window, int &ending,sf::Sound &S);
 	void RollDice(sf::RenderWindow& window, int di);
 	void DrawDice(sf::RenderWindow& window);
 	void  Move(int indx, int DiceIndx, sf::RenderWindow &winidow);

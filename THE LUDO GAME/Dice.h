@@ -18,6 +18,7 @@ private:
 	Sprite DiceHigh;
 	SoundBuffer DR;
 	Sound DiceRoll;
+	
 	Vector2u TextureSize;
 	int ri, ci;
 public:
