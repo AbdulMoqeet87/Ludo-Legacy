@@ -50,8 +50,8 @@ Ludo::Ludo()
 
 Ludo::Ludo(int _NOP)
 {
-//	NOP = _NOP;
-	NOP = 2;
+	NOP = _NOP;
+
 	BC_.loadFromFile("ButtonPressed.wav");
 	ButtonClick.setBuffer(BC_);
 	//-------------------------------
