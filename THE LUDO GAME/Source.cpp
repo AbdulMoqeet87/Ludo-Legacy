@@ -703,18 +703,19 @@ int Game(bool Restarted)
             RisingGeeks(window, RisingGeek, Glitch);
             Amna_Moqeet(window, RisingGeek, Amna_MOq, StrangerT, NeonSky);
             MajesticMoves(window, Majestic, Moves, Neon, PlayButton, PlayButton2);
-
         }
-        SelectPlayer(window, SPl, NOP, SelectP, P2, P4, P6, StrangerT);
+
+       SelectPlayer(window, SPl, NOP, SelectP, P2, P4, P6, StrangerT);
         Ludo L(NOP);
         L.play(window, Ending, StrangerT);
         if (Ending == 0 || Ending == 1)
             return Ending;
         window.display();
     }
-
-
 }
+    
+
+
 
 int main()
 {

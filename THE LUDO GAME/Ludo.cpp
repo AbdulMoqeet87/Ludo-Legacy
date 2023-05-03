@@ -50,7 +50,8 @@ Ludo::Ludo()
 
 Ludo::Ludo(int _NOP)
 {
-	NOP = _NOP;
+//	NOP = _NOP;
+	NOP = 2;
 	BC_.loadFromFile("ButtonPressed.wav");
 	ButtonClick.setBuffer(BC_);
 	//-------------------------------
@@ -80,11 +81,11 @@ Ludo::Ludo(int _NOP)
 	Ps = new player * [NOP];
 	if (NOP == 6)
 	{
-		Ps[0] = new player("Amna", maroon);
-		Ps[1] = new player("Moqeet", purple);
-		Ps[2] = new player("Abaid", dark_green);
-		Ps[3] = new player("Mahnoor", golden_yellow);
-		Ps[4] = new player("Minahil", dark_grey);
+		Ps[0] = new player("Amna Dogar", maroon);
+		Ps[1] = new player("Moqeet Don", purple);
+		Ps[2] = new player("Abaid Butt", dark_green);
+		Ps[3] = new player("Mahnoor Gujjar", golden_yellow);
+		Ps[4] = new player("Minahil Jutt", dark_grey);
 		Ps[5] = new player("Fahira", navy_blue);
 	}
 	else if (NOP == 4)
@@ -126,20 +127,25 @@ Ludo::Ludo(int _NOP)
 
 	B = new board(NOP);
 
-	B->getPiece(9)->setCellIndex(3);
-	B->getPiece(9)->setPosition(B->getCellCol(3)+ 38, B->getCellRow(3) + 42);
-	B->getPiece(6)->setCellIndex(1);
-	B->getPiece(6)->setPosition(B->getCellCol(1) + 38, B->getCellRow(1) + 42);
+	/*B->getPiece(1)->setCellIndex(32);
+	B->getPiece(1)->setPosition(B->getCellCol(32)+ 38, B->getCellRow(32) + 42);
+	B->getPiece(2)->setCellIndex(36);
+	B->getPiece(2)->setPosition(B->getCellCol(36) + 38, B->getCellRow(36) + 42);*/
 
 	//B->getPiece(0)->setCellIndex(5);
 	//B->getPiece(0)->setPosition(B->getCellCol(5) + 38, B->getCellRow(5) + 42);
 	//B->getPiece(1)->setCellIndex(6);
 	//B->getPiece(1)->setPosition(B->getCellCol(6) + 38, B->getCellRow(6) + 42);
 
-	B->getPiece(4)->setCellIndex(8);
-	B->getPiece(4)->setPosition(B->getCellCol(8) + 38, B->getCellRow(8) + 42);
-	B->getPiece(5)->setCellIndex(9);
-	B->getPiece(5)->setPosition(B->getCellCol(9) + 38, B->getCellRow(9) + 42);
+	
+	/*B->getPiece(5)->setCellIndex(39);
+	B->getPiece(5)->setPosition(B->getCellCol(39) + 38, B->getCellRow(39) + 42);
+	B->getPiece(6)->setCellIndex(41);
+	B->getPiece(6)->setPosition(B->getCellCol(41) + 38, B->getCellRow(41) + 42);
+
+	B->getPiece(4)->setCellIndex(30);
+	B->getPiece(4)->setPosition(B->getCellCol(30) + 38, B->getCellRow(30) + 42);*/
+
 
 	dice = new Dice(1160, 500);
 	dice->setDiceValue(2);
@@ -759,7 +765,7 @@ bool Ludo::isWin()
 
 void Ludo::displayScoreCard(sf::RenderWindow& window)
 {
-	cout << "inside Display Card\n";
+
 
 	sf::Texture BlurB;
 	BlurB.loadFromFile("BlurrBoard.png");
@@ -780,8 +786,6 @@ void Ludo::displayScoreCard(sf::RenderWindow& window)
 	names = new Text[WinPs.size()];
 	for (int i = 0; i < WinPs.size(); i++)
 	{
-		cout <<"NAME " << WinPs[i]->getName() << endl;
-
 		names[i].setCharacterSize(30);
 		names[i].setFont(Lato);
 		names[i].setString(WinPs[i]->getName());
@@ -925,11 +929,11 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 				{
 					if (clickedDice())
 					{
-						int s = 0;
+						RollDice(window, di);
+				/*		int s = 0;
 						cin >> s;
-						Ds[di]->setDiceValue(s);
+						Ds[di]->setDiceValue(s);*/
 						
-						//RollDice(window, di);
 					
 
 						if (Ds[di]->getDiceValue() == 6 && di != 2)
@@ -956,7 +960,7 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 							{
 
 								Move(indx, DiceIndx, window);
-								if (hasmoved)
+								//if (hasmoved)
 									Ds[DiceIndx]->setDiceValue(0);
 								hasmoved = false;
 								indx = -1;
@@ -1038,7 +1042,6 @@ void Ludo::play(sf::RenderWindow& window, int &ending,sf::Sound & S)
 				WinPs.push_back(Ps[i]);
 			}*/
 		
-
 			displayScoreCard(window);
 			ending = 1;
 			break;
